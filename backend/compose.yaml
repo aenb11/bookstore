@@ -5,7 +5,7 @@ services:
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: Abcd!1234
-      POSTGRES_DB: bookstore
+      POSTGRES_DB: bookstore_db
 
     ports:
       - "5432:5432"
