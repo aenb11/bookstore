@@ -35,7 +35,7 @@ configured tools:
 mise install
 ```
 
-Restore NuGet packages and local .NET CLI tools (`dotnet-ef`):
+Restore NuGet packages and local .NET CLI tools (`dotnet-ef`, `csharpier`):
 
 ```bash
 dotnet restore
@@ -69,10 +69,7 @@ dotnet ef database update --project src/Bookstore.Data --startup-project src/Boo
 > Whenever you modify entities and need to create a new migration:
 >
 > ```bash
-> dotnet ef migrations add <MigrationName> \
-> --project src/Bookstore.Data \
-> --startup-project src/Bookstore.Api \
-> -o Migrations
+> dotnet ef migrations add <MigrationName> --project src/Bookstore.Data --startup-project src/Bookstore.Api -o Migrations
 > ```
 
 ---
@@ -107,4 +104,22 @@ Wipe all database volumes and reset from scratch:
 docker compose down -v
 docker compose up -d
 dotnet ef database update --project src/Bookstore.Data --startup-project src/Bookstore.Api
+```
+
+---
+
+## Code Formatting
+
+This project enforces consistent C# formatting via [CSharpier](https://csharpier.com/).
+
+Check code formatting without modifying files:
+
+```bash
+dotnet csharpier check .
+```
+
+Format all files before committing:
+
+```bash
+dotnet csharpier format .
 ```
