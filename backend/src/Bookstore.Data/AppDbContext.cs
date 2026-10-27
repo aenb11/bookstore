@@ -6,23 +6,30 @@ namespace Bookstore.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public DbSet<Account> Accounts { get; set; } = null!;
-    public DbSet<Address> Addresses { get; set; } = null!;
-    public DbSet<AuditLog> AuditLogs { get; set; } = null!;
-    public DbSet<Author> Authors { get; set; } = null!;
-    public DbSet<Book> Books { get; set; } = null!;
-    public DbSet<BookAuthor> BookAuthors { get; set; } = null!;
-    public DbSet<BookImage> BookImages { get; set; } = null!;
-    public DbSet<BookTag> BookTags { get; set; } = null!;
-    public DbSet<CartItem> CartItems { get; set; } = null!;
-    public DbSet<Category> Categories { get; set; } = null!;
-    public DbSet<InventoryTransaction> InventoryTransactions { get; set; } = null!;
-    public DbSet<Order> Orders { get; set; } = null!;
-    public DbSet<OrderItem> OrderItems { get; set; } = null!;
-    public DbSet<Publisher> Publishers { get; set; } = null!;
-    public DbSet<Review> Reviews { get; set; } = null!;
-    public DbSet<Serie> Series { get; set; } = null!;
-    public DbSet<Tag> Tags { get; set; } = null!;
+    public DbSet<Account> Accounts => Set<Account>();
+    public DbSet<Address> Addresses => Set<Address>();
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
+    public DbSet<Author> Authors => Set<Author>();
+    public DbSet<Book> Books => Set<Book>();
+    public DbSet<BookAuthor> BookAuthors => Set<BookAuthor>();
+    public DbSet<BookImage> BookImages => Set<BookImage>();
+    public DbSet<BookTag> BookTags => Set<BookTag>();
+    public DbSet<CartItem> CartItems => Set<CartItem>();
+    public DbSet<Category> Categories => Set<Category>();
+    public DbSet<InventoryTransaction> InventoryTransactions => Set<InventoryTransaction>();
+    public DbSet<Order> Orders => Set<Order>();
+    public DbSet<OrderItem> OrderItems => Set<OrderItem>();
+    public DbSet<Publisher> Publishers => Set<Publisher>();
+    public DbSet<Review> Reviews => Set<Review>();
+    public DbSet<Serie> Series => Set<Serie>();
+    public DbSet<Tag> Tags => Set<Tag>();
+
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        base.OnConfiguring(optionsBuilder);
+
+        optionsBuilder.UseSnakeCaseNamingConvention();
+    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -47,7 +54,7 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     {
         var now = DateTimeOffset.UtcNow;
 
-        foreach (var entry in ChangeTracker.Entries().ToList())
+        foreach (var entry in ChangeTracker.Entries())
         {
             if (entry.State == EntityState.Deleted && entry.Entity is ISoftDeletableEntity sd)
             {
@@ -55,14 +62,13 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 sd.IsDeleted = true;
                 sd.DeletedAt = now;
             }
-            else if (entry.State == EntityState.Added && entry.Entity is ICreationAuditable c)
+
+            if (entry.State == EntityState.Added && entry.Entity is ICreationAuditable c)
             {
                 c.CreatedAt = now;
             }
-            else if (
-                entry.State == EntityState.Modified
-                && entry.Entity is IModificationAuditable m
-            )
+
+            if (entry.State == EntityState.Modified && entry.Entity is IModificationAuditable m)
             {
                 m.UpdatedAt = now;
             }
