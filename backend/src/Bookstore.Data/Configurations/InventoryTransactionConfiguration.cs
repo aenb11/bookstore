@@ -20,7 +20,7 @@ public class InventoryTransactionConfiguration : IEntityTypeConfiguration<Invent
 
         builder.ToTable(it =>
         {
-            it.HasCheckConstraint("ck_inventory_transactions_quantity", "quantity <> 0");
+            it.HasCheckConstraint("ck_inventory_transactions_quantity", "quantity_change <> 0");
             it.HasCheckConstraint("ck_inventory_transaction_balance_after", "balance_after >= 0");
             it.HasCheckConstraint(
                 "ck_inventory_transaction_reason",
