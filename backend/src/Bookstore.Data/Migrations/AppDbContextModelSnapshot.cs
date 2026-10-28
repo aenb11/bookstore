@@ -32,7 +32,6 @@ namespace Bookstore.Data.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<string>("AvatarKey")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)")
                         .HasColumnName("avatar_key");
@@ -92,7 +91,8 @@ namespace Bookstore.Data.Migrations
 
                     b.HasIndex("Email")
                         .IsUnique()
-                        .HasDatabaseName("ux_accounts_email");
+                        .HasDatabaseName("ux_accounts_email")
+                        .HasFilter("is_deleted = false");
 
                     b.ToTable("accounts", null, t =>
                         {
@@ -285,7 +285,12 @@ namespace Bookstore.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_authors");
 
-                    b.ToTable("authors", (string)null);
+                    b.ToTable("authors", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_authors_birth_year", "birth_year IS NULL OR birth_year >= 0");
+
+                            t.HasCheckConstraint("ck_authors_death_year", "death_year IS NULL OR birth_year IS NULL OR death_year >= birth_year");
+                        });
                 });
 
             modelBuilder.Entity("Bookstore.Data.Entities.Book", b =>
@@ -394,6 +399,11 @@ namespace Bookstore.Data.Migrations
 
                     b.HasIndex("CategoryId")
                         .HasDatabaseName("ix_books_category_id");
+
+                    b.HasIndex("Isbn")
+                        .IsUnique()
+                        .HasDatabaseName("ux_books_isbn")
+                        .HasFilter("is_deleted = false");
 
                     b.HasIndex("PublisherId")
                         .HasDatabaseName("ix_books_publisher_id");
@@ -570,7 +580,7 @@ namespace Bookstore.Data.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasDatabaseName("ix_categories_name")
+                        .HasDatabaseName("ux_categories_name")
                         .HasFilter("is_deleted = false");
 
                     b.ToTable("categories", (string)null);
@@ -626,6 +636,9 @@ namespace Bookstore.Data.Migrations
                     b.HasIndex("AccountId")
                         .HasDatabaseName("ix_inventory_transactions_account_id");
 
+                    b.HasIndex("OrderId")
+                        .HasDatabaseName("ix_inventory_transactions_order_id");
+
                     b.HasIndex("BookId", "CreatedAt")
                         .HasDatabaseName("ix_inventory_transactions_book_id_created_at");
 
@@ -633,7 +646,7 @@ namespace Bookstore.Data.Migrations
                         {
                             t.HasCheckConstraint("ck_inventory_transaction_balance_after", "balance_after >= 0");
 
-                            t.HasCheckConstraint("ck_inventory_transaction_reason", "reason IN ('PurchaseIn','Sale','OrderCancellation','Adjustment','Damaged')");
+                            t.HasCheckConstraint("ck_inventory_transaction_reason", "reason IN ('PurchaseIn','Sale','OrderCancelled','Adjustment','Damaged')");
 
                             t.HasCheckConstraint("ck_inventory_transactions_quantity", "quantity_change <> 0");
                         });
@@ -721,18 +734,18 @@ namespace Bookstore.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_orders");
 
-                    b.HasIndex("AccountId")
-                        .HasDatabaseName("ix_orders_account_id");
+                    b.HasIndex("AccountId", "CreatedAt")
+                        .HasDatabaseName("ix_orders_account_id_created_at");
 
                     b.ToTable("orders", null, t =>
                         {
                             t.HasCheckConstraint("ck_orders_payment_method", "payment_method IN ('CashOnDelivery','CreditCard')");
 
-                            t.HasCheckConstraint("ck_orders_payment_status", "payment_status IN ('Unpaid','Paid')");
+                            t.HasCheckConstraint("ck_orders_payment_status", "payment_status IN ('Pending','Paid','Failed','Refunded')");
 
                             t.HasCheckConstraint("ck_orders_shipping_fee", "shipping_fee >= 0");
 
-                            t.HasCheckConstraint("ck_orders_status", "status IN ('Pending','Processing','Shipped','Delivered','Cancelled')");
+                            t.HasCheckConstraint("ck_orders_status", "status IN ('Pending','Confirmed','Shipped','Delivered','Cancelled')");
                         });
                 });
 
@@ -814,7 +827,7 @@ namespace Bookstore.Data.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasDatabaseName("ix_publishers_name")
+                        .HasDatabaseName("ux_publishers_name")
                         .HasFilter("is_deleted = false");
 
                     b.ToTable("publishers", (string)null);
@@ -865,15 +878,17 @@ namespace Bookstore.Data.Migrations
                     b.HasKey("Id")
                         .HasName("pk_reviews");
 
-                    b.HasIndex("AccountId")
-                        .HasDatabaseName("ix_reviews_account_id");
-
                     b.HasIndex("BookId")
                         .HasDatabaseName("ix_reviews_book_id");
 
+                    b.HasIndex("AccountId", "BookId")
+                        .IsUnique()
+                        .HasDatabaseName("ux_reviews_account_book")
+                        .HasFilter("is_deleted = false");
+
                     b.ToTable("reviews", null, t =>
                         {
-                            t.HasCheckConstraint("ck_reviews_rating", "rating >= 1 AND rating <= 5");
+                            t.HasCheckConstraint("ck_reviews_rating", "rating BETWEEN 1 AND 5");
                         });
                 });
 
@@ -895,7 +910,8 @@ namespace Bookstore.Data.Migrations
                         .HasColumnName("deleted_at");
 
                     b.Property<string>("Description")
-                        .HasColumnType("text")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
                         .HasColumnName("description");
 
                     b.Property<bool>("IsDeleted")
@@ -914,6 +930,11 @@ namespace Bookstore.Data.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_series");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasDatabaseName("ux_series_name")
+                        .HasFilter("is_deleted = false");
 
                     b.ToTable("series", (string)null);
                 });
@@ -954,7 +975,7 @@ namespace Bookstore.Data.Migrations
 
                     b.HasIndex("Name")
                         .IsUnique()
-                        .HasDatabaseName("ix_tags_name")
+                        .HasDatabaseName("ux_tags_name")
                         .HasFilter("is_deleted = false");
 
                     b.ToTable("tags", (string)null);
@@ -1000,7 +1021,7 @@ namespace Bookstore.Data.Migrations
                     b.HasOne("Bookstore.Data.Entities.Serie", "Serie")
                         .WithMany()
                         .HasForeignKey("SerieId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("fk_books_series_serie_id");
 
                     b.Navigation("Category");
@@ -1088,6 +1109,12 @@ namespace Bookstore.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("fk_inventory_transactions_books_book_id");
 
+                    b.HasOne("Bookstore.Data.Entities.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_inventory_transactions_orders_order_id");
+
                     b.Navigation("Account");
 
                     b.Navigation("Book");
@@ -1136,7 +1163,7 @@ namespace Bookstore.Data.Migrations
                     b.HasOne("Bookstore.Data.Entities.Book", "Book")
                         .WithMany()
                         .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_reviews_books_book_id");
 
