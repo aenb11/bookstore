@@ -1,0 +1,31 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace Bookstore.Data;
+
+public static class DependencyInjection
+{
+    public static IServiceCollection AddDataInfrastructure(
+        this IServiceCollection services,
+        IConfiguration configuration
+    )
+    {
+        var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseNpgsql(
+                connectionString,
+                npgsql =>
+                {
+                    npgsql.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName);
+                    npgsql.EnableRetryOnFailure(3);
+                }
+            );
+            options.UseSnakeCaseNamingConvention();
+        });
+
+        return services;
+    }
+}
