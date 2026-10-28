@@ -38,6 +38,10 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
         });
 
         builder
+            .HasIndex(o => new { o.AccountId, o.CreatedAt })
+            .HasDatabaseName("ix_orders_account_id_created_at");
+
+        builder
             .HasOne(o => o.Account)
             .WithMany()
             .HasForeignKey(o => o.AccountId)

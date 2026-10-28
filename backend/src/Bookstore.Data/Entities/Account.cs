@@ -17,11 +17,11 @@ public enum AccountStatus
 
 public class Account : IAuditableEntity, ISoftDeletableEntity
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
     public required string ClerkId { get; init; }
     public required string Email { get; set; }
     public required string FullName { get; set; }
-    public required string AvatarKey { get; set; }
+    public string? AvatarKey { get; set; }
     public AccountRole Role { get; set; } = AccountRole.Customer;
     public AccountStatus Status { get; set; } = AccountStatus.Active;
 

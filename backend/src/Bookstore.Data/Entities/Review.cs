@@ -5,8 +5,8 @@ namespace Bookstore.Data.Entities;
 public class Review : IAuditableEntity, ISoftDeletableEntity
 {
     public int Id { get; init; }
-    public required int BookId { get; set; }
-    public required int AccountId { get; set; }
+    public required int BookId { get; init; }
+    public required int AccountId { get; init; }
     public required int Rating { get; set; } // 1 to 5
     public string? Comment { get; set; }
 

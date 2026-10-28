@@ -15,7 +15,11 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder.HasIndex(a => a.ClerkId).IsUnique().HasDatabaseName("ux_accounts_clerk_id");
 
         builder.Property(a => a.Email).HasMaxLength(100);
-        builder.HasIndex(a => a.Email).IsUnique().HasDatabaseName("ux_accounts_email");
+        builder
+            .HasIndex(a => a.Email)
+            .IsUnique()
+            .HasFilter(SqlHelper.NotDeleted)
+            .HasDatabaseName("ux_accounts_email");
 
         builder.Property(a => a.FullName).HasMaxLength(100);
 

@@ -13,5 +13,14 @@ public class AuthorConfiguration : IEntityTypeConfiguration<Author>
         builder.Property(a => a.Nationality).HasMaxLength(2); // ISO 3166-1 alpha-2 country code
         builder.Property(a => a.Biography).HasMaxLength(2000);
         builder.Property(a => a.PhotoKey).HasMaxLength(255);
+
+        builder.ToTable(a =>
+        {
+            a.HasCheckConstraint("ck_authors_birth_year", "birth_year IS NULL OR birth_year >= 0");
+            a.HasCheckConstraint(
+                "ck_authors_death_year",
+                "death_year IS NULL OR birth_year IS NULL OR death_year >= birth_year"
+            );
+        });
     }
 }

@@ -11,6 +11,10 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         builder.HasKey(c => c.Id);
         builder.Property(c => c.Name).HasMaxLength(100);
-        builder.HasIndex(c => c.Name).IsUnique().HasFilter(SqlHelper.NotDeleted); // Unique index with filter for soft delete
+        builder
+            .HasIndex(c => c.Name)
+            .IsUnique()
+            .HasFilter(SqlHelper.NotDeleted)
+            .HasDatabaseName("ux_categories_name"); // Unique index with filter for soft delete
     }
 }

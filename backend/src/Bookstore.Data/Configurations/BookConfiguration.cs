@@ -12,8 +12,13 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
         builder.HasKey(b => b.Id);
 
         builder.Property(b => b.Isbn).HasMaxLength(13);
+        builder
+            .HasIndex(b => b.Isbn)
+            .IsUnique()
+            .HasFilter(SqlHelper.NotDeleted)
+            .HasDatabaseName("ux_books_isbn");
         builder.Property(b => b.Title).HasMaxLength(200);
-        builder.Property(b => b.Language).HasMaxLength(2); // ISO 639-1 alpha-2 language code
+        builder.Property(b => b.Language).HasMaxLength(2); // ISO 639-1
         builder.Property(b => b.Description).HasMaxLength(1000);
 
         builder.Property(b => b.CoverType).HasConversion<string>().HasMaxLength(20);
@@ -54,7 +59,7 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
             .HasOne(b => b.Serie)
             .WithMany()
             .HasForeignKey(b => b.SerieId)
-            .OnDelete(DeleteBehavior.SetNull);
+            .OnDelete(DeleteBehavior.Restrict);
 
         builder.HasMany(b => b.Authors).WithMany(a => a.Books).UsingEntity<BookAuthor>();
         builder.HasMany(b => b.Tags).WithMany(t => t.Books).UsingEntity<BookTag>();

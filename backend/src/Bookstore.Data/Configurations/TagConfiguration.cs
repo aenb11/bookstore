@@ -11,6 +11,10 @@ public class TagConfiguration : IEntityTypeConfiguration<Tag>
     {
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Name).HasMaxLength(100);
-        builder.HasIndex(a => a.Name).IsUnique().HasFilter(SqlHelper.NotDeleted); // Unique index with filter for soft delete
+        builder
+            .HasIndex(a => a.Name)
+            .IsUnique()
+            .HasFilter(SqlHelper.NotDeleted)
+            .HasDatabaseName("ux_tags_name"); // Unique index with filter for soft delete
     }
 }

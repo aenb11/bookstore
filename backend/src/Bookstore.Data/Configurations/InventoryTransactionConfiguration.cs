@@ -29,6 +29,12 @@ public class InventoryTransactionConfiguration : IEntityTypeConfiguration<Invent
         });
 
         builder
+            .HasOne<Order>()
+            .WithMany()
+            .HasForeignKey(it => it.OrderId)
+            .OnDelete(DeleteBehavior.Restrict);
+
+        builder
             .HasOne(it => it.Book)
             .WithMany()
             .HasForeignKey(it => it.BookId)

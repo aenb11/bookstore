@@ -26,7 +26,7 @@ public enum BookAgeGroup
 
 public class Book : IAuditableEntity, ISoftDeletableEntity
 {
-    public int Id { get; set; }
+    public int Id { get; init; }
     public string? Isbn { get; set; }
     public required string Title { get; set; }
 
