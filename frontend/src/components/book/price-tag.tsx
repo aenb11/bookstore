@@ -23,7 +23,7 @@ export function PriceTag({ price, originalPrice, size = "sm", className }: Price
           </span>
           <span
             className={cn(
-              "rounded-sm bg-primary/10 px-1 font-semibold text-primary",
+              "rounded-md bg-primary/10 px-1.5 font-semibold text-primary",
               size === "lg" ? "text-sm" : "text-[0.7rem]",
             )}
           >

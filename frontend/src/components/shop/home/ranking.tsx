@@ -15,7 +15,7 @@ export function Ranking({ groups }: { groups: { category: Category; books: Book[
   const selected = books[Math.min(active, books.length - 1)];
 
   return (
-    <section aria-labelledby="ranking-heading" className="rounded-lg bg-card">
+    <section aria-labelledby="ranking-heading" className="rounded-xl bg-card">
       <div className="flex flex-wrap items-center gap-x-6 gap-y-2 border-b px-4 pt-3">
         <h2 id="ranking-heading" className="pb-3 text-lg font-bold">
           Bảng xếp hạng bán chạy tuần
@@ -51,7 +51,7 @@ export function Ranking({ groups }: { groups: { category: Category; books: Book[
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 className={cn(
-                  "flex items-center gap-3 rounded-md px-2 py-2.5 transition-colors",
+                  "flex items-center gap-3 rounded-lg px-2 py-2.5 transition-colors",
                   i === active && "bg-muted",
                 )}
               >
@@ -77,7 +77,7 @@ export function Ranking({ groups }: { groups: { category: Category; books: Book[
         </ol>
 
         {selected && (
-          <div className="hidden gap-5 rounded-md border p-5 md:flex">
+          <div className="hidden gap-5 rounded-xl border p-5 md:flex">
             <div className="w-36 shrink-0">
               <BookCover book={selected} />
             </div>

@@ -70,8 +70,8 @@ export default async function BookDetailPage({ params }: Props) {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <div className="mt-4 grid gap-10 rounded-lg bg-card p-4 sm:p-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
-        <div className="rounded-xl bg-muted/60 px-[18%] py-[12%] md:sticky md:top-32 md:self-start">
+      <div className="mt-4 grid gap-10 rounded-xl bg-card p-4 sm:p-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
+        <div className="rounded-2xl bg-muted/60 px-[18%] py-[12%] md:sticky md:top-32 md:self-start">
           <BookCover book={book} size="lg" />
         </div>
 
@@ -169,7 +169,7 @@ export default async function BookDetailPage({ params }: Props) {
       </div>
 
       {related.length > 0 && (
-        <section aria-labelledby="related-heading" className="mt-4 rounded-lg bg-card p-4 sm:p-6">
+        <section aria-labelledby="related-heading" className="mt-4 rounded-xl bg-card p-4 sm:p-6">
           <h2 id="related-heading" className="mb-6 text-2xl font-semibold sm:text-3xl">
             Có thể bạn cũng thích
           </h2>

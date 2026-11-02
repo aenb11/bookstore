@@ -83,7 +83,7 @@ export default async function CatalogPage({ searchParams }: { searchParams: Prom
           {items.length > 0 ? (
             <BookGrid books={items} className="lg:grid-cols-3 xl:grid-cols-4" />
           ) : (
-            <div className="flex flex-col items-center gap-4 rounded-lg border border-dashed py-20 text-center">
+            <div className="flex flex-col items-center gap-4 rounded-xl border border-dashed py-20 text-center">
               <SearchX className="size-10 text-muted-foreground" />
               <div>
                 <p className="font-heading text-lg font-semibold">Không tìm thấy sách phù hợp</p>
