@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import { viVN } from "@clerk/localizations";
+import { shadcn } from "@clerk/themes";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import "./globals.css";
@@ -25,8 +28,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        <TooltipProvider>{children}</TooltipProvider>
-        <Toaster position="bottom-right" />
+        <ClerkProvider localization={viVN} appearance={{ theme: shadcn }} signInUrl="/login" signUpUrl="/register">
+          <TooltipProvider>{children}</TooltipProvider>
+          <Toaster position="bottom-right" />
+        </ClerkProvider>
       </body>
     </html>
   );
