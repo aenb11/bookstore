@@ -1,16 +1,17 @@
+import { Suspense } from "react";
 import Link from "next/link";
-import { ChevronDown, LayoutGrid, Menu, Package, User } from "lucide-react";
+import { ChevronDown, LayoutGrid, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { categories } from "@/lib/mock-data";
+import { AccountMenu, AccountMenuFallback } from "./account-menu";
 import { CartSheet } from "./cart-sheet";
 import { Logo } from "./logo";
 import { SearchForm } from "./search-form";
@@ -52,35 +53,9 @@ export function SiteHeader() {
         </DropdownMenu>
         <SearchForm className="hidden flex-1 md:flex" />
         <div className="ml-auto flex items-center gap-1 md:ml-0">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-12 flex-col gap-0.5 px-2 text-xs font-normal text-muted-foreground">
-                <User className="size-5" />
-                <span className="hidden sm:inline">Tài khoản</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuLabel>Xin chào, Minh Anh</DropdownMenuLabel>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/account">
-                  <User /> Tài khoản
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/account#orders">
-                  <Package /> Đơn hàng
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem asChild>
-                <Link href="/login">Đăng nhập</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem asChild>
-                <Link href="/admin">Trang quản trị</Link>
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Suspense fallback={<AccountMenuFallback />}>
+            <AccountMenu />
+          </Suspense>
           <CartSheet />
         </div>
       </div>
