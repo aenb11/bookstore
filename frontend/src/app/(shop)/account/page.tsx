@@ -1,18 +1,33 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Heart, LogOut, MapPin, Package, User } from "lucide-react";
 import { OrderStatusBadge } from "@/components/order-status-badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { SignOutButton } from "@clerk/nextjs";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { formatDate, formatVND } from "@/lib/format";
+import { requireUser } from "@/lib/auth/dal";
+import { formatDate, formatVND, initials } from "@/lib/format";
+import { EditProfileButton } from "./edit-profile-button";
 import { customers, getBookById, orderTotal, orders } from "@/lib/mock-data";
 
 export const metadata: Metadata = { title: "Tài khoản của tôi" };
 
 export default function AccountPage() {
-  const me = customers[0];
-  const myOrders = orders.filter((order) => order.customerId === me.id);
+  return (
+    <Suspense fallback={<AccountSkeleton />}>
+      <AccountContent />
+    </Suspense>
+  );
+}
+
+async function AccountContent() {
+  const user = await requireUser("/account");
+  // TODO: replace with the orders API once the backend exposes it. Until then the
+  // order history is mock data for the demo customer.
+  const myOrders = orders.filter((order) => order.customerId === customers[0].id);
   const totalSpent = myOrders.filter((o) => o.status !== "cancelled").reduce((sum, o) => sum + orderTotal(o), 0);
 
   return (
@@ -20,11 +35,14 @@ export default function AccountPage() {
       <aside className="space-y-4">
         <div className="flex items-center gap-3">
           <Avatar className="size-14">
-            <AvatarFallback className="bg-primary text-lg text-primary-foreground">MA</AvatarFallback>
+            <AvatarImage src={user.imageUrl} alt="" />
+            <AvatarFallback className="bg-primary text-lg text-primary-foreground">
+              {initials(user.givenName)}
+            </AvatarFallback>
           </Avatar>
-          <div>
-            <p className="font-heading text-lg font-semibold">{me.name}</p>
-            <p className="text-sm text-muted-foreground">Thành viên từ {formatDate(me.joinedAt)}</p>
+          <div className="min-w-0">
+            <p className="truncate font-heading text-lg font-semibold">{user.name}</p>
+            <p className="truncate text-sm text-muted-foreground">{user.email}</p>
           </div>
         </div>
         <nav aria-label="Tài khoản" className="flex flex-col gap-1">
@@ -40,9 +58,11 @@ export default function AccountPage() {
               </a>
             </Button>
           ))}
-          <Button variant="ghost" className="justify-start text-destructive hover:text-destructive">
-            <LogOut /> Đăng xuất
-          </Button>
+          <SignOutButton redirectUrl="/">
+            <Button variant="ghost" className="justify-start text-destructive hover:text-destructive">
+              <LogOut /> Đăng xuất
+            </Button>
+          </SignOutButton>
         </nav>
       </aside>
 
@@ -67,17 +87,15 @@ export default function AccountPage() {
         <Card id="profile" className="scroll-mt-32">
           <CardHeader className="flex-row items-center justify-between">
             <CardTitle className="font-heading text-xl">Thông tin cá nhân</CardTitle>
-            <Button variant="outline" size="sm">
-              Chỉnh sửa
-            </Button>
+            <EditProfileButton />
           </CardHeader>
           <CardContent>
             <dl className="grid gap-4 text-sm sm:grid-cols-2">
               {[
-                ["Họ và tên", me.name],
-                ["Email", me.email],
-                ["Số điện thoại", me.phone],
-                ["Địa chỉ mặc định", `12 Nguyễn Văn Cừ, ${me.city}`],
+                ["Họ và tên", user.name],
+                ["Email", user.email],
+                ["Số điện thoại", user.phone ?? "Chưa cập nhật"],
+                ["Địa chỉ mặc định", "Chưa cập nhật"],
               ].map(([term, value]) => (
                 <div key={term}>
                   <dt className="text-muted-foreground">{term}</dt>
@@ -121,6 +139,29 @@ export default function AccountPage() {
             </Table>
           </CardContent>
         </Card>
+      </div>
+    </div>
+  );
+}
+
+function AccountSkeleton() {
+  return (
+    <div className="container-page grid gap-8 py-10 lg:grid-cols-[260px_1fr]" aria-busy>
+      <div className="flex items-center gap-3">
+        <Skeleton className="size-14 rounded-full" />
+        <div className="space-y-2">
+          <Skeleton className="h-5 w-32" />
+          <Skeleton className="h-4 w-40" />
+        </div>
+      </div>
+      <div className="space-y-8">
+        <Skeleton className="h-10 w-64" />
+        <div className="grid gap-4 sm:grid-cols-3">
+          {[0, 1, 2].map((i) => (
+            <Skeleton key={i} className="h-24" />
+          ))}
+        </div>
+        <Skeleton className="h-48" />
       </div>
     </div>
   );
