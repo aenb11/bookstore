@@ -53,6 +53,22 @@ cp .env.example .env.local
 # fill in NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY and CLERK_SECRET_KEY
 ```
 
+### 3. Development admin account
+
+In development, use a Clerk test email (any address containing `+clerk_test`).
+Clerk sends no real email for these, and the verification code is always `424242`.
+
+1. Go to `/register` and sign up with `admin+clerk_test@example.com` and a password of your choice.
+2. On the "Verify email" screen, enter `424242`.
+3. Make the account an admin:
+   ```bash
+   npm run set-role -- admin+clerk_test@example.com admin
+   ```
+4. Sign out and back in so the session picks up the role.
+
+Forgot the password? Set a new one in the Clerk Dashboard under **Users**.
+Test emails only work with development keys (`pk_test_` / `sk_test_`).
+
 ### How it works
 
 | Path | Access |
