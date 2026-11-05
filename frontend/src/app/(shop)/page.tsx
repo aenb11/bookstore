@@ -75,7 +75,7 @@ export default function HomePage() {
     <div className="container-page space-y-4 py-4">
       {/* Category menu + banners */}
       <section className="grid gap-4 lg:h-80 lg:grid-cols-[220px_minmax(0,1fr)_260px]">
-        <nav aria-label="Danh mục sản phẩm" className="hidden rounded-lg bg-card py-2 lg:block">
+        <nav aria-label="Danh mục sản phẩm" className="hidden rounded-xl bg-card py-2 lg:block">
           <p className="px-4 pt-1 pb-2 text-sm font-bold">Danh mục sản phẩm</p>
           <ul>
             {categories.map((category) => {
@@ -114,7 +114,7 @@ export default function HomePage() {
       </section>
 
       {/* Quick categories (mobile & tablet) */}
-      <nav aria-label="Danh mục" className="rounded-lg bg-card p-3 lg:hidden">
+      <nav aria-label="Danh mục" className="rounded-xl bg-card p-3 lg:hidden">
         <ul className="grid grid-cols-4 gap-2 sm:grid-cols-8">
           {categories.map((category) => {
             const Icon = categoryIcons[category.id];
@@ -137,7 +137,7 @@ export default function HomePage() {
       <Ranking groups={rankingGroups} />
 
       <section aria-labelledby="suggest-heading">
-        <div className="flex items-center justify-between rounded-t-lg border-b bg-card px-4 py-3">
+        <div className="flex items-center justify-between rounded-t-xl border-b bg-card px-4 py-3">
           <h2 id="suggest-heading" className="text-lg font-bold">
             Gợi ý hôm nay
           </h2>
@@ -153,7 +153,7 @@ export default function HomePage() {
         <div className="flex justify-center pt-4">
           <Link
             href="/books"
-            className="rounded-md border border-primary bg-card px-10 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground"
+            className="rounded-full border border-primary bg-card px-10 py-2 text-sm font-semibold text-primary hover:bg-primary hover:text-primary-foreground"
           >
             Xem thêm
           </Link>
@@ -177,7 +177,7 @@ function SideBanner({
   book: (typeof books)[number];
 }) {
   return (
-    <Link href={href} className={`flex items-center justify-between gap-3 overflow-hidden rounded-lg px-5 ${className}`}>
+    <Link href={href} className={`flex items-center justify-between gap-3 overflow-hidden rounded-xl px-5 ${className}`}>
       <div>
         <p className="font-bold">{title}</p>
         <p className="text-sm text-muted-foreground">{note}</p>

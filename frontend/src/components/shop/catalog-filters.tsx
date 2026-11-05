@@ -150,7 +150,7 @@ function PriceFilter({ initial, onCommit }: { initial: number[]; onCommit: (valu
 export function CatalogSidebar() {
   return (
     <aside aria-label="Bộ lọc" className="hidden w-60 shrink-0 lg:block">
-      <div className="sticky top-32 rounded-lg bg-card p-4">
+      <div className="sticky top-32 rounded-xl bg-card p-4">
         <FilterPanel />
       </div>
     </aside>

@@ -13,7 +13,7 @@ export function BookCard({ book, className }: { book: Book; className?: string }
     <Link
       href={`/books/${book.slug}`}
       className={cn(
-        "group flex flex-col gap-2 rounded-lg bg-card p-3 transition-shadow hover:shadow-[0_2px_12px_rgb(0_0_0/0.12)]",
+        "group flex flex-col gap-2 rounded-xl bg-card p-3 transition-shadow hover:shadow-[0_2px_12px_rgb(0_0_0/0.12)]",
         className,
       )}
     >
@@ -25,7 +25,7 @@ export function BookCard({ book, className }: { book: Book; className?: string }
         <div className="flex items-center gap-1.5">
           <span className="font-bold text-primary">{formatVND(book.price)}</span>
           {discount > 0 && (
-            <span className="rounded-sm bg-primary px-1 text-xs font-semibold text-primary-foreground">-{discount}%</span>
+            <span className="rounded-md bg-primary px-1.5 text-xs font-semibold text-primary-foreground">-{discount}%</span>
           )}
         </div>
         {book.originalPrice && (

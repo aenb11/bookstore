@@ -31,3 +31,10 @@ export function discountPercent(price: number, originalPrice?: number) {
   if (!originalPrice || originalPrice <= price) return 0;
   return Math.round(((originalPrice - price) / originalPrice) * 100);
 }
+
+/** "Nguyễn Minh Anh" → "MA" (last two words, as Vietnamese names are usually addressed). */
+export function initials(name: string) {
+  const words = name.trim().split(/\s+/).filter(Boolean);
+  return (words.length > 1 ? words.slice(-2) : words).map((w) => w[0]).join("").toUpperCase() || "?";
+}
+

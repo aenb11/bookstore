@@ -29,7 +29,7 @@ export function BannerCarousel({ banners }: { banners: Banner[] }) {
 
   return (
     <div
-      className="group relative h-full min-h-56 overflow-hidden rounded-lg"
+      className="group relative h-full min-h-56 overflow-hidden rounded-2xl"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       aria-roledescription="carousel"
@@ -49,7 +49,7 @@ export function BannerCarousel({ banners }: { banners: Banner[] }) {
           <div className="max-w-xs space-y-2">
             <p className="text-2xl leading-tight font-black sm:text-3xl">{banner.title}</p>
             <p className="text-sm opacity-85">{banner.subtitle}</p>
-            <span className="mt-2 inline-block rounded-md bg-card px-4 py-2 text-sm font-semibold text-foreground">
+            <span className="mt-2 inline-block rounded-full bg-card px-5 py-2 text-sm font-semibold text-foreground">
               Mua ngay
             </span>
           </div>

@@ -37,7 +37,7 @@ function Countdown() {
     <span className="flex items-center gap-1" aria-label="Thời gian còn lại">
       {parts.map((part, i) => (
         <span key={i} className="flex items-center gap-1">
-          <span className="rounded bg-foreground px-1.5 py-0.5 text-sm font-bold text-background tabular-nums">
+          <span className="rounded-md bg-foreground px-1.5 py-0.5 text-sm font-bold text-background tabular-nums">
             {part}
           </span>
           {i < 2 && <span className="font-bold">:</span>}
@@ -49,7 +49,7 @@ function Countdown() {
 
 export function FlashSale({ books }: { books: Book[] }) {
   return (
-    <section aria-labelledby="flash-sale-heading" className="overflow-hidden rounded-lg bg-card">
+    <section aria-labelledby="flash-sale-heading" className="overflow-hidden rounded-xl bg-card">
       <div className="flex flex-wrap items-center gap-4 border-b px-4 py-3">
         <h2 id="flash-sale-heading" className="flex items-center gap-1.5 text-xl font-black text-primary uppercase italic">
           <Zap className="size-5 fill-current" /> Flash Sale
@@ -65,10 +65,10 @@ export function FlashSale({ books }: { books: Book[] }) {
           const sold = 30 + ((i * 17) % 60);
           return (
             <li key={book.id}>
-              <Link href={`/books/${book.slug}`} className="group flex h-full flex-col gap-2 rounded-md p-2 hover:bg-muted">
+              <Link href={`/books/${book.slug}`} className="group flex h-full flex-col gap-2 rounded-lg p-2 hover:bg-muted">
                 <div className="relative px-[10%]">
                   <BookCover book={book} />
-                  <span className="absolute top-0 right-0 rounded-bl-md bg-primary px-1.5 py-0.5 text-xs font-bold text-primary-foreground">
+                  <span className="absolute top-0 right-0 rounded-bl-lg bg-primary px-1.5 py-0.5 text-xs font-bold text-primary-foreground">
                     -{discountPercent(book.price, book.originalPrice)}%
                   </span>
                 </div>

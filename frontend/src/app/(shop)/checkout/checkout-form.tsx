@@ -23,7 +23,7 @@ const paymentMethods = [
   { value: "ewallet", icon: Wallet, label: "Ví điện tử", hint: "MoMo, ZaloPay, VNPay" },
 ];
 
-export function CheckoutForm() {
+export function CheckoutForm({ defaultName, defaultEmail }: { defaultName: string; defaultEmail: string }) {
   const { lines, subtotal } = useCartLines();
   const router = useRouter();
 
@@ -54,13 +54,20 @@ export function CheckoutForm() {
           </CardHeader>
           <CardContent className="grid gap-4 sm:grid-cols-2">
             <Field id="name" label="Họ và tên">
-              <Input id="name" name="name" autoComplete="name" required defaultValue="Nguyễn Minh Anh" />
+              <Input id="name" name="name" autoComplete="name" required defaultValue={defaultName} />
             </Field>
             <Field id="phone" label="Số điện thoại">
               <Input id="phone" name="phone" type="tel" autoComplete="tel" required placeholder="09xx xxx xxx" />
             </Field>
             <Field id="email" label="Email" className="sm:col-span-2">
-              <Input id="email" name="email" type="email" autoComplete="email" placeholder="email@cuaban.com" />
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                placeholder="email@cuaban.com"
+                defaultValue={defaultEmail}
+              />
             </Field>
             <Field id="province" label="Tỉnh / Thành phố">
               <Select name="province" defaultValue={provinces[0]} required>

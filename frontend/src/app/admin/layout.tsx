@@ -1,10 +1,15 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Bell } from "lucide-react";
 import { AdminSidebar } from "@/components/admin/admin-sidebar";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { requireRole } from "@/lib/auth/dal";
+import { ADMIN_AREA_ROLES } from "@/lib/auth/roles";
+import { initials } from "@/lib/format";
 
 export const metadata: Metadata = {
   title: { default: "Quản trị", template: "%s | Quản trị Trang Sách" },
@@ -25,13 +30,36 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               <Bell />
               <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-primary" />
             </Button>
-            <Avatar className="size-8">
-              <AvatarFallback className="bg-secondary text-xs text-secondary-foreground">AD</AvatarFallback>
-            </Avatar>
+            <Suspense fallback={<Skeleton className="size-8 rounded-full" />}>
+              <AdminAvatar />
+            </Suspense>
           </div>
         </header>
-        <main className="flex-1 space-y-6 p-4 sm:p-6 lg:p-8">{children}</main>
+        <main className="flex-1 space-y-6 p-4 sm:p-6 lg:p-8">
+          <Suspense fallback={<Skeleton className="h-64" />}>
+            <AdminGuard>{children}</AdminGuard>
+          </Suspense>
+        </main>
       </SidebarInset>
     </SidebarProvider>
+  );
+}
+
+/**
+ * Server-side authorization for every admin page (the proxy redirect is only an
+ * optimistic check). Admin pages render only after the role check passes.
+ */
+async function AdminGuard({ children }: { children: React.ReactNode }) {
+  await requireRole(ADMIN_AREA_ROLES, "/admin");
+  return children;
+}
+
+async function AdminAvatar() {
+  const user = await requireRole(ADMIN_AREA_ROLES, "/admin");
+  return (
+    <Avatar className="size-8" title={`${user.name} (${user.email})`}>
+      <AvatarImage src={user.imageUrl} alt="" />
+      <AvatarFallback className="bg-secondary text-xs text-secondary-foreground">{initials(user.givenName)}</AvatarFallback>
+    </Avatar>
   );
 }

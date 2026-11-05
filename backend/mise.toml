@@ -1,2 +1,27 @@
 [tools]
 dotnet = "10"
+
+[env]
+ASPNETCORE_ENVIRONMENT = "Development"
+
+[tasks.db]
+description = "Run database using docker compose"
+run = "docker compose up -d"
+
+[tasks.dbdown]
+description = "Stop database using docker compose"
+run = "docker compose down"
+
+[tasks.dbremove]
+description = "Reset database using docker compose"
+run = "docker compose down -v"
+
+[tasks.migrate]
+description = "Run database migration"
+depends = ["db"]
+run = "dotnet ef database update --project src/Bookstore.Data --startup-project src/Bookstore.Api"
+
+[tasks.backend]
+description = "Run backend application"
+depends = ["migrate"]
+run = "dotnet watch --project src/Bookstore.Api --launch-profile https"
