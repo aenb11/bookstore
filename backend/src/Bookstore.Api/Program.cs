@@ -1,7 +1,10 @@
+using System.Text.Json.Serialization;
 using Bookstore.Api.Extensions;
 using Bookstore.Api.Middlewares;
 using Bookstore.Api.Services;
+using Bookstore.Api.Services.Storage;
 using Bookstore.Data;
+using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,19 +21,18 @@ builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
 builder.Services.AddScoped<ICurrentAccountService, CurrentAccountService>();
+builder.Services.AddSingleton<IStorageService, LocalStorageService>();
 
 builder
     .Services.AddControllers()
     .AddJsonOptions(options =>
     {
-        options.JsonSerializerOptions.Converters.Add(
-            new System.Text.Json.Serialization.JsonStringEnumConverter()
-        );
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.ConfigureHttpJsonOptions(o =>
+    o.SerializerOptions.Converters.Add(new JsonStringEnumConverter())
+);
 
 var app = builder.Build();
 
@@ -50,5 +52,17 @@ app.UseAuthentication();
 app.UseMiddleware<CurrentAccountMiddleware>();
 app.UseAuthorization();
 app.MapControllers();
+
+var uploadsPath = Path.Combine(builder.Environment.ContentRootPath, "uploads");
+Directory.CreateDirectory(uploadsPath);
+app.UseStaticFiles(
+    new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(
+            Path.Combine(builder.Environment.ContentRootPath, "uploads")
+        ),
+        RequestPath = "/files",
+    }
+);
 
 app.Run();
