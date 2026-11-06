@@ -10,6 +10,7 @@ public static class DependencyInjection
         services.AddScoped<ICurrentAccountService, CurrentAccountService>();
         services.AddSingleton<IStorageService, LocalStorageService>();
         services.AddScoped<IReviewService, ReviewService>();
+        services.AddScoped<ITagService, TagService>();
 
         return services;
     }
