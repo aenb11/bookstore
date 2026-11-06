@@ -13,7 +13,7 @@ public class LocalStorageService(IWebHostEnvironment env) : IStorageService
         string fileName,
         string contentType,
         string folder,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     )
     {
         var ext = Path.GetExtension(fileName).ToLowerInvariant();
@@ -25,11 +25,11 @@ public class LocalStorageService(IWebHostEnvironment env) : IStorageService
         Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
 
         await using var fs = File.Create(fullPath);
-        await content.CopyToAsync(fs, cancellationToken);
+        await content.CopyToAsync(fs, ct);
         return key;
     }
 
-    public Task DeleteAsync(string key, CancellationToken cancellationToken = default)
+    public Task DeleteAsync(string key, CancellationToken ct = default)
     {
         var fullPath = ResolveSafePath(key);
         if (fullPath != null && File.Exists(fullPath))

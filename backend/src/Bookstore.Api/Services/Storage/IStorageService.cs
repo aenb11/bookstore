@@ -7,9 +7,9 @@ public interface IStorageService
         string fileName,
         string contentType,
         string folder,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     );
-    Task DeleteAsync(string key, CancellationToken cancellationToken = default);
+    Task DeleteAsync(string key, CancellationToken ct = default);
 
     string GetUrl(string key);
 }

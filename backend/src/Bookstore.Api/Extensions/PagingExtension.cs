@@ -1,4 +1,4 @@
-using Bookstore.Api.Common;
+using Bookstore.Api.Common.Pagination;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Extensions;
@@ -9,18 +9,15 @@ public static class PagingExtension
         this IQueryable<T> query,
         int pageNumber,
         int pageSize,
-        CancellationToken cancellationToken = default
+        CancellationToken ct = default
     )
     {
         pageNumber = pageNumber <= 0 ? 1 : pageNumber;
         pageSize = pageSize <= 0 ? 10 : pageSize;
 
-        var totalCount = await query.CountAsync(cancellationToken);
+        var totalCount = await query.CountAsync(ct);
 
-        var items = await query
-            .Skip((pageNumber - 1) * pageSize)
-            .Take(pageSize)
-            .ToListAsync(cancellationToken);
+        var items = await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(ct);
 
         return new PagedResult<T>
         {

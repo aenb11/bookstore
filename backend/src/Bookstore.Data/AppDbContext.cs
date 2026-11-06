@@ -44,10 +44,10 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         return base.SaveChanges();
     }
 
-    public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    public override Task<int> SaveChangesAsync(CancellationToken ct = default)
     {
         ApplyAuditAndSoftDelete();
-        return base.SaveChangesAsync(cancellationToken);
+        return base.SaveChangesAsync(ct);
     }
 
     private void ApplyAuditAndSoftDelete()

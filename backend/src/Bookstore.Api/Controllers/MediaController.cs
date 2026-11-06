@@ -16,7 +16,7 @@ public class MediaController(IStorageService storageService) : ControllerBase
     public async Task<IActionResult> UploadFile(
         IFormFile file,
         [FromQuery, BindRequired] UploadPurpose purpose,
-        CancellationToken cancellationToken
+        CancellationToken ct
     )
     {
         if (!UploadPolicy.All.TryGetValue(purpose, out var policy))
@@ -38,7 +38,7 @@ public class MediaController(IStorageService storageService) : ControllerBase
 
         await using var stream = file.OpenReadStream();
 
-        var ext = await ImageValidator.DetectExtensionAsync(stream, cancellationToken);
+        var ext = await ImageValidator.DetectExtensionAsync(stream, ct);
         if (ext is null || !policy.AllowedExtensions.Contains(ext))
             return Problem(
                 statusCode: 400,
@@ -51,7 +51,7 @@ public class MediaController(IStorageService storageService) : ControllerBase
             $"file{ext}",
             file.ContentType,
             policy.Folder,
-            cancellationToken
+            ct
         );
 
         return Ok(new { key, url = storageService.GetUrl(key) });
