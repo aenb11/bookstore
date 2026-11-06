@@ -79,7 +79,7 @@ public class ReviewService(AppDbContext ctx) : IReviewService
         return await ctx
             .Reviews.AsNoTracking()
             .Where(r => r.Id == reviewId)
-            .Select(ReviewProjections.ToDetailResponseDto)
+            .Select(ReviewProjection.ToDetailResponseDto)
             .FirstOrDefaultAsync(ct);
     }
 
@@ -92,7 +92,7 @@ public class ReviewService(AppDbContext ctx) : IReviewService
             .Reviews.AsNoTracking()
             .ApplyFilter(filterParam)
             .ApplySort(filterParam)
-            .Select(ReviewProjections.ToDetailResponseDto)
+            .Select(ReviewProjection.ToDetailResponseDto)
             .ToPagedResultAsync(filterParam.PageNumber, filterParam.PageSize, ct);
     }
 
@@ -107,7 +107,7 @@ public class ReviewService(AppDbContext ctx) : IReviewService
             .Reviews.AsNoTracking()
             .Where(r => r.AccountId == accountId && !r.IsDeleted)
             .OrderByDescending(r => r.CreatedAt)
-            .Select(ReviewProjections.ToResponseDto)
+            .Select(ReviewProjection.ToResponseDto)
             .ToPagedResultAsync(pageNumber, pageSize, ct);
     }
 
@@ -127,7 +127,7 @@ public class ReviewService(AppDbContext ctx) : IReviewService
                 && (excludeAccountId == null || r.AccountId != excludeAccountId)
             )
             .OrderByDescending(r => r.CreatedAt)
-            .Select(ReviewProjections.ToResponseDto)
+            .Select(ReviewProjection.ToResponseDto)
             .ToPagedResultAsync(pageNumber, pageSize, ct);
     }
 
@@ -141,10 +141,10 @@ public class ReviewService(AppDbContext ctx) : IReviewService
     {
         var review =
             await ctx.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId && !r.IsDeleted, ct)
-            ?? throw new KeyNotFoundException($"Review with ID {reviewId} not found.");
+            ?? throw new NotFoundException($"Review with ID {reviewId} not found.");
 
         if (review.AccountId != currentAccountId)
-            throw new UnauthorizedAccessException("You are not authorized to update this review.");
+            throw new UnauthorizedException("You are not authorized to update this review.");
 
         review.Rating = dto.Rating;
         review.Comment = dto.Comment;

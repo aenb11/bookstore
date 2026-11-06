@@ -4,7 +4,7 @@ using Bookstore.Data.Entities;
 
 namespace Bookstore.Api.Common.Projections;
 
-public static class ReviewProjections
+public static class ReviewProjection
 {
     public static Expression<Func<Review, ReviewResponseDto>> ToResponseDto =>
         r => new ReviewResponseDto

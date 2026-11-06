@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Bookstore.Api.Common.Enums;
 using Bookstore.Api.Common.Pagination;
 
 namespace Bookstore.Api.DTOs.Reviews;
@@ -7,12 +8,6 @@ public enum ReviewSortBy
 {
     CreatedAt,
     Rating,
-}
-
-public enum ReviewSortOrder
-{
-    Asc,
-    Desc,
 }
 
 public class ReviewFilterParam : PaginationParam, IValidatableObject
@@ -33,7 +28,7 @@ public class ReviewFilterParam : PaginationParam, IValidatableObject
     public DateTimeOffset? ToDate { get; set; }
     public bool? IsDeleted { get; set; }
     public ReviewSortBy SortBy { get; set; } = ReviewSortBy.CreatedAt;
-    public ReviewSortOrder SortOrder { get; set; } = ReviewSortOrder.Desc;
+    public SortOrder SortOrder { get; set; } = SortOrder.Descending;
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {

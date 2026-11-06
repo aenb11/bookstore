@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Bookstore.Api.Common.Enums;
 using Bookstore.Api.Common.Extensions;
 using Bookstore.Api.DTOs.Reviews;
 using Bookstore.Data.Entities;
@@ -30,7 +31,7 @@ public static class ReviewQueryExtension
         var keySelector = SortMap[f.SortBy];
 
         var ordered =
-            f.SortOrder == ReviewSortOrder.Desc
+            f.SortOrder == SortOrder.Descending
                 ? q.OrderByDescending(keySelector)
                 : q.OrderBy(keySelector);
 
