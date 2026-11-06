@@ -1,15 +1,15 @@
 using System.Text.Json.Serialization;
+using Bookstore.Api.Common;
 using Bookstore.Api.Extensions;
 using Bookstore.Api.Middlewares;
-using Bookstore.Api.Services;
-using Bookstore.Api.Services.Storage;
 using Bookstore.Data;
 using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<AppExceptionHandler>();
+builder.Services.AddAppProblemDetails();
 builder.Services.AddAppOpenApi();
 
 builder.Services.AddAppCors(builder.Configuration);
@@ -20,8 +20,7 @@ builder.Services.AddDataInfrastructure(builder.Configuration);
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();
-builder.Services.AddScoped<ICurrentAccountService, CurrentAccountService>();
-builder.Services.AddSingleton<IStorageService, LocalStorageService>();
+builder.Services.AddAppServices();
 
 builder
     .Services.AddControllers()
