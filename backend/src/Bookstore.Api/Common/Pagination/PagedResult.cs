@@ -1,4 +1,4 @@
-namespace Bookstore.Api.Common;
+namespace Bookstore.Api.Common.Pagination;
 
 public class PagedResult<T>
 {
