@@ -7,6 +7,7 @@ using Bookstore.Api.Queries;
 using Bookstore.Data;
 using Bookstore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
 
 namespace Bookstore.Api.Services;
 
@@ -17,10 +18,26 @@ public class TagService(AppDbContext ctx) : ITagService
         CancellationToken ct = default
     )
     {
-        var tag = new Tag { Name = tagPostDto.Name };
+        var tag = new Tag { Name = tagPostDto.Name.Trim() };
 
-        await ctx.Tags.AddAsync(tag, ct);
-        await ctx.SaveChangesAsync(ct);
+        var isNameExists = await ctx.Tags.AnyAsync(
+            t => !t.IsDeleted && EF.Functions.ILike(t.Name, tag.Name),
+            ct
+        );
+
+        if (isNameExists)
+            throw new ConflictException($"Tag with name '{tag.Name}' already exists.");
+
+        try
+        {
+            await ctx.Tags.AddAsync(tag, ct);
+            await ctx.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateException ex)
+            when (ex.InnerException is PostgresException pgEx && pgEx.SqlState == "23505")
+        {
+            throw new ConflictException($"Tag with name '{tag.Name}' already exists.");
+        }
 
         return new TagDetailResponseDto
         {
@@ -66,9 +83,30 @@ public class TagService(AppDbContext ctx) : ITagService
             await ctx.Tags.FirstOrDefaultAsync(t => t.Id == tagId && !t.IsDeleted, ct)
             ?? throw new NotFoundException($"Tag with ID {tagId} not found.");
 
-        tag.Name = tagPutDto.Name;
+        var normailizedName = tagPutDto.Name.Trim();
 
-        await ctx.SaveChangesAsync(ct);
+        if (!string.Equals(tag.Name, normailizedName, StringComparison.OrdinalIgnoreCase))
+        {
+            var isNameExists = await ctx.Tags.AnyAsync(
+                t => !t.IsDeleted && EF.Functions.ILike(t.Name, normailizedName),
+                ct
+            );
+
+            if (isNameExists)
+                throw new ConflictException($"Tag with name '{normailizedName}' already exists.");
+
+            tag.Name = normailizedName;
+        }
+
+        try
+        {
+            await ctx.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateException ex)
+            when (ex.InnerException is PostgresException pgEx && pgEx.SqlState == "23505")
+        {
+            throw new ConflictException($"Tag with name '{normailizedName}' already exists.");
+        }
 
         return new TagDetailResponseDto
         {
