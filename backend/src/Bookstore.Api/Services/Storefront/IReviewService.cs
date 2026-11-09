@@ -1,14 +1,13 @@
 using Bookstore.Api.Common.Pagination;
 using Bookstore.Api.DTOs.Reviews;
 
-namespace Bookstore.Api.Services;
+namespace Bookstore.Api.Services.Storefront;
 
 public interface IReviewService
 {
     Task<ReviewResponseDto> CreateReviewAsync(
         int currentAccountId,
         string accountFullName,
-        bool isCustomer,
         ReviewPostDto reviewPostDto,
         CancellationToken ct = default
     );
@@ -21,31 +20,18 @@ public interface IReviewService
         CancellationToken ct = default
     );
 
-    Task DeleteReviewAsync(
-        int reviewId,
-        int currentAccountId,
-        bool isAdminOrStaff,
-        CancellationToken ct = default
-    );
+    Task DeleteReviewAsync(int reviewId, int currentAccountId, CancellationToken ct = default);
 
-    Task<ReviewDetailResponseDto?> GetReviewByIdAsync(int reviewId, CancellationToken ct = default);
-
-    Task<PagedResult<ReviewResponseDto>> GetReviewsByBookIdAsync(
-        int bookId,
-        int pageNumber,
-        int pageSize,
-        int? excludeAccountId = null,
-        CancellationToken ct = default
-    );
-
-    Task<PagedResult<ReviewResponseDto>> GetReviewsByAccountIdAsync(
+    Task<PagedResult<ReviewResponseDto>> GetOwnReviewsAsync(
         int accountId,
         int pageNumber,
         int pageSize,
         CancellationToken ct = default
     );
 
-    Task<PagedResult<ReviewDetailResponseDto>> GetReviewsAsync(
+    //TODO: Use this method in /books/{bookId}/reviews endpoint
+    Task<PagedResult<ReviewResponseDto>> GetReviewsAsync(
+        int bookId,
         ReviewFilterParam filterParam,
         CancellationToken ct = default
     );

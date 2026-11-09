@@ -8,21 +8,17 @@ using Bookstore.Data;
 using Bookstore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bookstore.Api.Services;
+namespace Bookstore.Api.Services.Storefront;
 
 public class ReviewService(AppDbContext ctx) : IReviewService
 {
     public async Task<ReviewResponseDto> CreateReviewAsync(
         int currentAccountId,
         string accountFullName,
-        bool isCustomer,
         ReviewPostDto reviewPostDto,
         CancellationToken ct = default
     )
     {
-        if (!isCustomer)
-            throw new ForbiddenException("Only customers can create reviews.");
-
         var hasReviewed = await ctx.Reviews.AnyAsync(
             r =>
                 r.BookId == reviewPostDto.BookId && r.AccountId == currentAccountId && !r.IsDeleted,
@@ -56,47 +52,35 @@ public class ReviewService(AppDbContext ctx) : IReviewService
     public async Task DeleteReviewAsync(
         int reviewId,
         int currentAccountId,
-        bool isAdminOrStaff,
         CancellationToken ct = default
     )
     {
         var review =
-            await ctx.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId && !r.IsDeleted, ct)
-            ?? throw new NotFoundException($"Review with ID {reviewId} not found.");
-
-        if (review.AccountId != currentAccountId && !isAdminOrStaff)
-            throw new ForbiddenException("You are not authorized to delete this review.");
+            await ctx.Reviews.FirstOrDefaultAsync(
+                r => r.Id == reviewId && r.AccountId == currentAccountId && !r.IsDeleted,
+                ct
+            ) ?? throw new NotFoundException($"Review with ID {reviewId} not found.");
 
         ctx.Reviews.Remove(review);
         await ctx.SaveChangesAsync(ct);
     }
 
-    public async Task<ReviewDetailResponseDto?> GetReviewByIdAsync(
-        int reviewId,
-        CancellationToken ct = default
-    )
-    {
-        return await ctx
-            .Reviews.AsNoTracking()
-            .Where(r => r.Id == reviewId)
-            .Select(ReviewProjection.ToDetailResponseDto)
-            .FirstOrDefaultAsync(ct);
-    }
-
-    public async Task<PagedResult<ReviewDetailResponseDto>> GetReviewsAsync(
+    public async Task<PagedResult<ReviewResponseDto>> GetReviewsAsync(
+        int bookId,
         ReviewFilterParam filterParam,
         CancellationToken ct = default
     )
     {
         return await ctx
             .Reviews.AsNoTracking()
-            .ApplyFilter(filterParam)
+            .Where(r => r.BookId == bookId && !r.IsDeleted)
+            .ApplyBaseFilter(filterParam)
             .ApplySort(filterParam)
-            .Select(ReviewProjection.ToDetailResponseDto)
+            .Select(ReviewProjection.ToResponseDto)
             .ToPagedResultAsync(filterParam.PageNumber, filterParam.PageSize, ct);
     }
 
-    public async Task<PagedResult<ReviewResponseDto>> GetReviewsByAccountIdAsync(
+    public async Task<PagedResult<ReviewResponseDto>> GetOwnReviewsAsync(
         int accountId,
         int pageNumber,
         int pageSize,
@@ -106,26 +90,6 @@ public class ReviewService(AppDbContext ctx) : IReviewService
         return await ctx
             .Reviews.AsNoTracking()
             .Where(r => r.AccountId == accountId && !r.IsDeleted)
-            .OrderByDescending(r => r.CreatedAt)
-            .Select(ReviewProjection.ToResponseDto)
-            .ToPagedResultAsync(pageNumber, pageSize, ct);
-    }
-
-    public async Task<PagedResult<ReviewResponseDto>> GetReviewsByBookIdAsync(
-        int bookId,
-        int pageNumber,
-        int pageSize,
-        int? excludeAccountId = null,
-        CancellationToken ct = default
-    )
-    {
-        return await ctx
-            .Reviews.AsNoTracking()
-            .Where(r =>
-                r.BookId == bookId
-                && !r.IsDeleted
-                && (excludeAccountId == null || r.AccountId != excludeAccountId)
-            )
             .OrderByDescending(r => r.CreatedAt)
             .Select(ReviewProjection.ToResponseDto)
             .ToPagedResultAsync(pageNumber, pageSize, ct);
