@@ -9,6 +9,7 @@ namespace Bookstore.Api.Controllers.Management;
 [ApiController]
 [Route("api/v1/management/tags")]
 [Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
+[Tags("Management - Tags")]
 public class TagController(ITagManagementService tagManagementService) : ControllerBase
 {
     [HttpGet]
