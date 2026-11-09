@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using Bookstore.Api.Common.Enums;
 using Bookstore.Api.Common.Extensions;
 using Bookstore.Api.DTOs.Tags;
@@ -8,16 +7,17 @@ namespace Bookstore.Api.Queries;
 
 public static class TagQueryExtenstion
 {
-    private static readonly Dictionary<TagSortBy, Expression<Func<Tag, object?>>> SortMap = new()
+    public static IQueryable<Tag> ApplyBaseFilter(this IQueryable<Tag> q, TagFilterParam f)
     {
-        [TagSortBy.Name] = t => t.Name,
-        [TagSortBy.CreatedAt] = t => t.CreatedAt,
-        [TagSortBy.UpdatedAt] = t => t.UpdatedAt,
-    };
+        return q.WhereIf(f.Name is not null, t => t.Name.Contains(f.Name!));
+    }
 
-    public static IQueryable<Tag> ApplyFilter(this IQueryable<Tag> q, TagFilterParam f)
+    public static IQueryable<Tag> ApplyManagementFilter(
+        this IQueryable<Tag> q,
+        TagManagementFilterParam f
+    )
     {
-        return q.WhereIf(f.Name is not null, t => t.Name.Contains(f.Name!))
+        return q.ApplyBaseFilter(f)
             .WhereIf(f.CreatedAtFrom.HasValue, t => t.CreatedAt >= f.CreatedAtFrom)
             .WhereIf(f.CreatedAtTo.HasValue, t => t.CreatedAt <= f.CreatedAtTo)
             .WhereIf(f.UpdatedAtFrom.HasValue, t => t.UpdatedAt >= f.UpdatedAtFrom)
@@ -25,14 +25,26 @@ public static class TagQueryExtenstion
             .WhereIf(f.IsDeleted.HasValue, t => t.IsDeleted == f.IsDeleted);
     }
 
-    public static IQueryable<Tag> ApplySort(this IQueryable<Tag> q, TagFilterParam f)
+    public static IQueryable<Tag> ApplyManagementSort(
+        this IQueryable<Tag> q,
+        TagManagementFilterParam f
+    )
     {
-        var keySelector = SortMap[f.SortBy];
+        var isDescending = f.SortOrder == SortOrder.Descending;
 
-        var ordered =
-            f.SortOrder == SortOrder.Descending
-                ? q.OrderByDescending(keySelector)
-                : q.OrderBy(keySelector);
+        var ordered = f.SortBy switch
+        {
+            TagManagementSortBy.Name => isDescending
+                ? q.OrderByDescending(t => t.Name)
+                : q.OrderBy(t => t.Name),
+            TagManagementSortBy.CreatedAt => isDescending
+                ? q.OrderByDescending(t => t.CreatedAt)
+                : q.OrderBy(t => t.CreatedAt),
+            TagManagementSortBy.UpdatedAt => isDescending
+                ? q.OrderByDescending(t => t.UpdatedAt)
+                : q.OrderBy(t => t.UpdatedAt),
+            _ => throw new ArgumentOutOfRangeException($"Invalid sort by value: {f.SortBy}"),
+        };
 
         return ordered.ThenByDescending(t => t.Id);
     }

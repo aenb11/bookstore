@@ -1,55 +1,52 @@
 using Bookstore.Api.Common;
 using Bookstore.Api.DTOs.Tags;
-using Bookstore.Api.Services;
+using Bookstore.Api.Services.Management;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Bookstore.Api.Controllers;
+namespace Bookstore.Api.Controllers.Management;
 
 [ApiController]
-[Route("api/v1/tags")]
-public class TagController(ITagService tagService) : ControllerBase
+[Route("api/v1/management/tags")]
+[Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
+public class TagController(ITagManagementService tagManagementService) : ControllerBase
 {
     [HttpGet]
-    [Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
     public async Task<IActionResult> GetAllTags(
-        [FromQuery] TagFilterParam filterParam,
+        [FromQuery] TagManagementFilterParam f,
         CancellationToken ct = default
     )
     {
-        return Ok(await tagService.GetTagsAsync(filterParam, ct));
+        return Ok(await tagManagementService.GetTagsAsync(f, ct));
     }
 
     [HttpPost]
-    [Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
     public async Task<IActionResult> CreateTag(
         [FromBody] TagPostDto dto,
         CancellationToken ct = default
     )
     {
-        var tag = await tagService.CreateTagAsync(dto, ct);
+        var tag = await tagManagementService.CreateTagAsync(dto, ct);
 
         return CreatedAtAction(nameof(GetAllTags), new { id = tag.Id }, tag);
     }
 
     [HttpPut("{id:int}")]
-    [Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
     public async Task<IActionResult> UpdateTag(
         int id,
         [FromBody] TagPutDto dto,
         CancellationToken ct = default
     )
     {
-        var tag = await tagService.UpdateTagAsync(id, dto, ct);
+        var tag = await tagManagementService.UpdateTagAsync(id, dto, ct);
 
         return Ok(tag);
     }
 
     [HttpDelete("{id:int}")]
-    [Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
     public async Task<IActionResult> DeleteTag(int id, CancellationToken ct = default)
     {
-        await tagService.DeleteTagAsync(id, ct);
+        await tagManagementService.DeleteTagAsync(id, ct);
 
         return NoContent();
     }

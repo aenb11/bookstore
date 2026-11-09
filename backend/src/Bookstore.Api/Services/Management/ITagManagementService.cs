@@ -1,12 +1,12 @@
 using Bookstore.Api.Common.Pagination;
 using Bookstore.Api.DTOs.Tags;
 
-namespace Bookstore.Api.Services;
+namespace Bookstore.Api.Services.Management;
 
-public interface ITagService
+public interface ITagManagementService
 {
     Task<PagedResult<TagDetailResponseDto>> GetTagsAsync(
-        TagFilterParam filterParam,
+        TagManagementFilterParam f,
         CancellationToken ct = default
     );
     Task<TagDetailResponseDto> CreateTagAsync(

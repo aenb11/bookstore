@@ -9,9 +9,9 @@ using Bookstore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Npgsql;
 
-namespace Bookstore.Api.Services;
+namespace Bookstore.Api.Services.Management;
 
-public class TagService(AppDbContext ctx) : ITagService
+public class TagManagementService(AppDbContext ctx) : ITagManagementService
 {
     public async Task<TagDetailResponseDto> CreateTagAsync(
         TagPostDto tagPostDto,
@@ -61,16 +61,16 @@ public class TagService(AppDbContext ctx) : ITagService
     }
 
     public async Task<PagedResult<TagDetailResponseDto>> GetTagsAsync(
-        TagFilterParam filterParam,
+        TagManagementFilterParam f,
         CancellationToken ct = default
     )
     {
         return await ctx
             .Tags.AsNoTracking()
-            .ApplyFilter(filterParam)
-            .ApplySort(filterParam)
+            .ApplyManagementFilter(f)
+            .ApplyManagementSort(f)
             .Select(TagProjection.ToDetailResponseDto)
-            .ToPagedResultAsync(filterParam.PageNumber, filterParam.PageSize, ct);
+            .ToPagedResultAsync(f.PageNumber, f.PageSize, ct);
     }
 
     public async Task<TagDetailResponseDto> UpdateTagAsync(
