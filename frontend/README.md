@@ -33,13 +33,20 @@ In the [Clerk Dashboard](https://dashboard.clerk.com):
 1. **Create application** and enable *Email* and *Google* as sign-in options.
    (In development Clerk uses shared Google credentials, so Google works right away;
    for production, add your own Google OAuth client.)
-2. **Configure → API keys**: copy the publishable and secret keys.
-3. **Configure → Sessions → Customize session token**, add:
+2. Under **User & authentication → Personal information**, enable **First name**
+   and **Last name** and make both required for sign-up. Clerk's `<SignUp />`
+   component uses these instance settings to render the registration fields.
+3. **Configure → API keys**: copy the publishable and secret keys.
+4. **Configure → Sessions → Customize session token**, add:
    ```json
-   { "metadata": "{{user.public_metadata}}" }
+   {
+     "metadata": "{{user.public_metadata}}",
+     "fullName": "{{user.full_name}}"
+   }
    ```
-   This puts the user's role in the session token, so `src/proxy.ts` can check it.
-4. **Roles**: after the user has signed up, run
+   This puts the user's role in the session token so `src/proxy.ts` can check it,
+   and makes the name entered at sign-up available to the backend.
+5. **Roles**: after the user has signed up, run
    ```bash
    npm run set-role -- someone@example.com admin   # or staff / customer
    ```
