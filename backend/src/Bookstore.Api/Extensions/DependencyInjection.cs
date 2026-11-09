@@ -1,5 +1,7 @@
 using Bookstore.Api.Services;
+using Bookstore.Api.Services.Management;
 using Bookstore.Api.Services.Storage;
+using Bookstore.Api.Services.Storefront;
 
 namespace Bookstore.Api.Extensions;
 
@@ -9,8 +11,16 @@ public static class DependencyInjection
     {
         services.AddScoped<ICurrentAccountService, CurrentAccountService>();
         services.AddSingleton<IStorageService, LocalStorageService>();
+
         services.AddScoped<IReviewService, ReviewService>();
         services.AddScoped<ITagService, TagService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<ISerieService, SerieService>();
+
+        services.AddScoped<IReviewManagementService, ReviewManagementService>();
+        services.AddScoped<ITagManagementService, TagManagementService>();
+        services.AddScoped<ICategoryManagementService, CategoryManagementService>();
+        services.AddScoped<ISerieManagementService, SerieManagementService>();
 
         return services;
     }
