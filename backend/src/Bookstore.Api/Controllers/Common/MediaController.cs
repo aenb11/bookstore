@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace Bookstore.Api.Controllers;
+namespace Bookstore.Api.Controllers.Common;
 
 [ApiController]
 [Route("api/v1/media")]
