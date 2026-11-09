@@ -17,6 +17,7 @@ public class TagService(AppDbContext ctx) : ITagService
     {
         return await ctx
             .Tags.AsNoTracking()
+            .Where(t => !t.IsDeleted)
             .ApplyBaseFilter(f)
             .OrderBy(t => t.Name)
             .Select(TagProjection.ToResponseDto)
