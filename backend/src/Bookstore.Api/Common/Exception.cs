@@ -17,3 +17,6 @@ public class UnauthorizedException(string message, string code = "UNAUTHORIZED")
 
 public class ForbiddenException(string message, string code = "FORBIDDEN")
     : AppException(message, StatusCodes.Status403Forbidden, code);
+
+public class BussinessException(string message, string code = "BUSINESS_RULE_VIOLATION")
+    : AppException(message, StatusCodes.Status422UnprocessableEntity, code);

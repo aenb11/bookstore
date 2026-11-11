@@ -18,6 +18,7 @@ public static class DependencyInjection
         services.AddScoped<ISerieService, SerieService>();
         services.AddScoped<IAuthorService, AuthorService>();
         services.AddScoped<IPublisherService, PublisherService>();
+        services.AddScoped<IAddressService, AddressService>();
 
         services.AddScoped<IReviewManagementService, ReviewManagementService>();
         services.AddScoped<ITagManagementService, TagManagementService>();
