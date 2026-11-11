@@ -80,7 +80,7 @@ public class TagManagementService(AppDbContext ctx) : ITagManagementService
     )
     {
         var tag =
-            await ctx.Tags.FirstOrDefaultAsync(t => t.Id == tagId && !t.IsDeleted, ct)
+            await ctx.Tags.FirstOrDefaultAsync(t => t.Id == tagId, ct)
             ?? throw new NotFoundException($"Tag with ID {tagId} not found.");
 
         var normailizedName = tagPutDto.Name.Trim();

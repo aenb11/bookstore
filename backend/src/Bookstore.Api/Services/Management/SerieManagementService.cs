@@ -47,6 +47,7 @@ public class SerieManagementService(AppDbContext ctx) : ISerieManagementService
         {
             Id = serie.Id,
             Name = serie.Name,
+            Description = serie.Description,
             CreatedAt = serie.CreatedAt,
             UpdatedAt = serie.UpdatedAt,
             IsDeleted = serie.IsDeleted,
@@ -84,7 +85,7 @@ public class SerieManagementService(AppDbContext ctx) : ISerieManagementService
     )
     {
         var serie =
-            await ctx.Series.FirstOrDefaultAsync(t => t.Id == serieId && !t.IsDeleted, ct)
+            await ctx.Series.FirstOrDefaultAsync(t => t.Id == serieId, ct)
             ?? throw new NotFoundException($"Serie with ID {serieId} not found.");
 
         var normailizedName = seriePutDto.Name.Trim();
@@ -116,6 +117,7 @@ public class SerieManagementService(AppDbContext ctx) : ISerieManagementService
         {
             Id = serie.Id,
             Name = serie.Name,
+            Description = serie.Description,
             CreatedAt = serie.CreatedAt,
             UpdatedAt = serie.UpdatedAt,
             IsDeleted = serie.IsDeleted,

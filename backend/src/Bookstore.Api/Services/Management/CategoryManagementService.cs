@@ -80,7 +80,7 @@ public class CategoryManagementService(AppDbContext ctx) : ICategoryManagementSe
     )
     {
         var category =
-            await ctx.Categories.FirstOrDefaultAsync(t => t.Id == categoryId && !t.IsDeleted, ct)
+            await ctx.Categories.FirstOrDefaultAsync(t => t.Id == categoryId, ct)
             ?? throw new NotFoundException($"Category with ID {categoryId} not found.");
 
         var normailizedName = categoryPutDto.Name.Trim();
