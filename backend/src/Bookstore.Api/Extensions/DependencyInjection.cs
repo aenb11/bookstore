@@ -16,11 +16,13 @@ public static class DependencyInjection
         services.AddScoped<ITagService, TagService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<ISerieService, SerieService>();
+        services.AddScoped<IAuthorService, AuthorService>();
 
         services.AddScoped<IReviewManagementService, ReviewManagementService>();
         services.AddScoped<ITagManagementService, TagManagementService>();
         services.AddScoped<ICategoryManagementService, CategoryManagementService>();
         services.AddScoped<ISerieManagementService, SerieManagementService>();
+        services.AddScoped<IAuthorManagementService, AuthorManagementService>();
 
         return services;
     }
