@@ -21,10 +21,10 @@ public static class PublisherQueryExtension
     )
     {
         return q.ApplyBaseFilter(f)
-            .WhereIf(f.CreatedAtFrom.HasValue, p => p.CreatedAt >= f.CreatedAtFrom)
-            .WhereIf(f.CreatedAtTo.HasValue, p => p.CreatedAt <= f.CreatedAtTo)
-            .WhereIf(f.UpdatedAtFrom.HasValue, p => p.UpdatedAt >= f.UpdatedAtFrom)
-            .WhereIf(f.UpdatedAtTo.HasValue, p => p.UpdatedAt <= f.UpdatedAtTo)
+            .WhereIf(f.CreatedFrom.HasValue, p => p.CreatedAt >= f.CreatedFrom)
+            .WhereIf(f.CreatedTo.HasValue, p => p.CreatedAt <= f.CreatedTo)
+            .WhereIf(f.UpdatedFrom.HasValue, p => p.UpdatedAt >= f.UpdatedFrom)
+            .WhereIf(f.UpdatedTo.HasValue, p => p.UpdatedAt <= f.UpdatedTo)
             .WhereIf(f.IsDeleted.HasValue, p => p.IsDeleted == f.IsDeleted);
     }
 

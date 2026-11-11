@@ -21,10 +21,10 @@ public static class CategoryQueryExtension
     )
     {
         return q.ApplyBaseFilter(f)
-            .WhereIf(f.CreatedAtFrom.HasValue, t => t.CreatedAt >= f.CreatedAtFrom)
-            .WhereIf(f.CreatedAtTo.HasValue, t => t.CreatedAt <= f.CreatedAtTo)
-            .WhereIf(f.UpdatedAtFrom.HasValue, t => t.UpdatedAt >= f.UpdatedAtFrom)
-            .WhereIf(f.UpdatedAtTo.HasValue, t => t.UpdatedAt <= f.UpdatedAtTo)
+            .WhereIf(f.CreatedFrom.HasValue, t => t.CreatedAt >= f.CreatedFrom)
+            .WhereIf(f.CreatedTo.HasValue, t => t.CreatedAt <= f.CreatedTo)
+            .WhereIf(f.UpdatedFrom.HasValue, t => t.UpdatedAt >= f.UpdatedFrom)
+            .WhereIf(f.UpdatedTo.HasValue, t => t.UpdatedAt <= f.UpdatedTo)
             .WhereIf(f.IsDeleted.HasValue, t => t.IsDeleted == f.IsDeleted);
     }
 

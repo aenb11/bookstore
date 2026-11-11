@@ -12,10 +12,10 @@ public enum AuthorManagementSortBy
 
 public class AuthorManagementFilterParam : AuthorFilterParam, IValidatableObject
 {
-    public DateTimeOffset? CreatedAtFrom { get; set; }
-    public DateTimeOffset? CreatedAtTo { get; set; }
-    public DateTimeOffset? UpdatedAtFrom { get; set; }
-    public DateTimeOffset? UpdatedAtTo { get; set; }
+    public DateTimeOffset? CreatedFrom { get; set; }
+    public DateTimeOffset? CreatedTo { get; set; }
+    public DateTimeOffset? UpdatedFrom { get; set; }
+    public DateTimeOffset? UpdatedTo { get; set; }
     public bool? IsDeleted { get; set; }
 
     public AuthorManagementSortBy SortBy { get; set; } = AuthorManagementSortBy.Name;
@@ -23,19 +23,19 @@ public class AuthorManagementFilterParam : AuthorFilterParam, IValidatableObject
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
-        if (CreatedAtFrom > CreatedAtTo)
+        if (CreatedFrom > CreatedTo)
         {
             yield return new ValidationResult(
                 "CreatedAtFrom cannot be later than CreatedAtTo.",
-                [nameof(CreatedAtFrom), nameof(CreatedAtTo)]
+                [nameof(CreatedFrom), nameof(CreatedTo)]
             );
         }
 
-        if (UpdatedAtFrom > UpdatedAtTo)
+        if (UpdatedFrom > UpdatedTo)
         {
             yield return new ValidationResult(
                 "UpdatedAtFrom cannot be later than UpdatedAtTo.",
-                [nameof(UpdatedAtFrom), nameof(UpdatedAtTo)]
+                [nameof(UpdatedFrom), nameof(UpdatedTo)]
             );
         }
     }

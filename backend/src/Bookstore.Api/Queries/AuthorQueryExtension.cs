@@ -9,10 +9,11 @@ public static class AuthorQueryExtension
 {
     public static IQueryable<Author> ApplyBaseFilter(this IQueryable<Author> q, AuthorFilterParam f)
     {
+        var parsedNationalities = f.GetParsedNationalities();
         return q.WhereIf(f.FullName is not null, x => x.FullName.Contains(f.FullName!))
             .WhereIf(
-                f.ParsedNationalities.Count != 0,
-                x => f.ParsedNationalities.Contains(x.Nationality.ToUpperInvariant())
+                parsedNationalities.Count != 0,
+                x => parsedNationalities.Contains(x.Nationality.ToUpperInvariant())
             );
     }
 
@@ -22,10 +23,10 @@ public static class AuthorQueryExtension
     )
     {
         return q.ApplyBaseFilter(f)
-            .WhereIf(f.CreatedAtFrom.HasValue, t => t.CreatedAt >= f.CreatedAtFrom)
-            .WhereIf(f.CreatedAtTo.HasValue, t => t.CreatedAt <= f.CreatedAtTo)
-            .WhereIf(f.UpdatedAtFrom.HasValue, t => t.UpdatedAt >= f.UpdatedAtFrom)
-            .WhereIf(f.UpdatedAtTo.HasValue, t => t.UpdatedAt <= f.UpdatedAtTo)
+            .WhereIf(f.CreatedFrom.HasValue, t => t.CreatedAt >= f.CreatedFrom)
+            .WhereIf(f.CreatedTo.HasValue, t => t.CreatedAt <= f.CreatedTo)
+            .WhereIf(f.UpdatedFrom.HasValue, t => t.UpdatedAt >= f.UpdatedFrom)
+            .WhereIf(f.UpdatedTo.HasValue, t => t.UpdatedAt <= f.UpdatedTo)
             .WhereIf(f.IsDeleted.HasValue, t => t.IsDeleted == f.IsDeleted);
     }
 

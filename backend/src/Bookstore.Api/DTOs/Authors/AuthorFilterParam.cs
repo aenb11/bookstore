@@ -1,6 +1,4 @@
-using System.Text.Json.Serialization;
 using Bookstore.Api.Common.Pagination;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Bookstore.Api.DTOs.Authors;
 
@@ -9,10 +7,10 @@ public class AuthorFilterParam : PaginationParam
     public string? FullName { get; set; }
     public string? Nationalities { get; set; }
 
-    [BindNever]
-    [JsonIgnore]
-    public List<string> ParsedNationalities =>
-        string.IsNullOrWhiteSpace(Nationalities)
+    private List<string>? _parsedNationalities;
+
+    public List<string> GetParsedNationalities() =>
+        _parsedNationalities ??= string.IsNullOrWhiteSpace(Nationalities)
             ? []
             :
             [

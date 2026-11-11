@@ -11,8 +11,8 @@ public static class ReviewQueryExtension
     {
         return q.WhereIf(f.MinRating.HasValue, r => r.Rating >= f.MinRating)
             .WhereIf(f.MaxRating.HasValue, r => r.Rating <= f.MaxRating)
-            .WhereIf(f.FromDate.HasValue, r => r.CreatedAt >= f.FromDate)
-            .WhereIf(f.ToDate.HasValue, r => r.CreatedAt <= f.ToDate);
+            .WhereIf(f.CreatedFrom.HasValue, r => r.CreatedAt >= f.CreatedFrom)
+            .WhereIf(f.CreatedTo.HasValue, r => r.CreatedAt <= f.CreatedTo);
     }
 
     public static IQueryable<Review> ApplyManagementFilter(

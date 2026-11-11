@@ -18,8 +18,8 @@ public class ReviewFilterParam : PaginationParam, IValidatableObject
     [Range(1, 5, ErrorMessage = "MaxRating must be between 1 and 5.")]
     public int? MaxRating { get; set; }
 
-    public DateTimeOffset? FromDate { get; set; }
-    public DateTimeOffset? ToDate { get; set; }
+    public DateTimeOffset? CreatedFrom { get; set; }
+    public DateTimeOffset? CreatedTo { get; set; }
     public ReviewSortBy SortBy { get; set; } = ReviewSortBy.CreatedAt;
     public SortOrder SortOrder { get; set; } = SortOrder.Descending;
 
@@ -33,11 +33,11 @@ public class ReviewFilterParam : PaginationParam, IValidatableObject
             );
         }
 
-        if (FromDate > ToDate)
+        if (CreatedFrom > CreatedTo)
         {
             yield return new ValidationResult(
                 "FromDate cannot be later than ToDate.",
-                [nameof(FromDate), nameof(ToDate)]
+                [nameof(CreatedFrom), nameof(CreatedTo)]
             );
         }
     }
