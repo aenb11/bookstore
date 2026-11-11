@@ -26,6 +26,7 @@ public static class DependencyInjection
         services.AddScoped<ISerieManagementService, SerieManagementService>();
         services.AddScoped<IAuthorManagementService, AuthorManagementService>();
         services.AddScoped<IPublisherManagementService, PublisherManagementService>();
+        services.AddScoped<IAccountManagementService, AccountManagementService>();
 
         return services;
     }
