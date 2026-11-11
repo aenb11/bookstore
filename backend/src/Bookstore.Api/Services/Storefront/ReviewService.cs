@@ -38,15 +38,7 @@ public class ReviewService(AppDbContext ctx) : IReviewService
         await ctx.Reviews.AddAsync(review, ct);
         await ctx.SaveChangesAsync(ct);
 
-        return new ReviewResponseDto
-        {
-            Id = review.Id,
-            BookId = review.BookId,
-            Rating = review.Rating,
-            Comment = review.Comment,
-            CreatedAt = review.CreatedAt,
-            AccountFullName = accountFullName,
-        };
+        return ReviewProjection.CompileToResponseDto(review);
     }
 
     public async Task DeleteReviewAsync(
@@ -115,14 +107,6 @@ public class ReviewService(AppDbContext ctx) : IReviewService
 
         await ctx.SaveChangesAsync(ct);
 
-        return new ReviewResponseDto
-        {
-            Id = review.Id,
-            BookId = review.BookId,
-            Rating = review.Rating,
-            Comment = review.Comment,
-            CreatedAt = review.CreatedAt,
-            AccountFullName = accountFullName,
-        };
+        return ReviewProjection.CompileToResponseDto(review);
     }
 }

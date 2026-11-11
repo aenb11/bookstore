@@ -20,4 +20,10 @@ public static class CategoryProjection
         IsDeleted = c.IsDeleted,
         DeletedAt = c.DeletedAt,
     };
+
+    public static readonly Func<Category, CategoryResponseDto> CompileToResponseDto =
+        ToResponseDto.Compile();
+
+    public static readonly Func<Category, CategoryDetailResponseDto> CompileToDetailResponseDto =
+        ToDetailResponseDto.Compile();
 }

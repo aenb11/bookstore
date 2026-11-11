@@ -30,20 +30,7 @@ public class AuthorManagementService(AppDbContext ctx) : IAuthorManagementServic
         await ctx.Authors.AddAsync(author, ct);
         await ctx.SaveChangesAsync(ct);
 
-        return new AuthorDetailResponseDto
-        {
-            Id = author.Id,
-            FullName = author.FullName,
-            Nationality = author.Nationality,
-            BirthYear = author.BirthYear,
-            DeathYear = author.DeathYear,
-            Biography = author.Biography,
-            PhotoKey = author.PhotoKey,
-            CreatedAt = author.CreatedAt,
-            UpdatedAt = author.UpdatedAt,
-            IsDeleted = author.IsDeleted,
-            DeletedAt = author.DeletedAt,
-        };
+        return AuthorProjection.CompileToDetailResponseDto(author);
     }
 
     public async Task DeleteAuthorAsync(int authorId, CancellationToken ct = default)
@@ -100,19 +87,6 @@ public class AuthorManagementService(AppDbContext ctx) : IAuthorManagementServic
 
         await ctx.SaveChangesAsync(ct);
 
-        return new AuthorDetailResponseDto
-        {
-            Id = author.Id,
-            FullName = author.FullName,
-            Nationality = author.Nationality,
-            BirthYear = author.BirthYear,
-            DeathYear = author.DeathYear,
-            Biography = author.Biography,
-            PhotoKey = author.PhotoKey,
-            CreatedAt = author.CreatedAt,
-            UpdatedAt = author.UpdatedAt,
-            IsDeleted = author.IsDeleted,
-            DeletedAt = author.DeletedAt,
-        };
+        return AuthorProjection.CompileToDetailResponseDto(author);
     }
 }

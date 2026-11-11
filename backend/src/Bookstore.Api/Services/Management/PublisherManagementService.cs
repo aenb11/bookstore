@@ -44,17 +44,7 @@ public class PublisherManagementService(AppDbContext ctx) : IPublisherManagement
             throw new ConflictException($"Publisher with name '{dto.Name}' already exists.");
         }
 
-        return new PublisherDetailResponseDto
-        {
-            Id = publisher.Id,
-            Name = publisher.Name,
-            Website = publisher.Website,
-            ContactEmail = publisher.ContactEmail,
-            CreatedAt = publisher.CreatedAt,
-            UpdatedAt = publisher.UpdatedAt,
-            IsDeleted = publisher.IsDeleted,
-            DeletedAt = publisher.DeletedAt,
-        };
+        return PublisherProjection.CompileToDetailResponseDto(publisher);
     }
 
     public async Task DeleteAsync(int id, CancellationToken ct = default)
@@ -128,16 +118,6 @@ public class PublisherManagementService(AppDbContext ctx) : IPublisherManagement
             throw new ConflictException($"Publisher with name '{dto.Name}' already exists.");
         }
 
-        return new PublisherDetailResponseDto
-        {
-            Id = publisher.Id,
-            Name = publisher.Name,
-            Website = publisher.Website,
-            ContactEmail = publisher.ContactEmail,
-            CreatedAt = publisher.CreatedAt,
-            UpdatedAt = publisher.UpdatedAt,
-            IsDeleted = publisher.IsDeleted,
-            DeletedAt = publisher.DeletedAt,
-        };
+        return PublisherProjection.CompileToDetailResponseDto(publisher);
     }
 }

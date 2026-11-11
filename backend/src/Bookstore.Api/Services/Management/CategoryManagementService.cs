@@ -39,15 +39,7 @@ public class CategoryManagementService(AppDbContext ctx) : ICategoryManagementSe
             throw new ConflictException($"Category with name '{category.Name}' already exists.");
         }
 
-        return new CategoryDetailResponseDto
-        {
-            Id = category.Id,
-            Name = category.Name,
-            CreatedAt = category.CreatedAt,
-            UpdatedAt = category.UpdatedAt,
-            IsDeleted = category.IsDeleted,
-            DeletedAt = category.DeletedAt,
-        };
+        return CategoryProjection.CompileToDetailResponseDto(category);
     }
 
     public async Task DeleteCategoryAsync(int categoryId, CancellationToken ct = default)
@@ -110,14 +102,6 @@ public class CategoryManagementService(AppDbContext ctx) : ICategoryManagementSe
             throw new ConflictException($"Category with name '{normailizedName}' already exists.");
         }
 
-        return new CategoryDetailResponseDto
-        {
-            Id = category.Id,
-            Name = category.Name,
-            CreatedAt = category.CreatedAt,
-            UpdatedAt = category.UpdatedAt,
-            IsDeleted = category.IsDeleted,
-            DeletedAt = category.DeletedAt,
-        };
+        return CategoryProjection.CompileToDetailResponseDto(category);
     }
 }

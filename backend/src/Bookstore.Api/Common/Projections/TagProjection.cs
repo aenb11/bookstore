@@ -19,4 +19,9 @@ public static class TagProjection
             IsDeleted = t.IsDeleted,
             DeletedAt = t.DeletedAt,
         };
+
+    public static readonly Func<Tag, TagResponseDto> CompileToResponseDto = ToResponseDto.Compile();
+
+    public static readonly Func<Tag, TagDetailResponseDto> CompileToDetailResponseDto =
+        ToDetailResponseDto.Compile();
 }

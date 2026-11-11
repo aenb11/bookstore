@@ -33,4 +33,10 @@ public static class ReviewProjection
             IsDeleted = r.IsDeleted,
             DeletedAt = r.DeletedAt,
         };
+
+    public static readonly Func<Review, ReviewResponseDto> CompileToResponseDto =
+        ToResponseDto.Compile();
+
+    public static readonly Func<Review, ReviewDetailResponseDto> CompileToDetailResponseDto =
+        ToDetailResponseDto.Compile();
 }

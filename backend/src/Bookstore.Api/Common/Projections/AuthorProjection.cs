@@ -33,4 +33,10 @@ public static class AuthorProjection
             IsDeleted = a.IsDeleted,
             DeletedAt = a.DeletedAt,
         };
+
+    public static readonly Func<Author, AuthorResponseDto> CompileToResponseDto =
+        ToResponseDto.Compile();
+
+    public static readonly Func<Author, AuthorDetailResponseDto> CompileToDetailResponseDto =
+        ToDetailResponseDto.Compile();
 }

@@ -28,4 +28,10 @@ public static class PublisherProjection
         IsDeleted = p.IsDeleted,
         DeletedAt = p.DeletedAt,
     };
+
+    public static readonly Func<Publisher, PublisherResponseDto> CompileToResponseDto =
+        ToResponseDto.Compile();
+
+    public static readonly Func<Publisher, PublisherDetailResponseDto> CompileToDetailResponseDto =
+        ToDetailResponseDto.Compile();
 }

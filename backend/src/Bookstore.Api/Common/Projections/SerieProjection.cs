@@ -25,4 +25,10 @@ public static class SerieProjection
             IsDeleted = s.IsDeleted,
             DeletedAt = s.DeletedAt,
         };
+
+    public static readonly Func<Serie, SerieResponseDto> CompileToResponseDto =
+        ToResponseDto.Compile();
+
+    public static readonly Func<Serie, SerieDetailResponseDto> CompileToDetailResponseDto =
+        ToDetailResponseDto.Compile();
 }

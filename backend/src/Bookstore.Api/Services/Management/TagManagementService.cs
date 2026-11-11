@@ -39,15 +39,7 @@ public class TagManagementService(AppDbContext ctx) : ITagManagementService
             throw new ConflictException($"Tag with name '{tag.Name}' already exists.");
         }
 
-        return new TagDetailResponseDto
-        {
-            Id = tag.Id,
-            Name = tag.Name,
-            CreatedAt = tag.CreatedAt,
-            UpdatedAt = tag.UpdatedAt,
-            IsDeleted = tag.IsDeleted,
-            DeletedAt = tag.DeletedAt,
-        };
+        return TagProjection.CompileToDetailResponseDto(tag);
     }
 
     public async Task DeleteTagAsync(int tagId, CancellationToken ct = default)
@@ -108,14 +100,6 @@ public class TagManagementService(AppDbContext ctx) : ITagManagementService
             throw new ConflictException($"Tag with name '{normailizedName}' already exists.");
         }
 
-        return new TagDetailResponseDto
-        {
-            Id = tag.Id,
-            Name = tag.Name,
-            CreatedAt = tag.CreatedAt,
-            UpdatedAt = tag.UpdatedAt,
-            IsDeleted = tag.IsDeleted,
-            DeletedAt = tag.DeletedAt,
-        };
+        return TagProjection.CompileToDetailResponseDto(tag);
     }
 }

@@ -43,16 +43,7 @@ public class SerieManagementService(AppDbContext ctx) : ISerieManagementService
             throw new ConflictException($"Serie with name '{serie.Name}' already exists.");
         }
 
-        return new SerieDetailResponseDto
-        {
-            Id = serie.Id,
-            Name = serie.Name,
-            Description = serie.Description,
-            CreatedAt = serie.CreatedAt,
-            UpdatedAt = serie.UpdatedAt,
-            IsDeleted = serie.IsDeleted,
-            DeletedAt = serie.DeletedAt,
-        };
+        return SerieProjection.CompileToDetailResponseDto(serie);
     }
 
     public async Task DeleteSerieAsync(int serieId, CancellationToken ct = default)
@@ -113,15 +104,6 @@ public class SerieManagementService(AppDbContext ctx) : ISerieManagementService
             throw new ConflictException($"Serie with name '{normailizedName}' already exists.");
         }
 
-        return new SerieDetailResponseDto
-        {
-            Id = serie.Id,
-            Name = serie.Name,
-            Description = serie.Description,
-            CreatedAt = serie.CreatedAt,
-            UpdatedAt = serie.UpdatedAt,
-            IsDeleted = serie.IsDeleted,
-            DeletedAt = serie.DeletedAt,
-        };
+        return SerieProjection.CompileToDetailResponseDto(serie);
     }
 }
