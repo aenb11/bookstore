@@ -99,7 +99,7 @@ public class PublisherManagementService(AppDbContext ctx) : IPublisherManagement
     )
     {
         var publisher =
-            ctx.Publishers.FirstOrDefault(p => p.Id == id && !p.IsDeleted)
+            ctx.Publishers.FirstOrDefault(p => p.Id == id)
             ?? throw new NotFoundException($"Publisher with ID {id} not found.");
 
         var normalizedName = dto.Name.Trim();
