@@ -28,8 +28,7 @@ public class SerieController(ISerieManagementService serieManagementService) : C
     )
     {
         var serie = await serieManagementService.CreateSerieAsync(dto, ct);
-
-        return CreatedAtAction(nameof(GetAllSeries), new { id = serie.Id }, serie);
+        return StatusCode(StatusCodes.Status201Created, serie);
     }
 
     [HttpPut("{id:int}")]

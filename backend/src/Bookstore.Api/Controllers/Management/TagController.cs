@@ -28,8 +28,7 @@ public class TagController(ITagManagementService tagManagementService) : Control
     )
     {
         var tag = await tagManagementService.CreateTagAsync(dto, ct);
-
-        return CreatedAtAction(nameof(GetAllTags), new { id = tag.Id }, tag);
+        return StatusCode(StatusCodes.Status201Created, tag);
     }
 
     [HttpPut("{id:int}")]

@@ -21,7 +21,7 @@ public class AuthorController(IAuthorManagementService authorManagementService) 
         return Ok(await authorManagementService.GetAllAuthorsAsync(f, ct));
     }
 
-    [HttpGet("{authorId:int}")]
+    [HttpGet("{authorId:int}", Name = "GetManagementAuthorById")]
     public async Task<IActionResult> GetAuthorByIdAsync(
         [FromRoute] int authorId,
         CancellationToken ct
@@ -29,7 +29,7 @@ public class AuthorController(IAuthorManagementService authorManagementService) 
     {
         var author = await authorManagementService.GetAuthorByIdAsync(authorId, ct);
         if (author is null)
-            return NotFound();
+            return Problem(statusCode: StatusCodes.Status404NotFound, title: "Author not found");
 
         return Ok(author);
     }
@@ -41,8 +41,8 @@ public class AuthorController(IAuthorManagementService authorManagementService) 
     )
     {
         var createdAuthor = await authorManagementService.CreateAuthorAsync(dto, ct);
-        return CreatedAtAction(
-            nameof(GetAuthorByIdAsync),
+        return CreatedAtRoute(
+            "GetManagementAuthorById",
             new { authorId = createdAuthor.Id },
             createdAuthor
         );

@@ -29,8 +29,7 @@ public class CategoryController(ICategoryManagementService categoryManagementSer
     )
     {
         var category = await categoryManagementService.CreateCategoryAsync(dto, ct);
-
-        return CreatedAtAction(nameof(GetAllCategories), new { id = category.Id }, category);
+        return StatusCode(StatusCodes.Status201Created, category);
     }
 
     [HttpPut("{id:int}")]

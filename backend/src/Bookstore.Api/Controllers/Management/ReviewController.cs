@@ -17,7 +17,7 @@ public class ReviewController(IReviewManagementService reviewManagementService) 
     {
         var review = await reviewManagementService.GetReviewByIdAsync(reviewId, ct);
         if (review is null)
-            return Problem(statusCode: 404, title: $"Review {reviewId} not found.");
+            return Problem(statusCode: StatusCodes.Status404NotFound, title: $"Review not found.");
 
         return Ok(review);
     }
