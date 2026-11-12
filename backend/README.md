@@ -87,6 +87,7 @@ Once running:
 - **Base URL:** `https://localhost:<port>` (check the terminal output for the
   active port)
 - **Interactive API Documentation (Scalar UI):** `https://localhost:<port>/scalar/v1`
+- **OpenAPI Documentation (JSON):** `https://localhost:<port>/openapi/v1.json`
 
 ---
 

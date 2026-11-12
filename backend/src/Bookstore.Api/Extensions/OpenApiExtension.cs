@@ -9,6 +9,17 @@ public static class OpenApiExtension
     {
         services.AddOpenApi(options =>
         {
+            options.AddSchemaTransformer(
+                (schema, context, cancellationToken) =>
+                {
+                    if (context.JsonTypeInfo.Type.IsEnum)
+                    {
+                        schema.Type = JsonSchemaType.String;
+                    }
+                    return Task.CompletedTask;
+                }
+            );
+
             options.AddDocumentTransformer(
                 (document, context, ct) =>
                 {

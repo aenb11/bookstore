@@ -1,0 +1,44 @@
+using System.ComponentModel.DataAnnotations;
+using Bookstore.Api.Common.Enums;
+using Bookstore.Api.Common.Pagination;
+
+namespace Bookstore.Api.DTOs.Reviews;
+
+public enum ReviewSortBy
+{
+    CreatedAt,
+    Rating,
+}
+
+public class ReviewFilterParam : PaginationParam, IValidatableObject
+{
+    [Range(1, 5, ErrorMessage = "MinRating must be between 1 and 5.")]
+    public int? MinRating { get; set; }
+
+    [Range(1, 5, ErrorMessage = "MaxRating must be between 1 and 5.")]
+    public int? MaxRating { get; set; }
+
+    public DateTimeOffset? CreatedFrom { get; set; }
+    public DateTimeOffset? CreatedTo { get; set; }
+    public ReviewSortBy SortBy { get; set; } = ReviewSortBy.CreatedAt;
+    public SortOrder SortOrder { get; set; } = SortOrder.Descending;
+
+    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+    {
+        if (MinRating > MaxRating)
+        {
+            yield return new ValidationResult(
+                "MinRating cannot be greater than MaxRating.",
+                [nameof(MinRating), nameof(MaxRating)]
+            );
+        }
+
+        if (CreatedFrom > CreatedTo)
+        {
+            yield return new ValidationResult(
+                "FromDate cannot be later than ToDate.",
+                [nameof(CreatedFrom), nameof(CreatedTo)]
+            );
+        }
+    }
+}
