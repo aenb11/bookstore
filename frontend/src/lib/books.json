@@ -84,145 +84,145 @@
   "books": [
     {
       "id": 1, "isbn": "9786041000001", "title": "Tôi thấy hoa vàng trên cỏ xanh", "categoryId": 1, "serieId": null, "publisherId": 1,
-      "publicationYear": 2018, "language": "vi", "pageCount": 378, "coverType": "Paperback", "weight": 280, "ageGroup": "Adult",
+      "publicationYear": 2018, "language": "VI", "pageCount": 378, "coverType": "Paperback", "weight": 280, "ageGroup": "Adult",
       "listPrice": 150000, "salePrice": 125000, "stockQuantity": 120, "status": "Available",
       "description": "Vietnamese edition published by NXB Trẻ in 2018."
     },
     {
       "id": 2, "isbn": "9786041000002", "title": "Mắt biếc", "categoryId": 1, "serieId": null, "publisherId": 1,
-      "publicationYear": 2019, "language": "vi", "pageCount": 300, "coverType": "Paperback", "weight": 230, "ageGroup": "Adult",
+      "publicationYear": 2019, "language": "VI", "pageCount": 300, "coverType": "Paperback", "weight": 230, "ageGroup": "Adult",
       "listPrice": 99000, "salePrice": 99000, "stockQuantity": 85, "status": "Available",
       "description": "Vietnamese edition published by NXB Trẻ in 2019."
     },
     {
       "id": 3, "isbn": "9786041000003", "title": "Số đỏ", "categoryId": 1, "serieId": null, "publisherId": 2,
-      "publicationYear": 2020, "language": "vi", "pageCount": 268, "coverType": "Paperback", "weight": 205, "ageGroup": "Adult",
+      "publicationYear": 2020, "language": "VI", "pageCount": 268, "coverType": "Paperback", "weight": 205, "ageGroup": "Adult",
       "listPrice": 78000, "salePrice": 78000, "stockQuantity": 42, "status": "Available",
       "description": "Vietnamese edition published by NXB Văn Học in 2020."
     },
     {
       "id": 4, "isbn": "9786041000004", "title": "Nỗi buồn chiến tranh", "categoryId": 1, "serieId": null, "publisherId": 1,
-      "publicationYear": 2021, "language": "vi", "pageCount": 340, "coverType": "Paperback", "weight": 255, "ageGroup": "Adult",
+      "publicationYear": 2021, "language": "VI", "pageCount": 340, "coverType": "Paperback", "weight": 255, "ageGroup": "Adult",
       "listPrice": 115000, "salePrice": 115000, "stockQuantity": 6, "status": "Available",
       "description": "Vietnamese edition published by NXB Trẻ in 2021."
     },
     {
       "id": 5, "isbn": "9786041000005", "title": "Dế Mèn phiêu lưu ký", "categoryId": 5, "serieId": null, "publisherId": 3,
-      "publicationYear": 2022, "language": "vi", "pageCount": 156, "coverType": "Paperback", "weight": 150, "ageGroup": "Children",
+      "publicationYear": 2022, "language": "VI", "pageCount": 156, "coverType": "Paperback", "weight": 150, "ageGroup": "Children",
       "listPrice": 68000, "salePrice": 55000, "stockQuantity": 200, "status": "Available",
       "description": "Vietnamese edition published by NXB Kim Đồng in 2022."
     },
     {
       "id": 6, "isbn": "9786041000006", "title": "Nhà giả kim", "categoryId": 2, "serieId": null, "publisherId": 4,
-      "publicationYear": 2020, "language": "vi", "pageCount": 228, "coverType": "Paperback", "weight": 190, "ageGroup": "Adult",
+      "publicationYear": 2020, "language": "VI", "pageCount": 228, "coverType": "Paperback", "weight": 190, "ageGroup": "Adult",
       "listPrice": 99000, "salePrice": 79000, "stockQuantity": 150, "status": "Available",
       "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2020."
     },
     {
       "id": 7, "isbn": "9786041000007", "title": "Rừng Na Uy", "categoryId": 2, "serieId": null, "publisherId": 4,
-      "publicationYear": 2021, "language": "vi", "pageCount": 556, "coverType": "Paperback", "weight": 410, "ageGroup": "Adult",
+      "publicationYear": 2021, "language": "VI", "pageCount": 556, "coverType": "Paperback", "weight": 410, "ageGroup": "Adult",
       "listPrice": 158000, "salePrice": 158000, "stockQuantity": 64, "status": "Available",
       "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2021."
     },
     {
       "id": 8, "isbn": "9786041000008", "title": "Trăm năm cô đơn", "categoryId": 2, "serieId": null, "publisherId": 2,
-      "publicationYear": 2019, "language": "vi", "pageCount": 520, "coverType": "Paperback", "weight": 390, "ageGroup": "Adult",
+      "publicationYear": 2019, "language": "VI", "pageCount": 520, "coverType": "Paperback", "weight": 390, "ageGroup": "Adult",
       "listPrice": 165000, "salePrice": 165000, "stockQuantity": 31, "status": "Available",
       "description": "Vietnamese edition published by NXB Văn Học in 2019."
     },
     {
       "id": 9, "isbn": "9786041000009", "title": "Hoàng tử bé", "categoryId": 5, "serieId": null, "publisherId": 4,
-      "publicationYear": 2022, "language": "vi", "pageCount": 112, "coverType": "Paperback", "weight": 130, "ageGroup": "Children",
+      "publicationYear": 2022, "language": "VI", "pageCount": 112, "coverType": "Paperback", "weight": 130, "ageGroup": "Children",
       "listPrice": 65000, "salePrice": 65000, "stockQuantity": 3, "status": "Available",
       "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2022."
     },
     {
       "id": 10, "isbn": "9786041000010", "title": "1984", "categoryId": 2, "serieId": null, "publisherId": 4,
-      "publicationYear": 2023, "language": "vi", "pageCount": 412, "coverType": "Paperback", "weight": 320, "ageGroup": "Adult",
+      "publicationYear": 2023, "language": "VI", "pageCount": 412, "coverType": "Paperback", "weight": 320, "ageGroup": "Adult",
       "listPrice": 160000, "salePrice": 135000, "stockQuantity": 58, "status": "Available",
       "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2023."
     },
     {
       "id": 11, "isbn": "9786041000011", "title": "Cha giàu cha nghèo", "categoryId": 3, "serieId": null, "publisherId": 1,
-      "publicationYear": 2021, "language": "vi", "pageCount": 336, "coverType": "Paperback", "weight": 270, "ageGroup": "Adult",
+      "publicationYear": 2021, "language": "VI", "pageCount": 336, "coverType": "Paperback", "weight": 270, "ageGroup": "Adult",
       "listPrice": 109000, "salePrice": 109000, "stockQuantity": 90, "status": "Available",
       "description": "Vietnamese edition published by NXB Trẻ in 2021."
     },
     {
       "id": 12, "isbn": "9786041000012", "title": "Từ tốt đến vĩ đại", "categoryId": 3, "serieId": null, "publisherId": 1,
-      "publicationYear": 2020, "language": "vi", "pageCount": 456, "coverType": "Paperback", "weight": 350, "ageGroup": "Adult",
+      "publicationYear": 2020, "language": "VI", "pageCount": 456, "coverType": "Paperback", "weight": 350, "ageGroup": "Adult",
       "listPrice": 225000, "salePrice": 189000, "stockQuantity": 27, "status": "Available",
       "description": "Vietnamese edition published by NXB Trẻ in 2020."
     },
     {
       "id": 13, "isbn": "9786041000013", "title": "Nghĩ giàu và làm giàu", "categoryId": 3, "serieId": null, "publisherId": 5,
-      "publicationYear": 2019, "language": "vi", "pageCount": 384, "coverType": "Paperback", "weight": 295, "ageGroup": "Adult",
+      "publicationYear": 2019, "language": "VI", "pageCount": 384, "coverType": "Paperback", "weight": 295, "ageGroup": "Adult",
       "listPrice": 98000, "salePrice": 98000, "stockQuantity": 110, "status": "Available",
       "description": "Vietnamese edition published by NXB Tổng Hợp TP.HCM in 2019."
     },
     {
       "id": 14, "isbn": "9786041000014", "title": "Đắc nhân tâm", "categoryId": 4, "serieId": null, "publisherId": 5,
-      "publicationYear": 2022, "language": "vi", "pageCount": 320, "coverType": "Paperback", "weight": 250, "ageGroup": "Adult",
+      "publicationYear": 2022, "language": "VI", "pageCount": 320, "coverType": "Paperback", "weight": 250, "ageGroup": "Adult",
       "listPrice": 108000, "salePrice": 86000, "stockQuantity": 240, "status": "Available",
       "description": "Vietnamese edition published by NXB Tổng Hợp TP.HCM in 2022."
     },
     {
       "id": 15, "isbn": "9786041000015", "title": "Thói quen nguyên tử", "categoryId": 4, "serieId": null, "publisherId": 6,
-      "publicationYear": 2023, "language": "vi", "pageCount": 368, "coverType": "Paperback", "weight": 290, "ageGroup": "Adult",
+      "publicationYear": 2023, "language": "VI", "pageCount": 368, "coverType": "Paperback", "weight": 290, "ageGroup": "Adult",
       "listPrice": 159000, "salePrice": 159000, "stockQuantity": 75, "status": "Available",
       "description": "Vietnamese edition published by NXB Thế Giới in 2023."
     },
     {
       "id": 16, "isbn": "9786041000016", "title": "Tuổi trẻ đáng giá bao nhiêu", "categoryId": 4, "serieId": null, "publisherId": 4,
-      "publicationYear": 2018, "language": "vi", "pageCount": 285, "coverType": "Paperback", "weight": 220, "ageGroup": "YoungAdult",
+      "publicationYear": 2018, "language": "VI", "pageCount": 285, "coverType": "Paperback", "weight": 220, "ageGroup": "YoungAdult",
       "listPrice": 90000, "salePrice": 90000, "stockQuantity": 4, "status": "Available",
       "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2018."
     },
     {
       "id": 17, "isbn": "9786041000017", "title": "Doraemon — Tập 1", "categoryId": 5, "serieId": 1, "publisherId": 3,
-      "publicationYear": 2023, "language": "vi", "pageCount": 192, "coverType": "Paperback", "weight": 140, "ageGroup": "Children",
+      "publicationYear": 2023, "language": "VI", "pageCount": 192, "coverType": "Paperback", "weight": 140, "ageGroup": "Children",
       "listPrice": 25000, "salePrice": 25000, "stockQuantity": 500, "status": "Available",
       "description": "Vietnamese edition published by NXB Kim Đồng in 2023."
     },
     {
       "id": 18, "isbn": "9786041000018", "title": "Sapiens: Lược sử loài người", "categoryId": 6, "serieId": null, "publisherId": 7,
-      "publicationYear": 2021, "language": "vi", "pageCount": 560, "coverType": "Paperback", "weight": 430, "ageGroup": "Adult",
+      "publicationYear": 2021, "language": "VI", "pageCount": 560, "coverType": "Paperback", "weight": 430, "ageGroup": "Adult",
       "listPrice": 299000, "salePrice": 239000, "stockQuantity": 46, "status": "Available",
       "description": "Vietnamese edition published by NXB Tri Thức in 2021."
     },
     {
       "id": 19, "isbn": "9786041000019", "title": "Việt Nam sử lược", "categoryId": 6, "serieId": null, "publisherId": 2,
-      "publicationYear": 2020, "language": "vi", "pageCount": 620, "coverType": "Paperback", "weight": 470, "ageGroup": "Adult",
+      "publicationYear": 2020, "language": "VI", "pageCount": 620, "coverType": "Paperback", "weight": 470, "ageGroup": "Adult",
       "listPrice": 175000, "salePrice": 175000, "stockQuantity": 22, "status": "Available",
       "description": "Vietnamese edition published by NXB Văn Học in 2020."
     },
     {
       "id": 20, "isbn": "9786041000020", "title": "Súng, vi trùng và thép", "categoryId": 6, "serieId": null, "publisherId": 6,
-      "publicationYear": 2022, "language": "vi", "pageCount": 640, "coverType": "Paperback", "weight": 490, "ageGroup": "Adult",
+      "publicationYear": 2022, "language": "VI", "pageCount": 640, "coverType": "Paperback", "weight": 490, "ageGroup": "Adult",
       "listPrice": 255000, "salePrice": 255000, "stockQuantity": 18, "status": "Available",
       "description": "Vietnamese edition published by NXB Thế Giới in 2022."
     },
     {
       "id": 21, "isbn": "9786041000021", "title": "Lược sử thời gian", "categoryId": 7, "serieId": null, "publisherId": 1,
-      "publicationYear": 2021, "language": "vi", "pageCount": 260, "coverType": "Paperback", "weight": 210, "ageGroup": "Adult",
+      "publicationYear": 2021, "language": "VI", "pageCount": 260, "coverType": "Paperback", "weight": 210, "ageGroup": "Adult",
       "listPrice": 115000, "salePrice": 115000, "stockQuantity": 38, "status": "Available",
       "description": "Vietnamese edition published by NXB Trẻ in 2021."
     },
     {
       "id": 22, "isbn": "9786041000022", "title": "Vũ trụ", "categoryId": 7, "serieId": null, "publisherId": 6,
-      "publicationYear": 2023, "language": "vi", "pageCount": 488, "coverType": "Paperback", "weight": 380, "ageGroup": "Adult",
+      "publicationYear": 2023, "language": "VI", "pageCount": 488, "coverType": "Paperback", "weight": 380, "ageGroup": "Adult",
       "listPrice": 268000, "salePrice": 229000, "stockQuantity": 2, "status": "Available",
       "description": "Vietnamese edition published by NXB Thế Giới in 2023."
     },
     {
       "id": 23, "isbn": "9786041000023", "title": "Tư duy nhanh và chậm", "categoryId": 8, "serieId": null, "publisherId": 6,
-      "publicationYear": 2022, "language": "vi", "pageCount": 612, "coverType": "Paperback", "weight": 470, "ageGroup": "Adult",
+      "publicationYear": 2022, "language": "VI", "pageCount": 612, "coverType": "Paperback", "weight": 470, "ageGroup": "Adult",
       "listPrice": 219000, "salePrice": 219000, "stockQuantity": 52, "status": "Available",
       "description": "Vietnamese edition published by NXB Thế Giới in 2022."
     },
     {
       "id": 24, "isbn": "9786041000024", "title": "Đi tìm lẽ sống", "categoryId": 8, "serieId": null, "publisherId": 5,
-      "publicationYear": 2021, "language": "vi", "pageCount": 224, "coverType": "Paperback", "weight": 180, "ageGroup": "Adult",
+      "publicationYear": 2021, "language": "VI", "pageCount": 224, "coverType": "Paperback", "weight": 180, "ageGroup": "Adult",
       "listPrice": 88000, "salePrice": 88000, "stockQuantity": 67, "status": "Available",
       "description": "Vietnamese edition published by NXB Tổng Hợp TP.HCM in 2021."
     }
