@@ -300,5 +300,113 @@
     { "id": 1, "bookId": 1, "accountId": 1, "rating": 5, "comment": "Sách đóng gói cẩn thận, giấy đẹp. Nội dung cuốn hút.", "createdAt": "2026-10-12T10:00:00+07:00" },
     { "id": 2, "bookId": 2, "accountId": 2, "rating": 4, "comment": "Giao hàng nhanh, giá tốt. Bìa hơi cong một chút.", "createdAt": "2026-10-05T10:00:00+07:00" },
     { "id": 3, "bookId": 5, "accountId": 3, "rating": 5, "comment": "Mua làm quà, bé rất thích.", "createdAt": "2026-09-28T10:00:00+07:00" }
+  ],
+  "orders": [
+    {
+      "id": 1, "accountId": 1, "recipientName": "Nguyễn Minh Anh", "recipientPhone": "0901234567",
+      "street": "12 Nguyễn Văn Cừ", "ward": "Phường 1", "district": "Quận 5", "city": "TP. Hồ Chí Minh",
+      "shippingFee": 0, "status": "Delivered", "paymentMethod": "CreditCard", "paymentStatus": "Paid",
+      "createdAt": "2026-10-20T09:15:00+07:00", "updatedAt": "2026-10-22T14:30:00+07:00"
+    },
+    {
+      "id": 2, "accountId": 2, "recipientName": "Trần Quốc Bảo", "recipientPhone": "0912345678",
+      "street": "25 Trần Hưng Đạo", "ward": "Phường Cửa Nam", "district": "Quận Hoàn Kiếm", "city": "Hà Nội",
+      "shippingFee": 25000, "status": "Shipped", "paymentMethod": "CashOnDelivery", "paymentStatus": "Pending",
+      "createdAt": "2026-10-24T11:05:00+07:00", "updatedAt": "2026-10-25T08:00:00+07:00"
+    },
+    {
+      "id": 3, "accountId": 3, "recipientName": "Lê Thu Hà", "recipientPhone": "0938456789",
+      "street": "8 Bạch Đằng", "ward": "Phường Hải Châu 1", "district": "Quận Hải Châu", "city": "Đà Nẵng",
+      "shippingFee": 25000, "status": "Cancelled", "paymentMethod": "CashOnDelivery", "paymentStatus": "Pending",
+      "createdAt": "2026-10-26T16:40:00+07:00", "updatedAt": "2026-10-26T17:10:00+07:00"
+    }
+  ],
+  "cartItems": [
+    { "accountId": 1, "bookId": 15, "quantity": 1, "createdAt": "2026-11-02T10:00:00+07:00" },
+    { "accountId": 2, "bookId": 17, "quantity": 2, "createdAt": "2026-11-03T13:20:00+07:00" },
+    { "accountId": 3, "bookId": 21, "quantity": 1, "createdAt": "2026-11-04T18:45:00+07:00" }
+  ],
+  "orderItems": [
+    { "orderId": 1, "bookId": 1, "quantity": 2, "price": 125000 },
+    { "orderId": 1, "bookId": 5, "quantity": 1, "price": 55000 },
+    { "orderId": 2, "bookId": 2, "quantity": 1, "price": 99000 },
+    { "orderId": 2, "bookId": 10, "quantity": 1, "price": 135000 },
+    { "orderId": 3, "bookId": 6, "quantity": 1, "price": 79000 }
+  ],
+  "auditLogs": [
+    {
+      "id": 1, "accountId": 1, "action": "OrderCreated", "entityName": "Order", "entityId": 1,
+      "details": { "status": "Pending", "itemCount": 2 },
+      "createdAt": "2026-10-20T09:15:00+07:00"
+    },
+    {
+      "id": 2, "accountId": 1, "action": "OrderStatusChanged", "entityName": "Order", "entityId": 1,
+      "details": { "from": "Shipped", "to": "Delivered" },
+      "createdAt": "2026-10-22T14:30:00+07:00"
+    },
+    {
+      "id": 3, "accountId": 3, "action": "OrderCancelled", "entityName": "Order", "entityId": 3,
+      "details": { "from": "Pending", "to": "Cancelled", "reason": "Customer request" },
+      "createdAt": "2026-10-26T17:10:00+07:00"
+    }
+  ],
+  "addresses": [
+    {
+      "id": 1, "accountId": 1, "isDefault": true, "recipientName": "Nguyễn Minh Anh", "recipientPhone": "0901234567",
+      "street": "12 Nguyễn Văn Cừ", "ward": "Phường 1", "district": "Quận 5", "city": "TP. Hồ Chí Minh",
+      "createdAt": "2026-09-10T10:00:00+07:00", "updatedAt": null
+    },
+    {
+      "id": 2, "accountId": 1, "isDefault": false, "recipientName": "Nguyễn Minh Anh", "recipientPhone": "0901234567",
+      "street": "40 Lê Văn Sỹ", "ward": "Phường 11", "district": "Quận 3", "city": "TP. Hồ Chí Minh",
+      "createdAt": "2026-10-02T12:30:00+07:00", "updatedAt": null
+    },
+    {
+      "id": 3, "accountId": 2, "isDefault": true, "recipientName": "Trần Quốc Bảo", "recipientPhone": "0912345678",
+      "street": "25 Trần Hưng Đạo", "ward": "Phường Cửa Nam", "district": "Quận Hoàn Kiếm", "city": "Hà Nội",
+      "createdAt": "2026-09-18T15:00:00+07:00", "updatedAt": null
+    },
+    {
+      "id": 4, "accountId": 3, "isDefault": true, "recipientName": "Lê Thu Hà", "recipientPhone": "0938456789",
+      "street": "8 Bạch Đằng", "ward": "Phường Hải Châu 1", "district": "Quận Hải Châu", "city": "Đà Nẵng",
+      "createdAt": "2026-09-28T09:45:00+07:00", "updatedAt": null
+    }
+  ],
+  "bookImages": [
+    { "id": 1, "bookId": 1, "imageKey": "https://www.nxbtre.com.vn/Images/Book/NXBTreStoryFull_02482010_104821.jpg", "sortOrder": 0 },
+    { "id": 2, "bookId": 1, "imageKey": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuvrlx3FToo8KesdMoRUX6bmFFrfkLM4Ow-pebeUNdC7aKuQ1ATE2qsP9j&s=10", "sortOrder": 1 },
+    { "id": 3, "bookId": 2, "imageKey": "https://www.nxbtre.com.vn/Images/Book/nxbtre_full_06402022_014041.jpg", "sortOrder": 0 },
+    { "id": 4, "bookId": 5, "imageKey": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZuR9PdxI4pNp-QDSshzBCADK24men9Cr0ZmWJDM38cb_ILDTk9HyN6A4&s=10", "sortOrder": 0 },
+    { "id": 5, "bookId": 6, "imageKey": "https://upload.wikimedia.org/wikipedia/vi/9/9c/Nh%C3%A0_gi%E1%BA%A3_kim_%28s%C3%A1ch%29.jpg?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=original", "sortOrder": 0 }
+  ],
+  "inventoryTransactions": [
+    {
+      "id": 1, "bookId": 1, "orderId": 1, "accountId": 1, "quantityChange": -2, "balanceAfter": 120,
+      "reason": "Sale", "note": "Đã hoàn tất đơn hàng 1", "createdAt": "2026-10-20T09:20:00+07:00"
+    },
+    {
+      "id": 2, "bookId": 5, "orderId": 1, "accountId": 1, "quantityChange": -1, "balanceAfter": 200,
+      "reason": "Sale", "note": "Đã hoàn tất đơn hàng 1", "createdAt": "2026-10-20T09:20:00+07:00"
+    },
+    {
+      "id": 3, "bookId": 2, "orderId": 2, "accountId": 2, "quantityChange": -1, "balanceAfter": 85,
+      "reason": "Sale", "note": "Đã hoàn tất đơn hàng 2", "createdAt": "2026-10-24T11:10:00+07:00"
+    },
+    {
+      "id": 4, "bookId": 10, "orderId": 2, "accountId": 2, "quantityChange": -1, "balanceAfter": 58,
+      "reason": "Sale", "note": "Đã hoàn tất đơn hàng 2", "createdAt": "2026-10-24T11:10:00+07:00"
+    },
+    {
+      "id": 5, "bookId": 6, "orderId": 3, "accountId": 3, "quantityChange": -1, "balanceAfter": 149,
+      "reason": "Sale", "note": "Đã đặt giữ cho đơn hàng 3", "createdAt": "2026-10-26T16:45:00+07:00"
+    },
+    {
+      "id": 6, "bookId": 6, "orderId": 3, "accountId": 3, "quantityChange": 1, "balanceAfter": 150,
+      "reason": "OrderCancelled", "note": "Bổ sung hàng sau khi đơn hàng 3 bị hủy", "createdAt": "2026-10-26T17:10:00+07:00"
+    },
+    {
+      "id": 7, "bookId": 22, "orderId": null, "accountId": null, "quantityChange": -1, "balanceAfter": 2,
+      "reason": "Adjustment", "note": "Hiệu chỉnh kiểm kê", "createdAt": "2026-10-28T08:00:00+07:00"
+    }
   ]
 }
