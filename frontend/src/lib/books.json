@@ -1,0 +1,412 @@
+{
+  "categories": [
+    { "id": 1, "name": "Văn học Việt Nam" },
+    { "id": 2, "name": "Văn học nước ngoài" },
+    { "id": 3, "name": "Kinh tế" },
+    { "id": 4, "name": "Kỹ năng sống" },
+    { "id": 5, "name": "Thiếu nhi" },
+    { "id": 6, "name": "Lịch sử" },
+    { "id": 7, "name": "Khoa học" },
+    { "id": 8, "name": "Tâm lý học" }
+  ],
+  "publishers": [
+    { "id": 1, "name": "NXB Trẻ" },
+    { "id": 2, "name": "NXB Văn Học" },
+    { "id": 3, "name": "NXB Kim Đồng" },
+    { "id": 4, "name": "NXB Hội Nhà Văn" },
+    { "id": 5, "name": "NXB Tổng Hợp TP.HCM" },
+    { "id": 6, "name": "NXB Thế Giới" },
+    { "id": 7, "name": "NXB Tri Thức" }
+  ],
+  "authors": [
+    { "id": 1, "fullName": "Nguyễn Nhật Ánh", "nationality": "VN" },
+    { "id": 2, "fullName": "Vũ Trọng Phụng", "nationality": "VN" },
+    { "id": 3, "fullName": "Bảo Ninh", "nationality": "VN" },
+    { "id": 4, "fullName": "Tô Hoài", "nationality": "VN" },
+    { "id": 5, "fullName": "Paulo Coelho", "nationality": "BR" },
+    { "id": 6, "fullName": "Lê Chu Cầu", "nationality": "VN" },
+    { "id": 7, "fullName": "Haruki Murakami", "nationality": "JP" },
+    { "id": 8, "fullName": "Trịnh Lữ", "nationality": "VN" },
+    { "id": 9, "fullName": "Gabriel García Márquez", "nationality": "CO" },
+    { "id": 10, "fullName": "Nguyễn Trung Đức", "nationality": "VN" },
+    { "id": 11, "fullName": "Antoine de Saint-Exupéry", "nationality": "FR" },
+    { "id": 12, "fullName": "Trác Phong", "nationality": "VN" },
+    { "id": 13, "fullName": "George Orwell", "nationality": "GB" },
+    { "id": 14, "fullName": "Đặng Phương Nghi", "nationality": "VN" },
+    { "id": 15, "fullName": "Robert T. Kiyosaki", "nationality": "US" },
+    { "id": 16, "fullName": "Thiên Kim", "nationality": "VN" },
+    { "id": 17, "fullName": "Jim Collins", "nationality": "US" },
+    { "id": 18, "fullName": "Trần Thị Ngân Tuyến", "nationality": "VN" },
+    { "id": 19, "fullName": "Napoleon Hill", "nationality": "US" },
+    { "id": 20, "fullName": "Việt Khương", "nationality": "VN" },
+    { "id": 21, "fullName": "Dale Carnegie", "nationality": "US" },
+    { "id": 22, "fullName": "Nguyễn Văn Phước", "nationality": "VN" },
+    { "id": 23, "fullName": "James Clear", "nationality": "US" },
+    { "id": 24, "fullName": "Vũ Phi Yên", "nationality": "VN" },
+    { "id": 25, "fullName": "Rosie Nguyễn", "nationality": "VN" },
+    { "id": 26, "fullName": "Fujiko F. Fujio", "nationality": "JP" },
+    { "id": 27, "fullName": "Yuval Noah Harari", "nationality": "IL" },
+    { "id": 28, "fullName": "Nguyễn Thủy Chung", "nationality": "VN" },
+    { "id": 29, "fullName": "Trần Trọng Kim", "nationality": "VN" },
+    { "id": 30, "fullName": "Jared Diamond", "nationality": "US" },
+    { "id": 31, "fullName": "Trần Tiễn Cao Đăng", "nationality": "VN" },
+    { "id": 32, "fullName": "Stephen Hawking", "nationality": "GB" },
+    { "id": 33, "fullName": "Cao Chi", "nationality": "VN" },
+    { "id": 34, "fullName": "Carl Sagan", "nationality": "US" },
+    { "id": 35, "fullName": "Nguyễn Viết Long", "nationality": "VN" },
+    { "id": 36, "fullName": "Daniel Kahneman", "nationality": "IL" },
+    { "id": 37, "fullName": "Hương Lan", "nationality": "VN" },
+    { "id": 38, "fullName": "Xuân Thanh", "nationality": "VN" },
+    { "id": 39, "fullName": "Viktor E. Frankl", "nationality": "AT" },
+    { "id": 40, "fullName": "Nguyễn Văn Bé", "nationality": "VN" }
+  ],
+  "series": [
+    { "id": 1, "name": "Doraemon", "description": "Các tập truyện Doraemon." }
+  ],
+  "tags": [
+    { "id": 1, "name": "Văn học Việt Nam" },
+    { "id": 2, "name": "Bán chạy" },
+    { "id": 3, "name": "Kinh điển" },
+    { "id": 4, "name": "Thiếu nhi" },
+    { "id": 5, "name": "Văn học nước ngoài" },
+    { "id": 6, "name": "Phát triển bản thân" },
+    { "id": 7, "name": "Kinh doanh" },
+    { "id": 8, "name": "Lịch sử" },
+    { "id": 9, "name": "Khoa học" },
+    { "id": 10, "name": "Tâm lý học" },
+    { "id": 11, "name": "Sách mới" }
+  ],
+  "accounts": [
+    { "id": 1, "clerkId": "mock-customer-001", "email": "minhanh@example.com", "fullName": "Nguyễn Minh Anh" },
+    { "id": 2, "clerkId": "mock-customer-002", "email": "quocbao@example.com", "fullName": "Trần Quốc Bảo" },
+    { "id": 3, "clerkId": "mock-customer-003", "email": "thuha@example.com", "fullName": "Lê Thu Hà" }
+  ],
+  "books": [
+    {
+      "id": 1, "isbn": "9786041000001", "title": "Tôi thấy hoa vàng trên cỏ xanh", "categoryId": 1, "serieId": null, "publisherId": 1,
+      "publicationYear": 2018, "language": "VI", "pageCount": 378, "coverType": "Paperback", "weight": 280, "ageGroup": "Adult",
+      "listPrice": 150000, "salePrice": 125000, "stockQuantity": 120, "status": "Available",
+      "description": "Vietnamese edition published by NXB Trẻ in 2018."
+    },
+    {
+      "id": 2, "isbn": "9786041000002", "title": "Mắt biếc", "categoryId": 1, "serieId": null, "publisherId": 1,
+      "publicationYear": 2019, "language": "VI", "pageCount": 300, "coverType": "Paperback", "weight": 230, "ageGroup": "Adult",
+      "listPrice": 99000, "salePrice": 99000, "stockQuantity": 85, "status": "Available",
+      "description": "Vietnamese edition published by NXB Trẻ in 2019."
+    },
+    {
+      "id": 3, "isbn": "9786041000003", "title": "Số đỏ", "categoryId": 1, "serieId": null, "publisherId": 2,
+      "publicationYear": 2020, "language": "VI", "pageCount": 268, "coverType": "Paperback", "weight": 205, "ageGroup": "Adult",
+      "listPrice": 78000, "salePrice": 78000, "stockQuantity": 42, "status": "Available",
+      "description": "Vietnamese edition published by NXB Văn Học in 2020."
+    },
+    {
+      "id": 4, "isbn": "9786041000004", "title": "Nỗi buồn chiến tranh", "categoryId": 1, "serieId": null, "publisherId": 1,
+      "publicationYear": 2021, "language": "VI", "pageCount": 340, "coverType": "Paperback", "weight": 255, "ageGroup": "Adult",
+      "listPrice": 115000, "salePrice": 115000, "stockQuantity": 6, "status": "Available",
+      "description": "Vietnamese edition published by NXB Trẻ in 2021."
+    },
+    {
+      "id": 5, "isbn": "9786041000005", "title": "Dế Mèn phiêu lưu ký", "categoryId": 5, "serieId": null, "publisherId": 3,
+      "publicationYear": 2022, "language": "VI", "pageCount": 156, "coverType": "Paperback", "weight": 150, "ageGroup": "Children",
+      "listPrice": 68000, "salePrice": 55000, "stockQuantity": 200, "status": "Available",
+      "description": "Vietnamese edition published by NXB Kim Đồng in 2022."
+    },
+    {
+      "id": 6, "isbn": "9786041000006", "title": "Nhà giả kim", "categoryId": 2, "serieId": null, "publisherId": 4,
+      "publicationYear": 2020, "language": "VI", "pageCount": 228, "coverType": "Paperback", "weight": 190, "ageGroup": "Adult",
+      "listPrice": 99000, "salePrice": 79000, "stockQuantity": 150, "status": "Available",
+      "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2020."
+    },
+    {
+      "id": 7, "isbn": "9786041000007", "title": "Rừng Na Uy", "categoryId": 2, "serieId": null, "publisherId": 4,
+      "publicationYear": 2021, "language": "VI", "pageCount": 556, "coverType": "Paperback", "weight": 410, "ageGroup": "Adult",
+      "listPrice": 158000, "salePrice": 158000, "stockQuantity": 64, "status": "Available",
+      "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2021."
+    },
+    {
+      "id": 8, "isbn": "9786041000008", "title": "Trăm năm cô đơn", "categoryId": 2, "serieId": null, "publisherId": 2,
+      "publicationYear": 2019, "language": "VI", "pageCount": 520, "coverType": "Paperback", "weight": 390, "ageGroup": "Adult",
+      "listPrice": 165000, "salePrice": 165000, "stockQuantity": 31, "status": "Available",
+      "description": "Vietnamese edition published by NXB Văn Học in 2019."
+    },
+    {
+      "id": 9, "isbn": "9786041000009", "title": "Hoàng tử bé", "categoryId": 5, "serieId": null, "publisherId": 4,
+      "publicationYear": 2022, "language": "VI", "pageCount": 112, "coverType": "Paperback", "weight": 130, "ageGroup": "Children",
+      "listPrice": 65000, "salePrice": 65000, "stockQuantity": 3, "status": "Available",
+      "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2022."
+    },
+    {
+      "id": 10, "isbn": "9786041000010", "title": "1984", "categoryId": 2, "serieId": null, "publisherId": 4,
+      "publicationYear": 2023, "language": "VI", "pageCount": 412, "coverType": "Paperback", "weight": 320, "ageGroup": "Adult",
+      "listPrice": 160000, "salePrice": 135000, "stockQuantity": 58, "status": "Available",
+      "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2023."
+    },
+    {
+      "id": 11, "isbn": "9786041000011", "title": "Cha giàu cha nghèo", "categoryId": 3, "serieId": null, "publisherId": 1,
+      "publicationYear": 2021, "language": "VI", "pageCount": 336, "coverType": "Paperback", "weight": 270, "ageGroup": "Adult",
+      "listPrice": 109000, "salePrice": 109000, "stockQuantity": 90, "status": "Available",
+      "description": "Vietnamese edition published by NXB Trẻ in 2021."
+    },
+    {
+      "id": 12, "isbn": "9786041000012", "title": "Từ tốt đến vĩ đại", "categoryId": 3, "serieId": null, "publisherId": 1,
+      "publicationYear": 2020, "language": "VI", "pageCount": 456, "coverType": "Paperback", "weight": 350, "ageGroup": "Adult",
+      "listPrice": 225000, "salePrice": 189000, "stockQuantity": 27, "status": "Available",
+      "description": "Vietnamese edition published by NXB Trẻ in 2020."
+    },
+    {
+      "id": 13, "isbn": "9786041000013", "title": "Nghĩ giàu và làm giàu", "categoryId": 3, "serieId": null, "publisherId": 5,
+      "publicationYear": 2019, "language": "VI", "pageCount": 384, "coverType": "Paperback", "weight": 295, "ageGroup": "Adult",
+      "listPrice": 98000, "salePrice": 98000, "stockQuantity": 110, "status": "Available",
+      "description": "Vietnamese edition published by NXB Tổng Hợp TP.HCM in 2019."
+    },
+    {
+      "id": 14, "isbn": "9786041000014", "title": "Đắc nhân tâm", "categoryId": 4, "serieId": null, "publisherId": 5,
+      "publicationYear": 2022, "language": "VI", "pageCount": 320, "coverType": "Paperback", "weight": 250, "ageGroup": "Adult",
+      "listPrice": 108000, "salePrice": 86000, "stockQuantity": 240, "status": "Available",
+      "description": "Vietnamese edition published by NXB Tổng Hợp TP.HCM in 2022."
+    },
+    {
+      "id": 15, "isbn": "9786041000015", "title": "Thói quen nguyên tử", "categoryId": 4, "serieId": null, "publisherId": 6,
+      "publicationYear": 2023, "language": "VI", "pageCount": 368, "coverType": "Paperback", "weight": 290, "ageGroup": "Adult",
+      "listPrice": 159000, "salePrice": 159000, "stockQuantity": 75, "status": "Available",
+      "description": "Vietnamese edition published by NXB Thế Giới in 2023."
+    },
+    {
+      "id": 16, "isbn": "9786041000016", "title": "Tuổi trẻ đáng giá bao nhiêu", "categoryId": 4, "serieId": null, "publisherId": 4,
+      "publicationYear": 2018, "language": "VI", "pageCount": 285, "coverType": "Paperback", "weight": 220, "ageGroup": "YoungAdult",
+      "listPrice": 90000, "salePrice": 90000, "stockQuantity": 4, "status": "Available",
+      "description": "Vietnamese edition published by NXB Hội Nhà Văn in 2018."
+    },
+    {
+      "id": 17, "isbn": "9786041000017", "title": "Doraemon — Tập 1", "categoryId": 5, "serieId": 1, "publisherId": 3,
+      "publicationYear": 2023, "language": "VI", "pageCount": 192, "coverType": "Paperback", "weight": 140, "ageGroup": "Children",
+      "listPrice": 25000, "salePrice": 25000, "stockQuantity": 500, "status": "Available",
+      "description": "Vietnamese edition published by NXB Kim Đồng in 2023."
+    },
+    {
+      "id": 18, "isbn": "9786041000018", "title": "Sapiens: Lược sử loài người", "categoryId": 6, "serieId": null, "publisherId": 7,
+      "publicationYear": 2021, "language": "VI", "pageCount": 560, "coverType": "Paperback", "weight": 430, "ageGroup": "Adult",
+      "listPrice": 299000, "salePrice": 239000, "stockQuantity": 46, "status": "Available",
+      "description": "Vietnamese edition published by NXB Tri Thức in 2021."
+    },
+    {
+      "id": 19, "isbn": "9786041000019", "title": "Việt Nam sử lược", "categoryId": 6, "serieId": null, "publisherId": 2,
+      "publicationYear": 2020, "language": "VI", "pageCount": 620, "coverType": "Paperback", "weight": 470, "ageGroup": "Adult",
+      "listPrice": 175000, "salePrice": 175000, "stockQuantity": 22, "status": "Available",
+      "description": "Vietnamese edition published by NXB Văn Học in 2020."
+    },
+    {
+      "id": 20, "isbn": "9786041000020", "title": "Súng, vi trùng và thép", "categoryId": 6, "serieId": null, "publisherId": 6,
+      "publicationYear": 2022, "language": "VI", "pageCount": 640, "coverType": "Paperback", "weight": 490, "ageGroup": "Adult",
+      "listPrice": 255000, "salePrice": 255000, "stockQuantity": 18, "status": "Available",
+      "description": "Vietnamese edition published by NXB Thế Giới in 2022."
+    },
+    {
+      "id": 21, "isbn": "9786041000021", "title": "Lược sử thời gian", "categoryId": 7, "serieId": null, "publisherId": 1,
+      "publicationYear": 2021, "language": "VI", "pageCount": 260, "coverType": "Paperback", "weight": 210, "ageGroup": "Adult",
+      "listPrice": 115000, "salePrice": 115000, "stockQuantity": 38, "status": "Available",
+      "description": "Vietnamese edition published by NXB Trẻ in 2021."
+    },
+    {
+      "id": 22, "isbn": "9786041000022", "title": "Vũ trụ", "categoryId": 7, "serieId": null, "publisherId": 6,
+      "publicationYear": 2023, "language": "VI", "pageCount": 488, "coverType": "Paperback", "weight": 380, "ageGroup": "Adult",
+      "listPrice": 268000, "salePrice": 229000, "stockQuantity": 2, "status": "Available",
+      "description": "Vietnamese edition published by NXB Thế Giới in 2023."
+    },
+    {
+      "id": 23, "isbn": "9786041000023", "title": "Tư duy nhanh và chậm", "categoryId": 8, "serieId": null, "publisherId": 6,
+      "publicationYear": 2022, "language": "VI", "pageCount": 612, "coverType": "Paperback", "weight": 470, "ageGroup": "Adult",
+      "listPrice": 219000, "salePrice": 219000, "stockQuantity": 52, "status": "Available",
+      "description": "Vietnamese edition published by NXB Thế Giới in 2022."
+    },
+    {
+      "id": 24, "isbn": "9786041000024", "title": "Đi tìm lẽ sống", "categoryId": 8, "serieId": null, "publisherId": 5,
+      "publicationYear": 2021, "language": "VI", "pageCount": 224, "coverType": "Paperback", "weight": 180, "ageGroup": "Adult",
+      "listPrice": 88000, "salePrice": 88000, "stockQuantity": 67, "status": "Available",
+      "description": "Vietnamese edition published by NXB Tổng Hợp TP.HCM in 2021."
+    }
+  ],
+  "bookAuthors": [
+    { "bookId": 1, "authorId": 1, "role": "Author" },
+    { "bookId": 2, "authorId": 1, "role": "Author" },
+    { "bookId": 3, "authorId": 2, "role": "Author" },
+    { "bookId": 4, "authorId": 3, "role": "Author" },
+    { "bookId": 5, "authorId": 4, "role": "Author" },
+    { "bookId": 6, "authorId": 5, "role": "Author" },
+    { "bookId": 6, "authorId": 6, "role": "Translator" },
+    { "bookId": 7, "authorId": 7, "role": "Author" },
+    { "bookId": 7, "authorId": 8, "role": "Translator" },
+    { "bookId": 8, "authorId": 9, "role": "Author" },
+    { "bookId": 8, "authorId": 10, "role": "Translator" },
+    { "bookId": 9, "authorId": 11, "role": "Author" },
+    { "bookId": 9, "authorId": 12, "role": "Translator" },
+    { "bookId": 10, "authorId": 13, "role": "Author" },
+    { "bookId": 10, "authorId": 14, "role": "Translator" },
+    { "bookId": 11, "authorId": 15, "role": "Author" },
+    { "bookId": 11, "authorId": 16, "role": "Translator" },
+    { "bookId": 12, "authorId": 17, "role": "Author" },
+    { "bookId": 12, "authorId": 18, "role": "Translator" },
+    { "bookId": 13, "authorId": 19, "role": "Author" },
+    { "bookId": 13, "authorId": 20, "role": "Translator" },
+    { "bookId": 14, "authorId": 21, "role": "Author" },
+    { "bookId": 14, "authorId": 22, "role": "Translator" },
+    { "bookId": 15, "authorId": 23, "role": "Author" },
+    { "bookId": 15, "authorId": 24, "role": "Translator" },
+    { "bookId": 16, "authorId": 25, "role": "Author" },
+    { "bookId": 17, "authorId": 26, "role": "Author" },
+    { "bookId": 18, "authorId": 27, "role": "Author" },
+    { "bookId": 18, "authorId": 28, "role": "Translator" },
+    { "bookId": 19, "authorId": 29, "role": "Author" },
+    { "bookId": 20, "authorId": 30, "role": "Author" },
+    { "bookId": 20, "authorId": 31, "role": "Translator" },
+    { "bookId": 21, "authorId": 32, "role": "Author" },
+    { "bookId": 21, "authorId": 33, "role": "Translator" },
+    { "bookId": 22, "authorId": 34, "role": "Author" },
+    { "bookId": 22, "authorId": 35, "role": "Translator" },
+    { "bookId": 23, "authorId": 36, "role": "Author" },
+    { "bookId": 23, "authorId": 37, "role": "Translator" },
+    { "bookId": 23, "authorId": 38, "role": "Translator" },
+    { "bookId": 24, "authorId": 39, "role": "Author" },
+    { "bookId": 24, "authorId": 40, "role": "Translator" }
+  ],
+  "bookTags": [
+    { "bookId": 1, "tagId": 1 }, { "bookId": 1, "tagId": 2 },
+    { "bookId": 2, "tagId": 1 }, { "bookId": 2, "tagId": 2 },
+    { "bookId": 3, "tagId": 1 }, { "bookId": 3, "tagId": 3 },
+    { "bookId": 4, "tagId": 1 }, { "bookId": 4, "tagId": 3 },
+    { "bookId": 5, "tagId": 4 }, { "bookId": 5, "tagId": 2 },
+    { "bookId": 6, "tagId": 5 }, { "bookId": 6, "tagId": 2 },
+    { "bookId": 7, "tagId": 5 },
+    { "bookId": 8, "tagId": 5 }, { "bookId": 8, "tagId": 3 },
+    { "bookId": 9, "tagId": 4 }, { "bookId": 9, "tagId": 2 },
+    { "bookId": 10, "tagId": 5 }, { "bookId": 10, "tagId": 3 }, { "bookId": 10, "tagId": 11 },
+    { "bookId": 11, "tagId": 7 }, { "bookId": 11, "tagId": 2 },
+    { "bookId": 12, "tagId": 7 },
+    { "bookId": 13, "tagId": 7 }, { "bookId": 13, "tagId": 2 },
+    { "bookId": 14, "tagId": 6 }, { "bookId": 14, "tagId": 2 },
+    { "bookId": 15, "tagId": 6 }, { "bookId": 15, "tagId": 11 },
+    { "bookId": 16, "tagId": 6 },
+    { "bookId": 17, "tagId": 4 }, { "bookId": 17, "tagId": 2 },
+    { "bookId": 18, "tagId": 8 }, { "bookId": 18, "tagId": 2 },
+    { "bookId": 19, "tagId": 8 },
+    { "bookId": 20, "tagId": 8 },
+    { "bookId": 21, "tagId": 9 },
+    { "bookId": 22, "tagId": 9 }, { "bookId": 22, "tagId": 11 },
+    { "bookId": 23, "tagId": 10 },
+    { "bookId": 24, "tagId": 10 }
+  ],
+  "reviews": [
+    { "id": 1, "bookId": 1, "accountId": 1, "rating": 5, "comment": "Sách đóng gói cẩn thận, giấy đẹp. Nội dung cuốn hút.", "createdAt": "2026-10-12T10:00:00+07:00" },
+    { "id": 2, "bookId": 2, "accountId": 2, "rating": 4, "comment": "Giao hàng nhanh, giá tốt. Bìa hơi cong một chút.", "createdAt": "2026-10-05T10:00:00+07:00" },
+    { "id": 3, "bookId": 5, "accountId": 3, "rating": 5, "comment": "Mua làm quà, bé rất thích.", "createdAt": "2026-09-28T10:00:00+07:00" }
+  ],
+  "orders": [
+    {
+      "id": 1, "accountId": 1, "recipientName": "Nguyễn Minh Anh", "recipientPhone": "0901234567",
+      "street": "12 Nguyễn Văn Cừ", "ward": "Phường 1", "district": "Quận 5", "city": "TP. Hồ Chí Minh",
+      "shippingFee": 0, "status": "Delivered", "paymentMethod": "CreditCard", "paymentStatus": "Paid",
+      "createdAt": "2026-10-20T09:15:00+07:00", "updatedAt": "2026-10-22T14:30:00+07:00"
+    },
+    {
+      "id": 2, "accountId": 2, "recipientName": "Trần Quốc Bảo", "recipientPhone": "0912345678",
+      "street": "25 Trần Hưng Đạo", "ward": "Phường Cửa Nam", "district": "Quận Hoàn Kiếm", "city": "Hà Nội",
+      "shippingFee": 25000, "status": "Shipped", "paymentMethod": "CashOnDelivery", "paymentStatus": "Pending",
+      "createdAt": "2026-10-24T11:05:00+07:00", "updatedAt": "2026-10-25T08:00:00+07:00"
+    },
+    {
+      "id": 3, "accountId": 3, "recipientName": "Lê Thu Hà", "recipientPhone": "0938456789",
+      "street": "8 Bạch Đằng", "ward": "Phường Hải Châu 1", "district": "Quận Hải Châu", "city": "Đà Nẵng",
+      "shippingFee": 25000, "status": "Cancelled", "paymentMethod": "CashOnDelivery", "paymentStatus": "Pending",
+      "createdAt": "2026-10-26T16:40:00+07:00", "updatedAt": "2026-10-26T17:10:00+07:00"
+    }
+  ],
+  "cartItems": [
+    { "accountId": 1, "bookId": 15, "quantity": 1, "createdAt": "2026-11-02T10:00:00+07:00" },
+    { "accountId": 2, "bookId": 17, "quantity": 2, "createdAt": "2026-11-03T13:20:00+07:00" },
+    { "accountId": 3, "bookId": 21, "quantity": 1, "createdAt": "2026-11-04T18:45:00+07:00" }
+  ],
+  "orderItems": [
+    { "orderId": 1, "bookId": 1, "quantity": 2, "price": 125000 },
+    { "orderId": 1, "bookId": 5, "quantity": 1, "price": 55000 },
+    { "orderId": 2, "bookId": 2, "quantity": 1, "price": 99000 },
+    { "orderId": 2, "bookId": 10, "quantity": 1, "price": 135000 },
+    { "orderId": 3, "bookId": 6, "quantity": 1, "price": 79000 }
+  ],
+  "auditLogs": [
+    {
+      "id": 1, "accountId": 1, "action": "OrderCreated", "entityName": "Order", "entityId": 1,
+      "details": { "status": "Pending", "itemCount": 2 },
+      "createdAt": "2026-10-20T09:15:00+07:00"
+    },
+    {
+      "id": 2, "accountId": 1, "action": "OrderStatusChanged", "entityName": "Order", "entityId": 1,
+      "details": { "from": "Shipped", "to": "Delivered" },
+      "createdAt": "2026-10-22T14:30:00+07:00"
+    },
+    {
+      "id": 3, "accountId": 3, "action": "OrderCancelled", "entityName": "Order", "entityId": 3,
+      "details": { "from": "Pending", "to": "Cancelled", "reason": "Customer request" },
+      "createdAt": "2026-10-26T17:10:00+07:00"
+    }
+  ],
+  "addresses": [
+    {
+      "id": 1, "accountId": 1, "isDefault": true, "recipientName": "Nguyễn Minh Anh", "recipientPhone": "0901234567",
+      "street": "12 Nguyễn Văn Cừ", "ward": "Phường 1", "district": "Quận 5", "city": "TP. Hồ Chí Minh",
+      "createdAt": "2026-09-10T10:00:00+07:00", "updatedAt": null
+    },
+    {
+      "id": 2, "accountId": 1, "isDefault": false, "recipientName": "Nguyễn Minh Anh", "recipientPhone": "0901234567",
+      "street": "40 Lê Văn Sỹ", "ward": "Phường 11", "district": "Quận 3", "city": "TP. Hồ Chí Minh",
+      "createdAt": "2026-10-02T12:30:00+07:00", "updatedAt": null
+    },
+    {
+      "id": 3, "accountId": 2, "isDefault": true, "recipientName": "Trần Quốc Bảo", "recipientPhone": "0912345678",
+      "street": "25 Trần Hưng Đạo", "ward": "Phường Cửa Nam", "district": "Quận Hoàn Kiếm", "city": "Hà Nội",
+      "createdAt": "2026-09-18T15:00:00+07:00", "updatedAt": null
+    },
+    {
+      "id": 4, "accountId": 3, "isDefault": true, "recipientName": "Lê Thu Hà", "recipientPhone": "0938456789",
+      "street": "8 Bạch Đằng", "ward": "Phường Hải Châu 1", "district": "Quận Hải Châu", "city": "Đà Nẵng",
+      "createdAt": "2026-09-28T09:45:00+07:00", "updatedAt": null
+    }
+  ],
+  "bookImages": [
+    { "id": 1, "bookId": 1, "imageKey": "https://www.nxbtre.com.vn/Images/Book/NXBTreStoryFull_02482010_104821.jpg", "sortOrder": 0 },
+    { "id": 2, "bookId": 1, "imageKey": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuvrlx3FToo8KesdMoRUX6bmFFrfkLM4Ow-pebeUNdC7aKuQ1ATE2qsP9j&s=10", "sortOrder": 1 },
+    { "id": 3, "bookId": 2, "imageKey": "https://www.nxbtre.com.vn/Images/Book/nxbtre_full_06402022_014041.jpg", "sortOrder": 0 },
+    { "id": 4, "bookId": 5, "imageKey": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZuR9PdxI4pNp-QDSshzBCADK24men9Cr0ZmWJDM38cb_ILDTk9HyN6A4&s=10", "sortOrder": 0 },
+    { "id": 5, "bookId": 6, "imageKey": "https://upload.wikimedia.org/wikipedia/vi/9/9c/Nh%C3%A0_gi%E1%BA%A3_kim_%28s%C3%A1ch%29.jpg?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=original", "sortOrder": 0 }
+  ],
+  "inventoryTransactions": [
+    {
+      "id": 1, "bookId": 1, "orderId": 1, "accountId": 1, "quantityChange": -2, "balanceAfter": 120,
+      "reason": "Sale", "note": "Đã hoàn tất đơn hàng 1", "createdAt": "2026-10-20T09:20:00+07:00"
+    },
+    {
+      "id": 2, "bookId": 5, "orderId": 1, "accountId": 1, "quantityChange": -1, "balanceAfter": 200,
+      "reason": "Sale", "note": "Đã hoàn tất đơn hàng 1", "createdAt": "2026-10-20T09:20:00+07:00"
+    },
+    {
+      "id": 3, "bookId": 2, "orderId": 2, "accountId": 2, "quantityChange": -1, "balanceAfter": 85,
+      "reason": "Sale", "note": "Đã hoàn tất đơn hàng 2", "createdAt": "2026-10-24T11:10:00+07:00"
+    },
+    {
+      "id": 4, "bookId": 10, "orderId": 2, "accountId": 2, "quantityChange": -1, "balanceAfter": 58,
+      "reason": "Sale", "note": "Đã hoàn tất đơn hàng 2", "createdAt": "2026-10-24T11:10:00+07:00"
+    },
+    {
+      "id": 5, "bookId": 6, "orderId": 3, "accountId": 3, "quantityChange": -1, "balanceAfter": 149,
+      "reason": "Sale", "note": "Đã đặt giữ cho đơn hàng 3", "createdAt": "2026-10-26T16:45:00+07:00"
+    },
+    {
+      "id": 6, "bookId": 6, "orderId": 3, "accountId": 3, "quantityChange": 1, "balanceAfter": 150,
+      "reason": "OrderCancelled", "note": "Bổ sung hàng sau khi đơn hàng 3 bị hủy", "createdAt": "2026-10-26T17:10:00+07:00"
+    },
+    {
+      "id": 7, "bookId": 22, "orderId": null, "accountId": null, "quantityChange": -1, "balanceAfter": 2,
+      "reason": "Adjustment", "note": "Hiệu chỉnh kiểm kê", "createdAt": "2026-10-28T08:00:00+07:00"
+    }
+  ]
+}
