@@ -5,7 +5,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const metadata: Metadata = { title: "Đăng ký" };
 
-/** Clerk's sign-up flow (email/password or Google, then email verification). */
+/** Clerk's sign-up flow (full name, email/password or Google, then email verification). */
 export default function RegisterPage() {
   return (
     <div className="container-page flex justify-center py-16">

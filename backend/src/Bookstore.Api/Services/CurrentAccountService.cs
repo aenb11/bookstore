@@ -43,7 +43,17 @@ public partial class CurrentAccountService(
 
             var fullName = principal?.FindFirst("full_name")?.Value;
             if (string.IsNullOrWhiteSpace(fullName))
+            {
+                var firstName = principal?.FindFirst("first_name")?.Value;
+                var lastName = principal?.FindFirst("last_name")?.Value;
+                fullName = string.Join(
+                    ' ',
+                    new[] { firstName, lastName }.Where(name => !string.IsNullOrWhiteSpace(name))
+                );
+            }
+            if (string.IsNullOrWhiteSpace(fullName))
                 fullName = email.Split('@')[0];
+            fullName = fullName.Trim();
 
             await db.Accounts.AddAsync(
                 new Account
