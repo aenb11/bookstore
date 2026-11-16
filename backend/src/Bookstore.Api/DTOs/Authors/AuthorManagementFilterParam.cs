@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using Bookstore.Api.Common.Enums;
 
 namespace Bookstore.Api.DTOs.Authors;
@@ -10,7 +9,7 @@ public enum AuthorManagementSortBy
     UpdatedAt,
 }
 
-public class AuthorManagementFilterParam : AuthorFilterParam, IValidatableObject
+public class AuthorManagementFilterParam : AuthorFilterParam
 {
     public DateTimeOffset? CreatedFrom { get; set; }
     public DateTimeOffset? CreatedTo { get; set; }
@@ -20,23 +19,4 @@ public class AuthorManagementFilterParam : AuthorFilterParam, IValidatableObject
 
     public AuthorManagementSortBy SortBy { get; set; } = AuthorManagementSortBy.Name;
     public SortOrder SortOrder { get; set; } = SortOrder.Ascending;
-
-    public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-    {
-        if (CreatedFrom > CreatedTo)
-        {
-            yield return new ValidationResult(
-                "CreatedAtFrom cannot be later than CreatedAtTo.",
-                [nameof(CreatedFrom), nameof(CreatedTo)]
-            );
-        }
-
-        if (UpdatedFrom > UpdatedTo)
-        {
-            yield return new ValidationResult(
-                "UpdatedAtFrom cannot be later than UpdatedAtTo.",
-                [nameof(UpdatedFrom), nameof(UpdatedTo)]
-            );
-        }
-    }
 }
