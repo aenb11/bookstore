@@ -20,24 +20,23 @@ internal class ReviewService(AppDbContext ctx, ReviewOperationsService reviewOpe
         CancellationToken ct = default
     )
     {
-        var bookExists = await ctx.Books.AnyAsync(
-            b =>
-                b.Id == reviewPostDto.BookId
-                && !b.IsDeleted
-                && (b.Status == BookStatus.Available || b.Status == BookStatus.Discontinued),
-            ct
-        );
-        if (!bookExists)
-        {
-            throw new NotFoundException($"Book with ID {reviewPostDto.BookId} was not found.");
-        }
+        var target =
+            await ctx
+                .Books.Where(b => b.Id == reviewPostDto.BookId && !b.IsDeleted)
+                .Select(b => new
+                {
+                    b.Status,
+                    HasReviewed = ctx.Reviews.Any(r =>
+                        r.BookId == b.Id && r.AccountId == currentAccountId && !r.IsDeleted
+                    ),
+                })
+                .FirstOrDefaultAsync(ct)
+            ?? throw new NotFoundException($"Book with ID {reviewPostDto.BookId} was not found.");
 
-        var hasReviewed = await ctx.Reviews.AnyAsync(
-            r =>
-                r.BookId == reviewPostDto.BookId && r.AccountId == currentAccountId && !r.IsDeleted,
-            ct
-        );
-        if (hasReviewed)
+        if (target.Status != BookStatus.Available && target.Status != BookStatus.Discontinued)
+            throw new BussinessException("Reviews can only be submitted for available books.");
+
+        if (target.HasReviewed)
             throw new ConflictException("You have already reviewed this book.");
 
         await using var transaction = await ctx.Database.BeginTransactionAsync(ct);
@@ -68,7 +67,15 @@ internal class ReviewService(AppDbContext ctx, ReviewOperationsService reviewOpe
     {
         var review =
             await ctx.Reviews.FirstOrDefaultAsync(
-                r => r.Id == reviewId && r.AccountId == currentAccountId && !r.IsDeleted,
+                r =>
+                    !r.Book.IsDeleted
+                    && (
+                        r.Book.Status == BookStatus.Available
+                        || r.Book.Status == BookStatus.Discontinued
+                    )
+                    && r.Id == reviewId
+                    && r.AccountId == currentAccountId
+                    && !r.IsDeleted,
                 ct
             ) ?? throw new NotFoundException($"Review with ID {reviewId} not found.");
 
@@ -83,7 +90,15 @@ internal class ReviewService(AppDbContext ctx, ReviewOperationsService reviewOpe
     {
         return await ctx
             .Reviews.AsNoTracking()
-            .Where(r => r.BookId == bookId && !r.IsDeleted)
+            .Where(r =>
+                !r.Book.IsDeleted
+                && (
+                    r.Book.Status == BookStatus.Available
+                    || r.Book.Status == BookStatus.Discontinued
+                )
+                && r.BookId == bookId
+                && !r.IsDeleted
+            )
             .ApplyBaseFilter(filterParam)
             .ApplySort(filterParam)
             .Select(ReviewProjection.ToResponseDto)
@@ -99,7 +114,15 @@ internal class ReviewService(AppDbContext ctx, ReviewOperationsService reviewOpe
     {
         return await ctx
             .Reviews.AsNoTracking()
-            .Where(r => r.AccountId == accountId && !r.IsDeleted)
+            .Where(r =>
+                !r.Book.IsDeleted
+                && (
+                    r.Book.Status == BookStatus.Available
+                    || r.Book.Status == BookStatus.Discontinued
+                )
+                && r.AccountId == accountId
+                && !r.IsDeleted
+            )
             .OrderByDescending(r => r.CreatedAt)
             .Select(ReviewProjection.ToResponseDto)
             .ToPagedResultAsync(pageNumber, pageSize, ct);
@@ -114,7 +137,12 @@ internal class ReviewService(AppDbContext ctx, ReviewOperationsService reviewOpe
     {
         var review =
             await ctx.Reviews.FirstOrDefaultAsync(
-                r => r.Id == reviewId && r.AccountId == currentAccountId && !r.IsDeleted,
+                r =>
+                    !r.Book.IsDeleted
+                    && r.Book.Status == BookStatus.Available
+                    && r.Id == reviewId
+                    && r.AccountId == currentAccountId
+                    && !r.IsDeleted,
                 ct
             ) ?? throw new NotFoundException($"Review with ID {reviewId} not found.");
 
