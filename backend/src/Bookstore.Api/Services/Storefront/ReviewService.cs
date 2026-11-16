@@ -4,21 +4,34 @@ using Bookstore.Api.Common.Projections;
 using Bookstore.Api.DTOs.Reviews;
 using Bookstore.Api.Extensions;
 using Bookstore.Api.Queries;
+using Bookstore.Api.Services.Common;
 using Bookstore.Data;
 using Bookstore.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Storefront;
 
-public class ReviewService(AppDbContext ctx) : IReviewService
+internal class ReviewService(AppDbContext ctx, ReviewOperationsService reviewOperationsService)
+    : IReviewService
 {
     public async Task<ReviewResponseDto> CreateReviewAsync(
         int currentAccountId,
-        string accountFullName,
         ReviewPostDto reviewPostDto,
         CancellationToken ct = default
     )
     {
+        var bookExists = await ctx.Books.AnyAsync(
+            b =>
+                b.Id == reviewPostDto.BookId
+                && !b.IsDeleted
+                && (b.Status == BookStatus.Available || b.Status == BookStatus.Discontinued),
+            ct
+        );
+        if (!bookExists)
+        {
+            throw new NotFoundException($"Book with ID {reviewPostDto.BookId} was not found.");
+        }
+
         var hasReviewed = await ctx.Reviews.AnyAsync(
             r =>
                 r.BookId == reviewPostDto.BookId && r.AccountId == currentAccountId && !r.IsDeleted,
@@ -27,16 +40,22 @@ public class ReviewService(AppDbContext ctx) : IReviewService
         if (hasReviewed)
             throw new ConflictException("You have already reviewed this book.");
 
+        await using var transaction = await ctx.Database.BeginTransactionAsync(ct);
+
         var review = new Review
         {
             BookId = reviewPostDto.BookId,
             AccountId = currentAccountId,
             Rating = reviewPostDto.Rating,
-            Comment = reviewPostDto.Comment,
+            Comment = reviewPostDto.Comment?.Trim(),
         };
 
-        await ctx.Reviews.AddAsync(review, ct);
+        ctx.Reviews.Add(review);
         await ctx.SaveChangesAsync(ct);
+
+        await reviewOperationsService.RecalculateBookRatingAsync(reviewPostDto.BookId, ct);
+
+        await transaction.CommitAsync(ct);
 
         return ReviewProjection.CompileToResponseDto(review);
     }
@@ -53,8 +72,7 @@ public class ReviewService(AppDbContext ctx) : IReviewService
                 ct
             ) ?? throw new NotFoundException($"Review with ID {reviewId} not found.");
 
-        ctx.Reviews.Remove(review);
-        await ctx.SaveChangesAsync(ct);
+        await reviewOperationsService.ExecuteDeleteAndRecalculateAsync(review, ct);
     }
 
     public async Task<PagedResult<ReviewResponseDto>> GetReviewsAsync(
@@ -90,22 +108,34 @@ public class ReviewService(AppDbContext ctx) : IReviewService
     public async Task<ReviewResponseDto> UpdateReviewAsync(
         int reviewId,
         int currentAccountId,
-        string accountFullName,
         ReviewPutDto dto,
         CancellationToken ct = default
     )
     {
         var review =
-            await ctx.Reviews.FirstOrDefaultAsync(r => r.Id == reviewId && !r.IsDeleted, ct)
-            ?? throw new NotFoundException($"Review with ID {reviewId} not found.");
+            await ctx.Reviews.FirstOrDefaultAsync(
+                r => r.Id == reviewId && r.AccountId == currentAccountId && !r.IsDeleted,
+                ct
+            ) ?? throw new NotFoundException($"Review with ID {reviewId} not found.");
 
-        if (review.AccountId != currentAccountId)
-            throw new UnauthorizedException("You are not authorized to update this review.");
+        var isRatingChanged = review.Rating != dto.Rating;
 
         review.Rating = dto.Rating;
-        review.Comment = dto.Comment;
+        review.Comment = dto.Comment?.Trim();
 
-        await ctx.SaveChangesAsync(ct);
+        if (isRatingChanged)
+        {
+            await using var transaction = await ctx.Database.BeginTransactionAsync(ct);
+
+            await ctx.SaveChangesAsync(ct);
+            await reviewOperationsService.RecalculateBookRatingAsync(review.BookId, ct);
+
+            await transaction.CommitAsync(ct);
+        }
+        else
+        {
+            await ctx.SaveChangesAsync(ct);
+        }
 
         return ReviewProjection.CompileToResponseDto(review);
     }

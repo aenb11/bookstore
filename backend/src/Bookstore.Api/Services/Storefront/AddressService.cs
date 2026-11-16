@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Storefront;
 
-public class AddressService(AppDbContext ctx) : IAddressService
+internal class AddressService(AppDbContext ctx) : IAddressService
 {
     public async Task<AddressResponseDto> CreateAsync(
         int currentAccountId,

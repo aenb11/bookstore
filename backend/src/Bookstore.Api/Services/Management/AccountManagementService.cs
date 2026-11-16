@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Management;
 
-public class AccountManagementService(AppDbContext ctx) : IAccountManagementService
+internal class AccountManagementService(AppDbContext ctx) : IAccountManagementService
 {
     public async Task<PagedResult<AccountDetailResponseDto>> GetAllAsync(
         AccountManagementFilterParam f,

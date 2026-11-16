@@ -11,7 +11,7 @@ using Npgsql;
 
 namespace Bookstore.Api.Services.Management;
 
-public class CategoryManagementService(AppDbContext ctx) : ICategoryManagementService
+internal class CategoryManagementService(AppDbContext ctx) : ICategoryManagementService
 {
     public async Task<CategoryDetailResponseDto> CreateCategoryAsync(
         CategoryPostDto categoryPostDto,

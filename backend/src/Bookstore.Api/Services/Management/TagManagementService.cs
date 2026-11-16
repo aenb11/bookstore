@@ -11,7 +11,7 @@ using Npgsql;
 
 namespace Bookstore.Api.Services.Management;
 
-public class TagManagementService(AppDbContext ctx) : ITagManagementService
+internal class TagManagementService(AppDbContext ctx) : ITagManagementService
 {
     public async Task<TagDetailResponseDto> CreateTagAsync(
         TagPostDto tagPostDto,

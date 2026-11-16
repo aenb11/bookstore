@@ -11,7 +11,7 @@ using Npgsql;
 
 namespace Bookstore.Api.Services.Management;
 
-public class SerieManagementService(AppDbContext ctx) : ISerieManagementService
+internal class SerieManagementService(AppDbContext ctx) : ISerieManagementService
 {
     public async Task<SerieDetailResponseDto> CreateSerieAsync(
         SeriePostDto seriePostDto,

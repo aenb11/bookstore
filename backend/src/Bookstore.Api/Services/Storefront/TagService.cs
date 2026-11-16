@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Storefront;
 
-public class TagService(AppDbContext ctx) : ITagService
+internal class TagService(AppDbContext ctx) : ITagService
 {
     public async Task<PagedResult<TagResponseDto>> GetTagsAsync(
         TagFilterParam f,

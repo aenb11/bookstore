@@ -7,7 +7,6 @@ public interface IReviewService
 {
     Task<ReviewResponseDto> CreateReviewAsync(
         int currentAccountId,
-        string accountFullName,
         ReviewPostDto reviewPostDto,
         CancellationToken ct = default
     );
@@ -15,7 +14,6 @@ public interface IReviewService
     Task<ReviewResponseDto> UpdateReviewAsync(
         int reviewId,
         int currentAccountId,
-        string accountFullName,
         ReviewPutDto reviewPatchDto,
         CancellationToken ct = default
     );
@@ -29,7 +27,6 @@ public interface IReviewService
         CancellationToken ct = default
     );
 
-    //TODO: Use this method in /books/{bookId}/reviews endpoint
     Task<PagedResult<ReviewResponseDto>> GetReviewsAsync(
         int bookId,
         ReviewFilterParam filterParam,

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Storefront;
 
-public class CategoryService(AppDbContext ctx) : ICategoryService
+internal class CategoryService(AppDbContext ctx) : ICategoryService
 {
     public Task<PagedResult<CategoryResponseDto>> GetCategoriesAsync(
         CategoryFilterParam f,
