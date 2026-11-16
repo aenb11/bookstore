@@ -8,7 +8,7 @@ namespace Bookstore.Api.Controllers.Management;
 
 [ApiController]
 [Route("api/v1/management/series")]
-[Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
+[Authorize(Roles = $"{AppRole.Admin},{AppRole.Staff}")]
 [Tags("Management - Series")]
 public class SerieController(ISerieManagementService serieManagementService) : ControllerBase
 {

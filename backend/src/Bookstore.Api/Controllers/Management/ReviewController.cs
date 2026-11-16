@@ -8,7 +8,7 @@ namespace Bookstore.Api.Controllers.Management;
 
 [ApiController]
 [Route("api/v1/management/reviews")]
-[Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
+[Authorize(Roles = $"{AppRole.Admin},{AppRole.Staff}")]
 [Tags("Management - Reviews")]
 public class ReviewController(IReviewManagementService reviewManagementService) : ControllerBase
 {

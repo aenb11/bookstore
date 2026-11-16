@@ -8,7 +8,7 @@ namespace Bookstore.Api.Controllers.Management;
 
 [ApiController]
 [Route("api/v1/management/categories")]
-[Authorize(Roles = $"{AppRole.Admin}, {AppRole.Staff}")]
+[Authorize(Roles = $"{AppRole.Admin},{AppRole.Staff}")]
 [Tags("Management - Categories")]
 public class CategoryController(ICategoryManagementService categoryManagementService)
     : ControllerBase
