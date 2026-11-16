@@ -40,7 +40,12 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
             b.HasCheckConstraint("ck_books_publication_year", "publication_year >= 0");
             b.HasCheckConstraint("ck_books_weight", "weight >= 0");
             b.HasCheckConstraint("ck_books_page_count", "page_count >= 0");
-            ;
+            b.HasCheckConstraint("ck_books_total_reviews", "total_reviews >= 0");
+            b.HasCheckConstraint(
+                "ck_books_average_rating",
+                "average_rating >= 0 AND average_rating <= 5"
+            );
+            b.HasCheckConstraint("ck_books_sold_count", "sold_count >= 0");
         });
 
         builder
@@ -61,7 +66,19 @@ public class BookConfiguration : IEntityTypeConfiguration<Book>
             .HasForeignKey(b => b.SerieId)
             .OnDelete(DeleteBehavior.Restrict);
 
-        builder.HasMany(b => b.Authors).WithMany(a => a.Books).UsingEntity<BookAuthor>();
+        builder
+            .HasMany(b => b.Authors)
+            .WithMany(a => a.Books)
+            .UsingEntity<BookAuthor>(
+                j =>
+                    j.HasOne(ba => ba.Author)
+                        .WithMany(a => a.BookAuthors)
+                        .HasForeignKey(ba => ba.AuthorId),
+                j =>
+                    j.HasOne(ba => ba.Book)
+                        .WithMany(b => b.BookAuthors)
+                        .HasForeignKey(ba => ba.BookId)
+            );
         builder.HasMany(b => b.Tags).WithMany(t => t.Books).UsingEntity<BookTag>();
     }
 }

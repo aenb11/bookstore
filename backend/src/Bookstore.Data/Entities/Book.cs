@@ -45,6 +45,10 @@ public class Book : IAuditableEntity, ISoftDeletableEntity
     public BookStatus Status { get; set; } = BookStatus.Available;
     public string? Description { get; set; }
 
+    public int TotalReviews { get; set; } = 0;
+    public double AverageRating { get; set; } = 0.0;
+    public int SoldCount { get; set; } = 0;
+
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset? UpdatedAt { get; set; }
     public bool IsDeleted { get; set; } = false;
@@ -55,6 +59,7 @@ public class Book : IAuditableEntity, ISoftDeletableEntity
     public Serie? Serie { get; set; }
 
     public ICollection<Author> Authors { get; set; } = [];
+    public ICollection<BookAuthor> BookAuthors { get; set; } = [];
     public ICollection<BookImage> Images { get; set; } = [];
     public ICollection<Tag> Tags { get; set; } = [];
 }
