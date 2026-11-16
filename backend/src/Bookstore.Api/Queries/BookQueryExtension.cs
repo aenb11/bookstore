@@ -1,0 +1,69 @@
+using Bookstore.Api.Common.Enums;
+using Bookstore.Api.Common.Extensions;
+using Bookstore.Api.DTOs.Books;
+using Bookstore.Data.Entities;
+
+namespace Bookstore.Api.Queries;
+
+public static class BookQueryExtension
+{
+    public static IQueryable<Book> ApplyBaseFilter(this IQueryable<Book> q, BookFilterParam f)
+    {
+        return q.WhereIf(f.Title is not null, x => x.Title.Contains(f.Title!))
+            .WhereIf(
+                f.AuthorFullName is not null,
+                x => x.Authors.Any(a => a.FullName.Contains(f.AuthorFullName!))
+            )
+            .WhereIf(f.CategoryId.HasValue, x => x.CategoryId == f.CategoryId)
+            .WhereIf(f.SerieId.HasValue, x => x.SerieId == f.SerieId)
+            .WhereIf(f.PublisherId.HasValue, x => x.PublisherId == f.PublisherId)
+            .WhereIf(
+                f.PublicationYearFrom.HasValue,
+                x => x.PublicationYear >= f.PublicationYearFrom
+            )
+            .WhereIf(f.PublicationYearTo.HasValue, x => x.PublicationYear <= f.PublicationYearTo)
+            .WhereIf(f.PriceFrom.HasValue, x => x.SalePrice >= f.PriceFrom)
+            .WhereIf(f.PriceTo.HasValue, x => x.SalePrice <= f.PriceTo)
+            .WhereIf(f.AverageRatingFrom.HasValue, x => x.AverageRating >= f.AverageRatingFrom)
+            .WhereIf(
+                f.IsOnStock.HasValue,
+                x => f.IsOnStock!.Value ? x.StockQuantity > 0 : x.StockQuantity == 0
+            )
+            .WhereIf(
+                f.IsDiscounted.HasValue,
+                x => f.IsDiscounted!.Value ? x.SalePrice < x.ListPrice : x.SalePrice == x.ListPrice
+            );
+    }
+
+    public static IQueryable<Book> ApplyBaseSort(this IQueryable<Book> q, BookFilterParam f)
+    {
+        var isDescending = f.SortOrder == SortOrder.Descending;
+
+        var baseOrdered = q.OrderByDescending(t => t.StockQuantity > 0);
+
+        var ordered = f.SortBy switch
+        {
+            BookSortBy.Title => isDescending
+                ? baseOrdered.ThenByDescending(t => t.Title)
+                : baseOrdered.ThenBy(t => t.Title),
+            BookSortBy.Price => isDescending
+                ? baseOrdered.ThenByDescending(t => t.SalePrice)
+                : baseOrdered.ThenBy(t => t.SalePrice),
+            BookSortBy.Rating => isDescending
+                ? baseOrdered.ThenByDescending(t => t.AverageRating)
+                : baseOrdered.ThenBy(t => t.AverageRating),
+            BookSortBy.SoldCount => isDescending
+                ? baseOrdered.ThenByDescending(t => t.SoldCount)
+                : baseOrdered.ThenBy(t => t.SoldCount),
+            BookSortBy.PublicationYear => isDescending
+                ? baseOrdered.ThenByDescending(t => t.PublicationYear)
+                : baseOrdered.ThenBy(t => t.PublicationYear),
+            BookSortBy.CreatedAt => isDescending
+                ? baseOrdered.ThenByDescending(t => t.CreatedAt)
+                : baseOrdered.ThenBy(t => t.CreatedAt),
+            _ => throw new ArgumentOutOfRangeException($"Invalid sort by value: {f.SortBy}"),
+        };
+
+        return ordered.ThenByDescending(t => t.Id);
+    }
+}
