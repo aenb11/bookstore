@@ -31,6 +31,7 @@ public static class DependencyInjection
         services.AddScoped<IAuthorManagementService, AuthorManagementService>();
         services.AddScoped<IPublisherManagementService, PublisherManagementService>();
         services.AddScoped<IAccountManagementService, AccountManagementService>();
+        services.AddScoped<IBookManagementService, BookManagementService>();
 
         return services;
     }

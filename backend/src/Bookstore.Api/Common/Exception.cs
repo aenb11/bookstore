@@ -20,3 +20,6 @@ public class ForbiddenException(string message, string code = "FORBIDDEN")
 
 public class BussinessException(string message, string code = "BUSINESS_RULE_VIOLATION")
     : AppException(message, StatusCodes.Status422UnprocessableEntity, code);
+
+public class BadRequestException(string message, string code = "BAD_REQUEST")
+    : AppException(message, StatusCodes.Status400BadRequest, code);

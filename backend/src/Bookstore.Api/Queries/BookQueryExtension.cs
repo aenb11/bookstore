@@ -7,7 +7,11 @@ namespace Bookstore.Api.Queries;
 
 public static class BookQueryExtension
 {
-    public static IQueryable<Book> ApplyBaseFilter(this IQueryable<Book> q, BookFilterParam f)
+    public static IQueryable<Book> ApplyBaseFilter<TSortBy>(
+        this IQueryable<Book> q,
+        BookFilterParamBase<TSortBy> f
+    )
+        where TSortBy : struct, Enum
     {
         return q.WhereIf(f.Title is not null, x => x.Title.Contains(f.Title!))
             .WhereIf(
@@ -33,6 +37,20 @@ public static class BookQueryExtension
                 f.IsDiscounted.HasValue,
                 x => f.IsDiscounted!.Value ? x.SalePrice < x.ListPrice : x.SalePrice == x.ListPrice
             );
+    }
+
+    public static IQueryable<Book> ApplyManagementFilter(
+        this IQueryable<Book> q,
+        BookManagementFilterParam f
+    )
+    {
+        return q.ApplyBaseFilter(f)
+            .WhereIf(
+                !string.IsNullOrWhiteSpace(f.Isbn),
+                x => x.Isbn != null && x.Isbn.Contains(f.Isbn!)
+            )
+            .WhereIf(f.Status.HasValue, x => x.Status == f.Status)
+            .WhereIf(f.IsDeleted.HasValue, x => x.IsDeleted == f.IsDeleted);
     }
 
     public static IQueryable<Book> ApplyBaseSort(this IQueryable<Book> q, BookFilterParam f)
@@ -61,6 +79,45 @@ public static class BookQueryExtension
             BookSortBy.CreatedAt => isDescending
                 ? baseOrdered.ThenByDescending(t => t.CreatedAt)
                 : baseOrdered.ThenBy(t => t.CreatedAt),
+            _ => throw new ArgumentOutOfRangeException($"Invalid sort by value: {f.SortBy}"),
+        };
+
+        return ordered.ThenByDescending(t => t.Id);
+    }
+
+    public static IQueryable<Book> ApplyManagementSort(
+        this IQueryable<Book> q,
+        BookManagementFilterParam f
+    )
+    {
+        var isDescending = f.SortOrder == SortOrder.Descending;
+
+        var ordered = f.SortBy switch
+        {
+            BookManagementSortBy.Title => isDescending
+                ? q.OrderByDescending(t => t.Title)
+                : q.OrderBy(t => t.Title),
+            BookManagementSortBy.Price => isDescending
+                ? q.OrderByDescending(t => t.SalePrice)
+                : q.OrderBy(t => t.SalePrice),
+            BookManagementSortBy.Rating => isDescending
+                ? q.OrderByDescending(t => t.AverageRating)
+                : q.OrderBy(t => t.AverageRating),
+            BookManagementSortBy.SoldCount => isDescending
+                ? q.OrderByDescending(t => t.SoldCount)
+                : q.OrderBy(t => t.SoldCount),
+            BookManagementSortBy.PublicationYear => isDescending
+                ? q.OrderByDescending(t => t.PublicationYear)
+                : q.OrderBy(t => t.PublicationYear),
+            BookManagementSortBy.StockQuantity => isDescending
+                ? q.OrderByDescending(t => t.StockQuantity)
+                : q.OrderBy(t => t.StockQuantity),
+            BookManagementSortBy.CreatedAt => isDescending
+                ? q.OrderByDescending(t => t.CreatedAt)
+                : q.OrderBy(t => t.CreatedAt),
+            BookManagementSortBy.UpdatedAt => isDescending
+                ? q.OrderByDescending(t => t.UpdatedAt)
+                : q.OrderBy(t => t.UpdatedAt),
             _ => throw new ArgumentOutOfRangeException($"Invalid sort by value: {f.SortBy}"),
         };
 
