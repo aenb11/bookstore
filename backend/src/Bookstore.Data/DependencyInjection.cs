@@ -1,3 +1,4 @@
+using Bookstore.Data.Seeders;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddDataInfrastructure(
         this IServiceCollection services,
-        IConfiguration configuration
+        IConfiguration configuration,
+        bool isDevelopment
     )
     {
         var connectionString = configuration.GetConnectionString("DefaultConnection");
@@ -24,6 +26,19 @@ public static class DependencyInjection
                 }
             );
             options.UseSnakeCaseNamingConvention();
+
+            if (isDevelopment)
+            {
+                options.EnableSensitiveDataLogging();
+                options.UseAsyncSeeding(DevDataSeeder.SeedAsync);
+                options.UseSeeding(
+                    (ctx, _) =>
+                        DevDataSeeder
+                            .SeedAsync(ctx, _, CancellationToken.None)
+                            .GetAwaiter()
+                            .GetResult()
+                );
+            }
         });
 
         return services;
