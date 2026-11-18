@@ -543,6 +543,12 @@ namespace Bookstore.Data.Migrations
                         maxLength: 1000,
                         nullable: true
                     ),
+                    total_reviews = table.Column<int>(type: "integer", nullable: false),
+                    average_rating = table.Column<double>(
+                        type: "double precision",
+                        nullable: false
+                    ),
+                    sold_count = table.Column<int>(type: "integer", nullable: false),
                     created_at = table.Column<DateTimeOffset>(
                         type: "timestamp with time zone",
                         nullable: false
@@ -565,6 +571,10 @@ namespace Bookstore.Data.Migrations
                         "age_group IN ('Everyone','Children','YoungAdult','Adult')"
                     );
                     table.CheckConstraint(
+                        "ck_books_average_rating",
+                        "average_rating >= 0 AND average_rating <= 5"
+                    );
+                    table.CheckConstraint(
                         "ck_books_cover_type",
                         "cover_type IN ('Hardcover','Paperback')"
                     );
@@ -575,11 +585,13 @@ namespace Bookstore.Data.Migrations
                         "list_price >= 0 AND sale_price >= 0 AND sale_price <= list_price"
                     );
                     table.CheckConstraint("ck_books_publication_year", "publication_year >= 0");
+                    table.CheckConstraint("ck_books_sold_count", "sold_count >= 0");
                     table.CheckConstraint(
                         "ck_books_status",
                         "status IN ('Draft','Available','Archived','Discontinued')"
                     );
                     table.CheckConstraint("ck_books_stock_quantity", "stock_quantity >= 0");
+                    table.CheckConstraint("ck_books_total_reviews", "total_reviews >= 0");
                     table.CheckConstraint("ck_books_weight", "weight >= 0");
                     table.ForeignKey(
                         name: "fk_books_categories_category_id",

@@ -18,4 +18,5 @@ public class Author : IAuditableEntity, ISoftDeletableEntity
     public DateTimeOffset? DeletedAt { get; set; }
 
     public ICollection<Book> Books { get; set; } = [];
+    public ICollection<BookAuthor> BookAuthors { get; set; } = [];
 }

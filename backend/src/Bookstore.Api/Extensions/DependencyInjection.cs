@@ -1,4 +1,5 @@
 using Bookstore.Api.Services;
+using Bookstore.Api.Services.Common;
 using Bookstore.Api.Services.Management;
 using Bookstore.Api.Services.Storage;
 using Bookstore.Api.Services.Storefront;
@@ -12,6 +13,8 @@ public static class DependencyInjection
         services.AddScoped<ICurrentAccountService, CurrentAccountService>();
         services.AddSingleton<IStorageService, LocalStorageService>();
 
+        services.AddScoped<ReviewOperationsService>();
+
         services.AddScoped<IReviewService, ReviewService>();
         services.AddScoped<ITagService, TagService>();
         services.AddScoped<ICategoryService, CategoryService>();
@@ -19,6 +22,7 @@ public static class DependencyInjection
         services.AddScoped<IAuthorService, AuthorService>();
         services.AddScoped<IPublisherService, PublisherService>();
         services.AddScoped<IAddressService, AddressService>();
+        services.AddScoped<IBookService, BookService>();
 
         services.AddScoped<IReviewManagementService, ReviewManagementService>();
         services.AddScoped<ITagManagementService, TagManagementService>();
@@ -27,6 +31,7 @@ public static class DependencyInjection
         services.AddScoped<IAuthorManagementService, AuthorManagementService>();
         services.AddScoped<IPublisherManagementService, PublisherManagementService>();
         services.AddScoped<IAccountManagementService, AccountManagementService>();
+        services.AddScoped<IBookManagementService, BookManagementService>();
 
         return services;
     }

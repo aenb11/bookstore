@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Storefront;
 
-public class SerieService(AppDbContext ctx) : ISerieService
+internal class SerieService(AppDbContext ctx) : ISerieService
 {
     public async Task<PagedResult<SerieResponseDto>> GetSeriesAsync(
         SerieFilterParam f,

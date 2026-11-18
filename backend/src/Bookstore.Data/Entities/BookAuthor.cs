@@ -13,4 +13,7 @@ public class BookAuthor
     public required int BookId { get; init; }
     public required int AuthorId { get; init; }
     public required BookAuthorRole Role { get; set; }
+
+    public Book Book { get; set; } = null!;
+    public Author Author { get; set; } = null!;
 }

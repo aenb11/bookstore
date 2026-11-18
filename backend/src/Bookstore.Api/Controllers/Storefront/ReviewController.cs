@@ -1,7 +1,6 @@
 using Bookstore.Api.Common;
 using Bookstore.Api.Common.Pagination;
 using Bookstore.Api.DTOs.Reviews;
-using Bookstore.Api.Services;
 using Bookstore.Api.Services.Storefront;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +10,7 @@ namespace Bookstore.Api.Controllers.Storefront;
 [ApiController]
 [Route("api/v1/reviews")]
 [Authorize(Roles = $"{AppRole.Customer}")]
-public class ReviewController(
-    IReviewService reviewService,
-    ICurrentAccountService currentAccountService
-) : ControllerBase
+public class ReviewController(IReviewService reviewService) : ControllerBase
 {
     [HttpGet("me")]
     public async Task<IActionResult> GetMyReviews(
@@ -38,10 +34,8 @@ public class ReviewController(
         CancellationToken ct
     )
     {
-        var account = await currentAccountService.GetOrCreateCurrentAccountAsync();
-        var accountId = account.Id;
-        var fullName = account.FullName;
-        var review = await reviewService.CreateReviewAsync(accountId, fullName, dto, ct);
+        var accountId = User.GetAccountId();
+        var review = await reviewService.CreateReviewAsync(accountId, dto, ct);
 
         return CreatedAtAction("GetManagementReviewById", new { reviewId = review.Id }, review);
     }
@@ -53,16 +47,8 @@ public class ReviewController(
         CancellationToken ct
     )
     {
-        var account = await currentAccountService.GetOrCreateCurrentAccountAsync();
-        var accountId = account.Id;
-        var fullName = account.FullName;
-        var updatedReview = await reviewService.UpdateReviewAsync(
-            reviewId,
-            accountId,
-            fullName,
-            dto,
-            ct
-        );
+        var accountId = User.GetAccountId();
+        var updatedReview = await reviewService.UpdateReviewAsync(reviewId, accountId, dto, ct);
 
         return Ok(updatedReview);
     }
@@ -75,5 +61,17 @@ public class ReviewController(
         await reviewService.DeleteReviewAsync(reviewId, accountId, ct);
 
         return NoContent();
+    }
+
+    [HttpGet("book/{bookId:int}")]
+    [AllowAnonymous]
+    public async Task<IActionResult> GetReviewsByBookId(
+        [FromRoute] int bookId,
+        [FromQuery] ReviewFilterParam f,
+        CancellationToken ct
+    )
+    {
+        var reviews = await reviewService.GetReviewsAsync(bookId, f, ct);
+        return Ok(reviews);
     }
 }

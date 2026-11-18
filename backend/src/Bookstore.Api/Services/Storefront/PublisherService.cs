@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Storefront;
 
-public class PublisherService(AppDbContext ctx) : IPublisherService
+internal class PublisherService(AppDbContext ctx) : IPublisherService
 {
     public Task<PagedResult<PublisherResponseDto>> GetAllAsync(
         PublisherFilterParam f,

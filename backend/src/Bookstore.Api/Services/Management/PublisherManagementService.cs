@@ -11,7 +11,7 @@ using Npgsql;
 
 namespace Bookstore.Api.Services.Management;
 
-public class PublisherManagementService(AppDbContext ctx) : IPublisherManagementService
+internal class PublisherManagementService(AppDbContext ctx) : IPublisherManagementService
 {
     public async Task<PublisherDetailResponseDto> CreateAsync(
         PublisherPostDto dto,

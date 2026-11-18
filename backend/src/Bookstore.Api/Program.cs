@@ -16,7 +16,7 @@ builder.Services.AddAppCors(builder.Configuration);
 
 builder.Services.AddAppAuthentication(builder.Configuration);
 
-builder.Services.AddDataInfrastructure(builder.Configuration);
+builder.Services.AddDataInfrastructure(builder.Configuration, builder.Environment.IsDevelopment());
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddMemoryCache();

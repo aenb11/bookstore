@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Storefront;
 
-public class AuthorService(AppDbContext ctx) : IAuthorService
+internal class AuthorService(AppDbContext ctx) : IAuthorService
 {
     public async Task<PagedResult<AuthorResponseDto>> GetAllAuthorsAsync(
         AuthorFilterParam f,

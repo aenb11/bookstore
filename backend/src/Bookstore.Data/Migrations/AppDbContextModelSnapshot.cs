@@ -308,6 +308,10 @@ namespace Bookstore.Data.Migrations
                         .HasColumnType("character varying(20)")
                         .HasColumnName("age_group");
 
+                    b.Property<double>("AverageRating")
+                        .HasColumnType("double precision")
+                        .HasColumnName("average_rating");
+
                     b.Property<int>("CategoryId")
                         .HasColumnType("integer")
                         .HasColumnName("category_id");
@@ -370,6 +374,10 @@ namespace Bookstore.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("serie_id");
 
+                    b.Property<int>("SoldCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("sold_count");
+
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasMaxLength(20)
@@ -385,6 +393,10 @@ namespace Bookstore.Data.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)")
                         .HasColumnName("title");
+
+                    b.Property<int>("TotalReviews")
+                        .HasColumnType("integer")
+                        .HasColumnName("total_reviews");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -415,6 +427,8 @@ namespace Bookstore.Data.Migrations
                         {
                             t.HasCheckConstraint("ck_books_age_group", "age_group IN ('Everyone','Children','YoungAdult','Adult')");
 
+                            t.HasCheckConstraint("ck_books_average_rating", "average_rating >= 0 AND average_rating <= 5");
+
                             t.HasCheckConstraint("ck_books_cover_type", "cover_type IN ('Hardcover','Paperback')");
 
                             t.HasCheckConstraint("ck_books_isbn", "isbn IS NULL OR LENGTH(isbn) = 13");
@@ -425,9 +439,13 @@ namespace Bookstore.Data.Migrations
 
                             t.HasCheckConstraint("ck_books_publication_year", "publication_year >= 0");
 
+                            t.HasCheckConstraint("ck_books_sold_count", "sold_count >= 0");
+
                             t.HasCheckConstraint("ck_books_status", "status IN ('Draft','Available','Archived','Discontinued')");
 
                             t.HasCheckConstraint("ck_books_stock_quantity", "stock_quantity >= 0");
+
+                            t.HasCheckConstraint("ck_books_total_reviews", "total_reviews >= 0");
 
                             t.HasCheckConstraint("ck_books_weight", "weight >= 0");
                         });
@@ -1033,19 +1051,23 @@ namespace Bookstore.Data.Migrations
 
             modelBuilder.Entity("Bookstore.Data.Entities.BookAuthor", b =>
                 {
-                    b.HasOne("Bookstore.Data.Entities.Author", null)
-                        .WithMany()
+                    b.HasOne("Bookstore.Data.Entities.Author", "Author")
+                        .WithMany("BookAuthors")
                         .HasForeignKey("AuthorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_book_authors_authors_author_id");
 
-                    b.HasOne("Bookstore.Data.Entities.Book", null)
-                        .WithMany()
+                    b.HasOne("Bookstore.Data.Entities.Book", "Book")
+                        .WithMany("BookAuthors")
                         .HasForeignKey("BookId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_book_authors_books_book_id");
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
                 });
 
             modelBuilder.Entity("Bookstore.Data.Entities.BookImage", b =>
@@ -1177,8 +1199,15 @@ namespace Bookstore.Data.Migrations
                     b.Navigation("Addresses");
                 });
 
+            modelBuilder.Entity("Bookstore.Data.Entities.Author", b =>
+                {
+                    b.Navigation("BookAuthors");
+                });
+
             modelBuilder.Entity("Bookstore.Data.Entities.Book", b =>
                 {
+                    b.Navigation("BookAuthors");
+
                     b.Navigation("Images");
                 });
 

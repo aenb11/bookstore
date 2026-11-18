@@ -4,12 +4,16 @@ using Bookstore.Api.Common.Projections;
 using Bookstore.Api.DTOs.Reviews;
 using Bookstore.Api.Extensions;
 using Bookstore.Api.Queries;
+using Bookstore.Api.Services.Common;
 using Bookstore.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Management;
 
-public class ReviewManagementService(AppDbContext ctx) : IReviewManagementService
+internal class ReviewManagementService(
+    AppDbContext ctx,
+    ReviewOperationsService reviewOperationsService
+) : IReviewManagementService
 {
     public async Task DeleteReviewAsync(int id, CancellationToken ct = default)
     {
@@ -17,8 +21,7 @@ public class ReviewManagementService(AppDbContext ctx) : IReviewManagementServic
             await ctx.Reviews.FirstOrDefaultAsync(r => r.Id == id && !r.IsDeleted, ct)
             ?? throw new NotFoundException($"Review with ID {id} not found.");
 
-        ctx.Reviews.Remove(review);
-        await ctx.SaveChangesAsync(ct);
+        await reviewOperationsService.ExecuteDeleteAndRecalculateAsync(review, ct);
     }
 
     public async Task<ReviewDetailResponseDto?> GetReviewByIdAsync(

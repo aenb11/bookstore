@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bookstore.Api.Services.Management;
 
-public class AuthorManagementService(AppDbContext ctx) : IAuthorManagementService
+internal class AuthorManagementService(AppDbContext ctx) : IAuthorManagementService
 {
     public async Task<AuthorDetailResponseDto> CreateAuthorAsync(
         AuthorPostDto dto,

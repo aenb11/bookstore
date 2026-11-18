@@ -25,7 +25,7 @@ public class AuthorController(IAuthorService authorService) : ControllerBase
     {
         var author = await authorService.GetAuthorByIdAsync(authorId, ct);
         if (author is null)
-            return NotFound();
+            return Problem(statusCode: StatusCodes.Status404NotFound, title: "Author not found");
 
         return Ok(author);
     }
