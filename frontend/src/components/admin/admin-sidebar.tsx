@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BookOpen, LayoutDashboard, LibraryBig, ShoppingCart, Store, Users, UserCog } from "lucide-react";
+import { BookOpen, LayoutDashboard, LibraryBig, ShoppingCart, Store, Users, UserCog, Tags, FolderOpen, MessageSquare } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -27,6 +27,9 @@ const navItems = [
   { href: "/admin/orders", label: "Đơn hàng", icon: ShoppingCart, badge: pendingCount },
   { href: "/admin/customers", label: "Khách hàng", icon: Users },
   { href: "/admin/accounts", label: "Tài khoản", icon: UserCog },
+  { href: "/admin/tags", label: "Quản lý Tag", icon: Tags },
+  { href: "/admin/categories", label: "Danh mục sách", icon: FolderOpen },
+  { href: "/admin/reviews", label: "Quản lý Review", icon: MessageSquare },
 ];
 
 export function AdminSidebar() {
