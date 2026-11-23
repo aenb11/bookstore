@@ -6,8 +6,7 @@ namespace Bookstore.Api.DTOs.Books;
 public abstract class BookFilterParamBase<TSortBy> : PaginationParam
     where TSortBy : struct, Enum
 {
-    public string? Title { get; set; }
-    public string? AuthorFullName { get; set; }
+    public string? Keyword { get; set; } // Search by title, author, ISBN
 
     public int? CategoryId { get; set; }
     public int? SerieId { get; set; }
