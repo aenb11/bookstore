@@ -49,7 +49,7 @@ export function CartView() {
                   <BookCover book={book} size="sm" />
                 </div>
                 <div className="min-w-0">
-                  <Link href={`/books/${book.slug}`} className="line-clamp-2 font-heading font-semibold hover:underline">
+                  <Link href={`/books/${book.id}`} className="line-clamp-2 font-heading font-semibold hover:underline">
                     {book.title}
                   </Link>
                   <p className="text-sm text-muted-foreground">{book.author}</p>

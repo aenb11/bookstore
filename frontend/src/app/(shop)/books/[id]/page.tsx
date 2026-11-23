@@ -19,33 +19,73 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatDate } from "@/lib/format";
-import { LOW_STOCK_THRESHOLD, books, getBookBySlug, getCategory, reviews } from "@/lib/mock-data";
+import { LOW_STOCK_THRESHOLD, books, getCategory, reviews } from "@/lib/mock-data";
+import { getBookDetail } from "@/lib/api/books";
+import type { Book } from "@/lib/types";
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ id: string }> };
 
-export function generateStaticParams() {
-  return books.map((book) => ({ slug: book.slug }));
-}
+export const instant = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const book = getBookBySlug((await params).slug);
-  return book ? { title: book.title, description: book.description.slice(0, 155) } : {};
+  const { id } = await params;
+  if (!/^\d+$/.test(id)) return {};
+  const apiBook = await getBookDetail(Number(id));
+  if (!apiBook) return {};
+  return { title: apiBook.title, description: apiBook.description?.slice(0, 155) };
+}
+
+function toBook(apiBook: NonNullable<Awaited<ReturnType<typeof getBookDetail>>>): Book {
+  const primaryAuthor = apiBook.authors[0]?.fullName ?? "Không rõ tác giả";
+  return {
+    id: String(apiBook.id),
+    slug: "",
+    title: apiBook.title,
+    author: primaryAuthor,
+    publisher: apiBook.publisher.name,
+    publishedYear: apiBook.publicationYear,
+    pages: apiBook.pageCount,
+    categoryId: String(apiBook.category.id),
+    price: apiBook.salePrice,
+    originalPrice: apiBook.salePrice < apiBook.listPrice ? apiBook.listPrice : undefined,
+    rating: apiBook.averageRating,
+    reviewCount: apiBook.totalReviews,
+    soldCount: apiBook.soldCount,
+    stock: apiBook.stockQuantity,
+    description: apiBook.description ?? "",
+    isbn: apiBook.isbn ?? "",
+  };
 }
 
 export default async function BookDetailPage({ params }: Props) {
-  const book = getBookBySlug((await params).slug);
-  if (!book) notFound();
+  const { id } = await params;
+  if (!/^\d+$/.test(id)) notFound();
 
-  const category = getCategory(book.categoryId)!;
+  const apiBook = await getBookDetail(Number(id));
+  if (!apiBook) notFound();
+
+  const book = toBook(apiBook);
+  const mockCategory =
+    getCategory(book.categoryId) ??
+    books
+      .map((item) => getCategory(item.categoryId))
+      .find((item) => item?.name === apiBook.category.name);
+  const category = mockCategory ?? {
+    id: String(apiBook.category.id),
+    slug: "",
+    name: apiBook.category.name,
+    description: "",
+  };
+  const categoryHref = category.slug ? `/books?category=${category.slug}` : "/books";
   const related = books.filter((b) => b.categoryId === book.categoryId && b.id !== book.id).slice(0, 5);
   const details = [
-    ["Tác giả", book.author],
-    ...(book.translator ? [["Dịch giả", book.translator]] : []),
-    ["Nhà xuất bản", book.publisher],
-    ["Năm xuất bản", String(book.publishedYear)],
-    ["Số trang", String(book.pages)],
-    ["ISBN", book.isbn],
-    ["Danh mục", category.name],
+    ["Tác giả", apiBook.authors.map((author) => author.fullName).join(", ") || "Không rõ"],
+    ["Nhà xuất bản", apiBook.publisher.name],
+    ["Năm xuất bản", String(apiBook.publicationYear)],
+    ["Số trang", String(apiBook.pageCount)],
+    ["ISBN", apiBook.isbn ?? "Không có"],
+    ["Ngôn ngữ", apiBook.language],
+    ["Danh mục", apiBook.category.name],
   ];
 
   return (
@@ -60,7 +100,7 @@ export default async function BookDetailPage({ params }: Props) {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/books?category=${category.slug}`}>{category.name}</Link>
+              <Link href={categoryHref}>{category.name}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />

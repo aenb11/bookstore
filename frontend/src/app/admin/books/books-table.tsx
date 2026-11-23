@@ -113,7 +113,7 @@ export function BooksTable() {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
                     <DropdownMenuItem asChild>
-                      <Link href={`/books/${book.slug}`}>
+                      <Link href={`/books/${book.id}`}>
                         <Eye /> Xem trên cửa hàng
                       </Link>
                     </DropdownMenuItem>

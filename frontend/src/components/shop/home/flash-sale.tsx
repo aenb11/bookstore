@@ -65,7 +65,7 @@ export function FlashSale({ books }: { books: Book[] }) {
           const sold = 30 + ((i * 17) % 60);
           return (
             <li key={book.id}>
-              <Link href={`/books/${book.slug}`} className="group flex h-full flex-col gap-2 rounded-lg p-2 hover:bg-muted">
+              <Link href={`/books/${book.id}`} className="group flex h-full flex-col gap-2 rounded-lg p-2 hover:bg-muted">
                 <div className="relative px-[10%]">
                   <BookCover book={book} />
                   <span className="absolute top-0 right-0 rounded-bl-lg bg-primary px-1.5 py-0.5 text-xs font-bold text-primary-foreground">
