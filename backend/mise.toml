@@ -6,7 +6,7 @@ ASPNETCORE_ENVIRONMENT = "Development"
 
 [tasks.db]
 description = "Run database using docker compose"
-run = "docker compose up -d"
+run = "docker compose up -d postgres"
 
 [tasks.dbdown]
 description = "Stop database using docker compose"
