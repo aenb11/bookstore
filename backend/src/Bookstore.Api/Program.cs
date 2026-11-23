@@ -3,6 +3,7 @@ using Bookstore.Api.Common;
 using Bookstore.Api.Extensions;
 using Bookstore.Api.Middlewares;
 using Bookstore.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Scalar.AspNetCore;
 
@@ -35,9 +36,30 @@ builder.Services.ConfigureHttpJsonOptions(o =>
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    try
+    {
+        var context = services.GetRequiredService<AppDbContext>();
+        await context.Database.MigrateAsync();
+    }
+    catch (Exception ex)
+    {
+        var logger = services.GetRequiredService<ILogger<Program>>();
+        logger.LogError(ex, "An error occurred while migrating or initializing the database.");
+        throw;
+    }
+}
+
 app.UseExceptionHandler();
 app.UseStatusCodePages();
-app.UseHttpsRedirection();
+
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseCors(CorsExtension.FrontendPolicy);
 
 // Configure the HTTP request pipeline.
@@ -57,9 +79,7 @@ Directory.CreateDirectory(uploadsPath);
 app.UseStaticFiles(
     new StaticFileOptions
     {
-        FileProvider = new PhysicalFileProvider(
-            Path.Combine(builder.Environment.ContentRootPath, "uploads")
-        ),
+        FileProvider = new PhysicalFileProvider(uploadsPath),
         RequestPath = "/files",
     }
 );

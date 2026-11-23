@@ -1,0 +1,6 @@
+**/bin
+**/obj
+.git
+.vs
+.vscode
+src/Bookstore.Api/uploads

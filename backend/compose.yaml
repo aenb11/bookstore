@@ -1,5 +1,6 @@
 services:
-  main-db:
+  postgres:
+    container_name: postgres
     image: postgres:17.7-alpine
 
     environment:
@@ -11,7 +12,7 @@ services:
       - "5432:5432"
 
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql/data
 
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U admin -d bookstore"]
@@ -19,5 +20,21 @@ services:
       timeout: 3s
       retries: 5
 
+  bookstore_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bookstore_api
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=bookstore_db;Username=admin;Password=Abcd!1234
+    volumes:
+      - ./src/Bookstore.Api/uploads:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy
+
 volumes:
-  db-data:
+  postgres_data:
