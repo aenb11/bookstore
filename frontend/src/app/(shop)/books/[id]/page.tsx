@@ -19,8 +19,9 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatDate } from "@/lib/format";
-import { LOW_STOCK_THRESHOLD, books, getCategory, reviews } from "@/lib/mock-data";
+import { LOW_STOCK_THRESHOLD, books, getCategory } from "@/lib/mock-data";
 import { getBookDetail } from "@/lib/api/books";
+import { getBookReviews } from "@/lib/api/reviews";
 import type { Book } from "@/lib/types";
 
 type Props = { params: Promise<{ id: string }> };
@@ -61,7 +62,10 @@ export default async function BookDetailPage({ params }: Props) {
   const { id } = await params;
   if (!/^\d+$/.test(id)) notFound();
 
-  const apiBook = await getBookDetail(Number(id));
+  const [apiBook, bookReviews] = await Promise.all([
+    getBookDetail(Number(id)),
+    getBookReviews(Number(id)),
+  ]);
   if (!apiBook) notFound();
 
   const book = toBook(apiBook);
@@ -170,7 +174,7 @@ export default async function BookDetailPage({ params }: Props) {
             <TabsList>
               <TabsTrigger value="description">Mô tả</TabsTrigger>
               <TabsTrigger value="details">Thông tin chi tiết</TabsTrigger>
-              <TabsTrigger value="reviews">Đánh giá ({reviews.length})</TabsTrigger>
+              <TabsTrigger value="reviews">Đánh giá ({bookReviews.length})</TabsTrigger>
             </TabsList>
             <TabsContent value="description" className="pt-4">
               <p className="max-w-prose leading-relaxed text-pretty">{book.description}</p>
@@ -186,23 +190,27 @@ export default async function BookDetailPage({ params }: Props) {
               </dl>
             </TabsContent>
             <TabsContent value="reviews" className="space-y-5 pt-4">
-              {reviews.map((review) => (
-                <article key={review.id} className="flex gap-3">
-                  <Avatar>
-                    <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-1">
-                    <div className="flex flex-wrap items-center gap-x-3">
-                      <p className="font-medium">{review.author}</p>
-                      <RatingStars rating={review.rating} />
-                      <time dateTime={review.createdAt} className="text-xs text-muted-foreground">
-                        {formatDate(review.createdAt)}
-                      </time>
+              {bookReviews.length === 0 ? (
+                <p className="text-sm text-muted-foreground">Chưa có đánh giá nào.</p>
+              ) : (
+                bookReviews.map((review) => (
+                  <article key={review.id} className="flex gap-3">
+                    <Avatar>
+                      <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center gap-x-3">
+                        <p className="font-medium">{review.author}</p>
+                        <RatingStars rating={review.rating} />
+                        <time dateTime={review.createdAt} className="text-xs text-muted-foreground">
+                          {formatDate(review.createdAt)}
+                        </time>
+                      </div>
+                      <p className="text-sm leading-relaxed">{review.content}</p>
                     </div>
-                    <p className="text-sm leading-relaxed">{review.content}</p>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                ))
+              )}
             </TabsContent>
           </Tabs>
         </div>
