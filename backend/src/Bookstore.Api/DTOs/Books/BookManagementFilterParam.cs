@@ -16,7 +16,6 @@ public enum BookManagementSortBy
 
 public class BookManagementFilterParam : BookFilterParamBase<BookManagementSortBy>
 {
-    public string? Isbn { get; set; }
     public BookStatus? Status { get; set; }
     public bool? IsDeleted { get; set; }
 

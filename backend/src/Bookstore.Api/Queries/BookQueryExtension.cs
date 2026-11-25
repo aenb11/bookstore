@@ -13,10 +13,14 @@ public static class BookQueryExtension
     )
         where TSortBy : struct, Enum
     {
-        return q.WhereIf(f.Title is not null, x => x.Title.Contains(f.Title!))
+        return q.WhereIf(f.Keyword is not null, x => x.Title.Contains(f.Keyword!))
             .WhereIf(
-                f.AuthorFullName is not null,
-                x => x.Authors.Any(a => a.FullName.Contains(f.AuthorFullName!))
+                f.Keyword is not null,
+                x => x.Authors.Any(a => a.FullName.Contains(f.Keyword!))
+            )
+            .WhereIf(
+                !string.IsNullOrWhiteSpace(f.Keyword),
+                x => x.Isbn != null && x.Isbn.Contains(f.Keyword!)
             )
             .WhereIf(f.CategoryId.HasValue, x => x.CategoryId == f.CategoryId)
             .WhereIf(f.SerieId.HasValue, x => x.SerieId == f.SerieId)
@@ -45,10 +49,6 @@ public static class BookQueryExtension
     )
     {
         return q.ApplyBaseFilter(f)
-            .WhereIf(
-                !string.IsNullOrWhiteSpace(f.Isbn),
-                x => x.Isbn != null && x.Isbn.Contains(f.Isbn!)
-            )
             .WhereIf(f.Status.HasValue, x => x.Status == f.Status)
             .WhereIf(f.IsDeleted.HasValue, x => x.IsDeleted == f.IsDeleted);
     }
