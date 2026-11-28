@@ -1,5 +1,6 @@
+import { Suspense } from "react";
 import { SiteFooter } from "@/components/shop/site-footer";
-import { SiteHeader } from "@/components/shop/site-header";
+import { SiteHeader, SiteHeaderFallback } from "@/components/shop/site-header";
 
 export default function ShopLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,7 +11,9 @@ export default function ShopLayout({ children }: { children: React.ReactNode }) 
       >
         Bỏ qua đến nội dung chính
       </a>
-      <SiteHeader />
+      <Suspense fallback={<SiteHeaderFallback />}>
+        <SiteHeader />
+      </Suspense>
       <main id="main" className="flex-1">
         {children}
       </main>
