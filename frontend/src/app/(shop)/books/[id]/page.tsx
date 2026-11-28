@@ -69,6 +69,7 @@ export default async function BookDetailPage({ params }: Props) {
   if (!apiBook) notFound();
 
   const book = toBook(apiBook);
+  const coverImage = [...apiBook.images].sort((a, b) => a.sortOrder - b.sortOrder)[0];
   const mockCategory =
     getCategory(book.categoryId) ??
     books
@@ -116,7 +117,7 @@ export default async function BookDetailPage({ params }: Props) {
 
       <div className="mt-4 grid gap-10 rounded-xl bg-card p-4 sm:p-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
         <div className="rounded-2xl bg-muted/60 px-[18%] py-[12%] md:sticky md:top-32 md:self-start">
-          <BookCover book={book} size="lg" />
+          <BookCover book={book} imageUrl={coverImage?.url} size="lg" />
         </div>
 
         <div className="space-y-6">
