@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetClose, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { categories } from "@/lib/mock-data";
+import { getCategories } from "@/lib/api/categories";
 import { AccountMenu, AccountMenuFallback } from "./account-menu";
 import { CartSheet } from "./cart-sheet";
 import { Logo } from "./logo";
@@ -22,7 +22,26 @@ const navLinks = [
   { href: "/books?sale=1", label: "Khuyến mãi" },
 ];
 
-export function SiteHeader() {
+export function SiteHeaderFallback() {
+  return (
+    <header aria-hidden="true" className="sticky top-0 z-40 bg-card shadow-[0_1px_0_var(--border)]">
+      <div className="h-7 bg-primary" />
+      <div className="container-page flex h-16 items-center gap-3 lg:gap-5">
+        <div className="size-10 rounded-md bg-muted" />
+        <div className="h-8 w-32 rounded-md bg-muted" />
+        <div className="hidden h-8 w-24 rounded-md bg-muted lg:block" />
+        <div className="ml-auto h-8 w-20 rounded-md bg-muted" />
+      </div>
+      <div className="container-page pb-3 md:hidden">
+        <div className="h-8 rounded-md bg-muted" />
+      </div>
+    </header>
+  );
+}
+
+export async function SiteHeader() {
+  const categories = await getCategories();
+
   return (
     <header className="sticky top-0 z-40 bg-card shadow-[0_1px_0_var(--border)]">
       <div className="bg-primary text-primary-foreground">
@@ -31,7 +50,7 @@ export function SiteHeader() {
         </p>
       </div>
       <div className="container-page flex h-16 items-center gap-3 lg:gap-5">
-        <MobileNav />
+        <MobileNav categories={categories} />
         <Logo />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -42,7 +61,7 @@ export function SiteHeader() {
           <DropdownMenuContent align="start" className="w-56">
             {categories.map((category) => (
               <DropdownMenuItem key={category.id} asChild>
-                <Link href={`/books?category=${category.slug}`}>{category.name}</Link>
+                <Link href={`/books?categoryId=${category.id}`}>{category.name}</Link>
               </DropdownMenuItem>
             ))}
             <DropdownMenuSeparator />
@@ -66,7 +85,7 @@ export function SiteHeader() {
   );
 }
 
-function MobileNav() {
+function MobileNav({ categories }: { categories: { id: number; name: string }[] }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -97,7 +116,7 @@ function MobileNav() {
                 <li key={category.id}>
                   <SheetClose asChild>
                     <Link
-                      href={`/books?category=${category.slug}`}
+                      href={`/books?categoryId=${category.id}`}
                       className="block rounded-md px-2 py-2 hover:bg-muted"
                     >
                       {category.name}

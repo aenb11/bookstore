@@ -11,7 +11,7 @@ export function BookCard({ book, className }: { book: Book; className?: string }
 
   return (
     <Link
-      href={`/books/${book.slug}`}
+      href={`/books/${book.id}`}
       className={cn(
         "group flex flex-col gap-2 rounded-xl bg-card p-3 transition-shadow hover:shadow-[0_2px_12px_rgb(0_0_0/0.12)]",
         className,

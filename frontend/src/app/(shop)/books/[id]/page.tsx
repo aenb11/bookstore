@@ -19,33 +19,78 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { formatDate } from "@/lib/format";
-import { LOW_STOCK_THRESHOLD, books, getBookBySlug, getCategory, reviews } from "@/lib/mock-data";
+import { LOW_STOCK_THRESHOLD, books, getCategory } from "@/lib/mock-data";
+import { getBookDetail } from "@/lib/api/books";
+import { getBookReviews } from "@/lib/api/reviews";
+import type { Book } from "@/lib/types";
 
-type Props = { params: Promise<{ slug: string }> };
+type Props = { params: Promise<{ id: string }> };
 
-export function generateStaticParams() {
-  return books.map((book) => ({ slug: book.slug }));
-}
+export const instant = false;
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const book = getBookBySlug((await params).slug);
-  return book ? { title: book.title, description: book.description.slice(0, 155) } : {};
+  const { id } = await params;
+  if (!/^\d+$/.test(id)) return {};
+  const apiBook = await getBookDetail(Number(id));
+  if (!apiBook) return {};
+  return { title: apiBook.title, description: apiBook.description?.slice(0, 155) };
+}
+
+function toBook(apiBook: NonNullable<Awaited<ReturnType<typeof getBookDetail>>>): Book {
+  const primaryAuthor = apiBook.authors[0]?.fullName ?? "Không rõ tác giả";
+  return {
+    id: String(apiBook.id),
+    slug: "",
+    title: apiBook.title,
+    author: primaryAuthor,
+    publisher: apiBook.publisher.name,
+    publishedYear: apiBook.publicationYear,
+    pages: apiBook.pageCount,
+    categoryId: String(apiBook.category.id),
+    price: apiBook.salePrice,
+    originalPrice: apiBook.salePrice < apiBook.listPrice ? apiBook.listPrice : undefined,
+    rating: apiBook.averageRating,
+    reviewCount: apiBook.totalReviews,
+    soldCount: apiBook.soldCount,
+    stock: apiBook.stockQuantity,
+    description: apiBook.description ?? "",
+    isbn: apiBook.isbn ?? "",
+  };
 }
 
 export default async function BookDetailPage({ params }: Props) {
-  const book = getBookBySlug((await params).slug);
-  if (!book) notFound();
+  const { id } = await params;
+  if (!/^\d+$/.test(id)) notFound();
 
-  const category = getCategory(book.categoryId)!;
+  const [apiBook, bookReviews] = await Promise.all([
+    getBookDetail(Number(id)),
+    getBookReviews(Number(id)),
+  ]);
+  if (!apiBook) notFound();
+
+  const book = toBook(apiBook);
+  const coverImage = [...apiBook.images].sort((a, b) => a.sortOrder - b.sortOrder)[0];
+  const mockCategory =
+    getCategory(book.categoryId) ??
+    books
+      .map((item) => getCategory(item.categoryId))
+      .find((item) => item?.name === apiBook.category.name);
+  const category = mockCategory ?? {
+    id: String(apiBook.category.id),
+    slug: "",
+    name: apiBook.category.name,
+    description: "",
+  };
+  const categoryHref = category.slug ? `/books?category=${category.slug}` : "/books";
   const related = books.filter((b) => b.categoryId === book.categoryId && b.id !== book.id).slice(0, 5);
   const details = [
-    ["Tác giả", book.author],
-    ...(book.translator ? [["Dịch giả", book.translator]] : []),
-    ["Nhà xuất bản", book.publisher],
-    ["Năm xuất bản", String(book.publishedYear)],
-    ["Số trang", String(book.pages)],
-    ["ISBN", book.isbn],
-    ["Danh mục", category.name],
+    ["Tác giả", apiBook.authors.map((author) => author.fullName).join(", ") || "Không rõ"],
+    ["Nhà xuất bản", apiBook.publisher.name],
+    ["Năm xuất bản", String(apiBook.publicationYear)],
+    ["Số trang", String(apiBook.pageCount)],
+    ["ISBN", apiBook.isbn ?? "Không có"],
+    ["Ngôn ngữ", apiBook.language],
+    ["Danh mục", apiBook.category.name],
   ];
 
   return (
@@ -60,7 +105,7 @@ export default async function BookDetailPage({ params }: Props) {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href={`/books?category=${category.slug}`}>{category.name}</Link>
+              <Link href={categoryHref}>{category.name}</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -72,7 +117,7 @@ export default async function BookDetailPage({ params }: Props) {
 
       <div className="mt-4 grid gap-10 rounded-xl bg-card p-4 sm:p-6 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)] lg:gap-16">
         <div className="rounded-2xl bg-muted/60 px-[18%] py-[12%] md:sticky md:top-32 md:self-start">
-          <BookCover book={book} size="lg" />
+          <BookCover book={book} imageUrl={coverImage?.url} size="lg" />
         </div>
 
         <div className="space-y-6">
@@ -130,7 +175,7 @@ export default async function BookDetailPage({ params }: Props) {
             <TabsList>
               <TabsTrigger value="description">Mô tả</TabsTrigger>
               <TabsTrigger value="details">Thông tin chi tiết</TabsTrigger>
-              <TabsTrigger value="reviews">Đánh giá ({reviews.length})</TabsTrigger>
+              <TabsTrigger value="reviews">Đánh giá ({bookReviews.length})</TabsTrigger>
             </TabsList>
             <TabsContent value="description" className="pt-4">
               <p className="max-w-prose leading-relaxed text-pretty">{book.description}</p>
@@ -146,23 +191,27 @@ export default async function BookDetailPage({ params }: Props) {
               </dl>
             </TabsContent>
             <TabsContent value="reviews" className="space-y-5 pt-4">
-              {reviews.map((review) => (
-                <article key={review.id} className="flex gap-3">
-                  <Avatar>
-                    <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="space-y-1">
-                    <div className="flex flex-wrap items-center gap-x-3">
-                      <p className="font-medium">{review.author}</p>
-                      <RatingStars rating={review.rating} />
-                      <time dateTime={review.createdAt} className="text-xs text-muted-foreground">
-                        {formatDate(review.createdAt)}
-                      </time>
+              {bookReviews.length === 0 ? (
+                <p className="text-sm text-muted-foreground">Chưa có đánh giá nào.</p>
+              ) : (
+                bookReviews.map((review) => (
+                  <article key={review.id} className="flex gap-3">
+                    <Avatar>
+                      <AvatarFallback>{review.author.charAt(0)}</AvatarFallback>
+                    </Avatar>
+                    <div className="space-y-1">
+                      <div className="flex flex-wrap items-center gap-x-3">
+                        <p className="font-medium">{review.author}</p>
+                        <RatingStars rating={review.rating} />
+                        <time dateTime={review.createdAt} className="text-xs text-muted-foreground">
+                          {formatDate(review.createdAt)}
+                        </time>
+                      </div>
+                      <p className="text-sm leading-relaxed">{review.content}</p>
                     </div>
-                    <p className="text-sm leading-relaxed">{review.content}</p>
-                  </div>
-                </article>
-              ))}
+                  </article>
+                ))
+              )}
             </TabsContent>
           </Tabs>
         </div>

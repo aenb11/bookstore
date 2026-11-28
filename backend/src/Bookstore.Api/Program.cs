@@ -54,12 +54,10 @@ using (var scope = app.Services.CreateScope())
 
 app.UseExceptionHandler();
 app.UseStatusCodePages();
-
 if (!app.Environment.IsDevelopment())
 {
     app.UseHttpsRedirection();
 }
-
 app.UseCors(CorsExtension.FrontendPolicy);
 
 // Configure the HTTP request pipeline.

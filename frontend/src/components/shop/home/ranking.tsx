@@ -47,7 +47,7 @@ export function Ranking({ groups }: { groups: { category: Category; books: Book[
           {books.map((book, i) => (
             <li key={book.id}>
               <Link
-                href={`/books/${book.slug}`}
+                href={`/books/${book.id}`}
                 onMouseEnter={() => setActive(i)}
                 onFocus={() => setActive(i)}
                 className={cn(

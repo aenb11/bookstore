@@ -113,7 +113,7 @@ export function CartSheet() {
                   </div>
                   <div className="flex min-w-0 flex-1 flex-col gap-1">
                     <SheetClose asChild>
-                      <Link href={`/books/${book.slug}`} className="line-clamp-2 font-heading font-semibold hover:underline">
+                      <Link href={`/books/${book.id}`} className="line-clamp-2 font-heading font-semibold hover:underline">
                         {book.title}
                       </Link>
                     </SheetClose>
